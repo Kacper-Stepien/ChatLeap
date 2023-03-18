@@ -2,17 +2,22 @@
   "name": "chatleap",
   "version": "1.0.0",
   "description": "",
-  "main": "app.js",
+  "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon app.js"
+    "start": "nodemon server.js"
   },
   "author": "Kacper Stępień",
   "license": "ISC",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
+    "express-mongo-sanitize": "^2.2.0",
+    "helmet": "^6.0.1",
     "mongoose": "^7.0.2",
-    "nodemon": "^2.0.21"
+    "nodemon": "^2.0.21",
+    "validator": "^13.9.0",
+    "xss-clean": "^0.1.1"
   }
 }

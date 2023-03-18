@@ -1,8 +1,9 @@
 const mongoose = require("mongoose");
 const validator = require("validator");
 const Post = require("./postModel");
+const bcrypt = require("bcryptjs");
 
-const userSchame = new mongoose.Schema({
+const userSchema = new mongoose.Schema({
   name: {
     type: String,
     required: [true, "Proszę podać imię"],
@@ -23,6 +24,8 @@ const userSchame = new mongoose.Schema({
     required: [true, "Proszę podać nick"],
     unique: true,
     lowercase: true,
+    minlength: 5,
+    maxlenght: 20,
     validate: [validator.isAlphanumeric, "Proszę podać poprawny nick"],
   },
   password: {
@@ -41,6 +44,7 @@ const userSchame = new mongoose.Schema({
       },
       message: "Hasła nie są takie same",
     },
+    select: false,
   },
   posts: [
     {
@@ -50,5 +54,13 @@ const userSchame = new mongoose.Schema({
   ],
 });
 
-const User = mongoose.model("User", userSchame);
+userSchema.pre("save", async function (next) {
+  if (!this.isModified("password")) return next();
+
+  this.password = await bcrypt.hashSync(this.password, 12);
+  this.passwordConfirm = undefined;
+  next();
+});
+
+const User = mongoose.model("User", userSchema);
 module.exports = User;
