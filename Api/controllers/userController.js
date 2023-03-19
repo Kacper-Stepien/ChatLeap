@@ -8,33 +8,6 @@ const filterObj = (obj, ...allowedFields) => {
   return newObj;
 };
 
-exports.signUp = async (req, res, next) => {
-  try {
-    const { name, surname, email, nick, password, passwordConfirm } = req.body;
-    const newUser = await User.create({
-      name,
-      surname,
-      email,
-      nick,
-      password,
-      passwordConfirm,
-    });
-
-    res.status(201).json({
-      status: "success",
-      data: {
-        user: newUser,
-      },
-    });
-  } catch (error) {
-    res.status(400).json({
-      status: "fail",
-      //   message: error,
-      message: "Nie udało się utworzyć użytkownika",
-    });
-  }
-};
-
 exports.getAllUsers = async (req, res, next) => {
   try {
     const users = await User.find();

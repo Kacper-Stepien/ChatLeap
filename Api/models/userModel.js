@@ -46,6 +46,7 @@ const userSchema = new mongoose.Schema({
     },
     select: false,
   },
+  passwordChangedAt: Date,
   posts: [
     {
       type: mongoose.Schema.ObjectId,
@@ -55,12 +56,31 @@ const userSchema = new mongoose.Schema({
 });
 
 userSchema.pre("save", async function (next) {
+  // Run before save() and create()
   if (!this.isModified("password")) return next();
 
-  this.password = await bcrypt.hashSync(this.password, 12);
+  this.password = await bcrypt.hash(this.password, 12); // Hash password with cost of 12
   this.passwordConfirm = undefined;
   next();
 });
+
+userSchema.methods.correctPassword = async function (
+  givenPassword,
+  userPassword
+) {
+  return await bcrypt.compare(givenPassword, userPassword);
+};
+
+userSchema.methods.changePasswordAfter = function (JWTTimestamp) {
+  if (this.passwordChangedAt) {
+    const changedTimestamp = parseInt(
+      this.passwordChangedAt.getTime() / 1000,
+      10
+    );
+    return JWTTimestamp < changedTimestamp;
+  }
+  return false;
+};
 
 const User = mongoose.model("User", userSchema);
 module.exports = User;

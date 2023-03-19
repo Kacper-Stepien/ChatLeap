@@ -1,10 +1,11 @@
 const express = require("express");
-const mongoose = require("mongoose");
 const dotenv = require("dotenv"); // Load environment variables from .env file
 const helmet = require("helmet"); // This will set some HTTP headers to help protect your app from some well-known web vulnerabilities
 const mongoSanitize = require("express-mongo-sanitize"); // This will prevent NoSQL query injection
 const xss = require("xss-clean"); // This will sanitize user input coming from POST body, GET queries, and url params
 
+const globalErrorHandler = require("./controllers/errorController");
+const AppError = require("./utils/appError");
 const userRouter = require("./routes/userRoutes");
 
 dotenv.config({ path: "./config.env" }); // Load environment variables from .env file
@@ -22,5 +23,14 @@ app.use(xss()); // Sanitize user input coming from POST body, GET queries, and u
 
 // Routes
 app.use("/chatleap/user", userRouter);
+
+app.all("*", (req, res, next) => {
+  // Handle all undefined routes
+  next(
+    new AppError(`Nie można znaleźć ${req.originalUrl} na tym serwerze!`, 404)
+  );
+});
+
+app.use(globalErrorHandler); // Global error handler - must be after all routes and middlewares that can throw errors
 
 module.exports = app;
