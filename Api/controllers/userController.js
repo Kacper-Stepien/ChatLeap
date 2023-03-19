@@ -1,4 +1,7 @@
 const User = require("./../models/userModel");
+const catchAsync = require("./../utils/catchAsync");
+const AppError = require("./../utils/appError");
+const Post = require("./../models/postModel");
 
 const filterObj = (obj, ...allowedFields) => {
   const newObj = {}; // Create empty object
@@ -8,109 +11,82 @@ const filterObj = (obj, ...allowedFields) => {
   return newObj;
 };
 
-exports.getAllUsers = async (req, res, next) => {
-  try {
-    const users = await User.find();
-    res.status(200).json({
-      status: "success",
-      data: {
-        users,
-        length: users.length,
-      },
-    });
-  } catch (error) {
-    res.status(400).json({
-      status: "fail",
-      message: "Nie znaleziono użytkowników",
-    });
-  }
-};
+exports.getAllUsers = catchAsync(async (req, res, next) => {
+  const users = await User.find();
+  res.status(200).json({
+    status: "success",
+    data: {
+      users,
+      length: users.length,
+    },
+  });
+});
 
-exports.getUser = async (req, res, next) => {
-  try {
-    const user = await User.findById(req.params.id);
-    res.status(200).json({
-      status: "success",
-      data: {
-        user,
-      },
-    });
-  } catch (error) {
-    res.status(400).json({
-      status: "fail",
-      message: "Nie znaleziono użytkownika",
-    });
+exports.getUser = catchAsync(async (req, res, next) => {
+  const user = await User.findById(req.params.id);
+  if (!user) {
+    return next(new AppError("User not found", 404));
   }
-};
+  res.status(200).json({
+    status: "success",
+    data: {
+      user,
+    },
+  });
+});
 
-exports.getUserByNick = async (req, res, next) => {
-  try {
-    const user = await User.findOne({ nick: req.params.nick });
-    res.status(200).json({
-      status: "success",
-      data: {
-        user,
-      },
-    });
-  } catch (error) {
-    res.status(400).json({
-      status: "fail",
-      message: "Nie znaleziono użytkownika",
-    });
+exports.getUserByNick = catchAsync(async (req, res, next) => {
+  const user = await User.findOne({ nick: req.params.nick });
+  if (!user) {
+    return next(new AppError("User not found", 404));
   }
-};
+  res.status(200).json({
+    status: "success",
+    data: {
+      user,
+    },
+  });
+});
 
-exports.updateMe = async (req, res, next) => {
+exports.updateMe = catchAsync(async (req, res, next) => {
   if (req.body.password || req.body.passwordConfirm) {
-    res.status(400).json({
-      status: "fail",
-      message:
-        "Nie można zmienić hasła przez tę metodę. Użyj /updateMyPassword",
-    });
-  }
-  try {
-    const filteredBody = filterObj(
-      req.body,
-      "name",
-      "surname",
-      "email",
-      "nick"
+    return next(
+      new AppError(
+        "The password cannot be changed by this method. Use /updateMyPassword",
+        400
+      )
     );
-
-    const updatedUser = await User.findByIdAndUpdate(
-      req.user.id,
-      filteredBody,
-      {
-        new: true, // Return updated document
-        runValidators: true, // Run validators on update
-      }
-    );
-
-    res.status(200).json({
-      status: "success",
-      data: {
-        user: updatedUser,
-      },
-    });
-  } catch (error) {
-    res.status(400).json({
-      status: "fail",
-      message: "Nie udało się zaktualizować użytkownika",
-    });
   }
-};
+  const filteredBody = filterObj(req.body, "name", "surname", "email", "nick");
 
-exports.deleteMe = async (req, res, next) => {
-  try {
-    await User.findByIdAndDelete(req.user.id);
-    res.status(204).json({
-      status: "success",
-      data: null,
-    });
-  } catch (error) {
-    res.status(400).json({
-      status: "fail",
-      message: "Nie udało się usunąć użytkownika",
-    });
-  }
-};
+  const updatedUser = await User.findByIdAndUpdate(req.user.id, filteredBody, {
+    new: true, // Return updated document
+    runValidators: true, // Run validators on update
+  });
+
+  res.status(200).json({
+    status: "success",
+    data: {
+      user: updatedUser,
+    },
+  });
+});
+
+exports.deleteMe = catchAsync(async (req, res, next) => {
+  await User.findByIdAndDelete(req.user.id);
+  return res.status(204).json({
+    status: "success",
+    data: null,
+  });
+});
+
+exports.getPostsByUser = catchAsync(async (req, res, next) => {
+  const userId = req.params.id;
+  const posts = await Post.find({ author: userId }).populate("author");
+  res.status(200).json({
+    status: "success",
+    data: {
+      posts,
+    },
+  });
+});

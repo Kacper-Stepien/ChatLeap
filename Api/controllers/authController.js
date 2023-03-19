@@ -37,6 +37,9 @@ exports.signUp = catchAsync(async (req, res, next) => {
     passwordConfirm,
   });
 
+  newUser.password = undefined; // Hide password from response
+  newUser.passwordConfirm = undefined;
+
   res.status(201).json({
     status: "success",
     data: {
@@ -44,36 +47,6 @@ exports.signUp = catchAsync(async (req, res, next) => {
     },
   });
 });
-
-// exports.login = async (req, res, next) => {
-//   try {
-//     const { email, password } = req.body;
-//     // 1) Check if email and password exist
-//     if (!email || !password) {
-//       return next(new AppError("Please enter your email and password", 400));
-//     }
-//     // 2) Check if user exists && password is correct
-//     const user = await User.findOne({ email: email }).select("+password");
-//     if (!user) {
-//       return next(
-//         new AppError("User with given email address doesn't exists", 400)
-//       );
-//     }
-//     const correctData = await user.correctPassword(password, user.password);
-//     if (!correctData) {
-//       return next(new AppError("Password is incorrect", 400));
-//     }
-
-//     // 3) If everything ok, send token to client
-//     const token = signToken(user._id);
-//     return res.status(200).json({
-//       status: "success",
-//       token,
-//     });
-//   } catch (error) {
-//     return next(new AppError(error.message, 400));
-//   }
-// };
 
 exports.login = catchAsync(async (req, res, next) => {
   const { email, password } = req.body;
@@ -101,7 +74,7 @@ exports.login = catchAsync(async (req, res, next) => {
   });
 });
 
-exports.protect = async (req, res, next) => {
+exports.protect = catchAsync(async (req, res, next) => {
   // 1) Getting token and check of it's there
   let token;
   if (
@@ -118,15 +91,12 @@ exports.protect = async (req, res, next) => {
 
   // 2) Validate token
   let decodedToken;
-  try {
-    decodedToken = await jwt.verify(token, process.env.JWT_SECRET);
-    console.log(decodedToken);
 
-    if (!decodedToken) {
-      return next(new AppError("You're not logged in. Please login", 401));
-    }
-  } catch (error) {
-    return next(new AppError(error.message, 401));
+  decodedToken = await jwt.verify(token, process.env.JWT_SECRET);
+  console.log(decodedToken);
+
+  if (!decodedToken) {
+    return next(new AppError("You're not logged in. Please login", 401));
   }
 
   // 3) Check if user still exists
@@ -148,4 +118,4 @@ exports.protect = async (req, res, next) => {
 
   req.user = freshUser;
   next();
-};
+});

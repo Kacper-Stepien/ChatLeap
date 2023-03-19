@@ -6,6 +6,11 @@ const handleValidationError = (err) => {
   return new AppError(message, 400, errors);
 };
 
+const invalidToken = () => {
+  const message = `Invalid token`;
+  return new AppError(message, 401);
+};
+
 const sendError = (err, res) => {
   res.status(err.statusCode).json({
     status: err.status,
@@ -21,5 +26,6 @@ module.exports = (err, req, res, next) => {
   error.message = err.message;
   if (error._message === "User validation failed")
     error = handleValidationError(err);
+  if (error.message === "jwt malformed") error = invalidToken();
   sendError(error, res);
 };

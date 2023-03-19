@@ -7,6 +7,7 @@ const xss = require("xss-clean"); // This will sanitize user input coming from P
 const globalErrorHandler = require("./controllers/errorController");
 const AppError = require("./utils/appError");
 const userRouter = require("./routes/userRoutes");
+const postRouter = require("./routes/postRoutes");
 
 dotenv.config({ path: "./config.env" }); // Load environment variables from .env file
 
@@ -23,12 +24,11 @@ app.use(xss()); // Sanitize user input coming from POST body, GET queries, and u
 
 // Routes
 app.use("/chatleap/user", userRouter);
+app.use("/chatleap/post", postRouter);
 
 app.all("*", (req, res, next) => {
   // Handle all undefined routes
-  next(
-    new AppError(`Nie można znaleźć ${req.originalUrl} na tym serwerze!`, 404)
-  );
+  next(new AppError(`Could not find ${req.originalUrl} on this server!`, 404));
 });
 
 app.use(globalErrorHandler); // Global error handler - must be after all routes and middlewares that can throw errors

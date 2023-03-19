@@ -12,8 +12,12 @@ router.get("/", userController.getAllUsers);
 
 router.get("/:id", authController.protect, userController.getUser);
 
-router.get("/nick/:nick", userController.getUserByNick);
+router.get("/:id/posts", authController.protect, userController.getPostsByUser);
 
-router;
+router.get("/nick/:nick", authController.protect, userController.getUserByNick);
 
-module.exports = router.patch("/updateMe/:id", userController.updateMe);
+router.patch("/updateMe", authController.protect, userController.updateMe);
+
+router.delete("/deleteMe", authController.protect, userController.deleteMe);
+
+module.exports = router;
