@@ -3,6 +3,7 @@ const catchAsync = require("./../utils/catchAsync");
 const AppError = require("./../utils/appError");
 const Comment = require("./../models/commentModel");
 const Like = require("./../models/likeModel");
+const User = require("./../models/userModel");
 
 const postExists = async (postId) => {
   return Post.exists({ _id: postId });
@@ -15,8 +16,13 @@ const postBelongsToUser = async (postId, userId) => {
 exports.createPost = catchAsync(async (req, res, next) => {
   const { text } = req.body;
   const author = req.user.id;
+  const user = await User.findById(author);
 
   const post = await Post.create({ text, author });
+
+  // add post to user
+  user.posts.push(post);
+  await user.save();
 
   res.status(201).json({
     status: "success",
@@ -80,6 +86,13 @@ exports.deletePost = catchAsync(async (req, res, next) => {
   // Delete all post's likes
   await Like.deleteMany({ post: postId });
 
+  // Delete post from user
+  await User.findByIdAndUpdate(
+    author,
+    { $pull: { posts: postId } },
+    { new: true }
+  );
+
   res.status(204).json({
     status: "success",
     data: null,
@@ -88,7 +101,6 @@ exports.deletePost = catchAsync(async (req, res, next) => {
 
 exports.getAllPosts = catchAsync(async (req, res, next) => {
   const posts = await Post.find({}).populate("author");
-
   res.status(200).json({
     status: "success",
     data: {
@@ -102,12 +114,30 @@ exports.getPost = catchAsync(async (req, res, next) => {
   if (!(await postExists(postId))) {
     return next(new AppError("Post not found", 400));
   }
-  const post = await Post.findById(req.params.id).populate("author");
+  const post = await Post.findById(req.params.id)
+    .populate("author")
+    .populate("comments");
 
   res.status(200).json({
     status: "success",
     data: {
       post,
+    },
+  });
+});
+
+exports.getPostComments = catchAsync(async (req, res, next) => {
+  const postId = req.params.id;
+  if (!(await postExists(postId))) {
+    return next(new AppError("Post not found", 400));
+  }
+
+  const comments = await Comment.find({ post: postId }).populate("author");
+
+  res.status(200).json({
+    status: "success",
+    data: {
+      comments,
     },
   });
 });

@@ -8,6 +8,7 @@ const globalErrorHandler = require("./controllers/errorController");
 const AppError = require("./utils/appError");
 const userRouter = require("./routes/userRoutes");
 const postRouter = require("./routes/postRoutes");
+const commentRouter = require("./routes/commentRoutes");
 
 dotenv.config({ path: "./config.env" }); // Load environment variables from .env file
 
@@ -25,6 +26,7 @@ app.use(xss()); // Sanitize user input coming from POST body, GET queries, and u
 // Routes
 app.use("/chatleap/user", userRouter);
 app.use("/chatleap/post", postRouter);
+app.use("/chatleap/comment", commentRouter);
 
 app.all("*", (req, res, next) => {
   // Handle all undefined routes

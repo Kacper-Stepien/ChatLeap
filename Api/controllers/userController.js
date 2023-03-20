@@ -2,6 +2,7 @@ const User = require("./../models/userModel");
 const catchAsync = require("./../utils/catchAsync");
 const AppError = require("./../utils/appError");
 const Post = require("./../models/postModel");
+const Comment = require("./../models/commentModel");
 
 const filterObj = (obj, ...allowedFields) => {
   const newObj = {}; // Create empty object
@@ -82,7 +83,11 @@ exports.deleteMe = catchAsync(async (req, res, next) => {
 
 exports.getPostsByUser = catchAsync(async (req, res, next) => {
   const userId = req.params.id;
-  const posts = await Post.find({ author: userId }).populate("author");
+  const posts = await Post.find({ author: userId })
+    .populate("author")
+    .populate("comments");
+
+  console.log(posts);
   res.status(200).json({
     status: "success",
     data: {
