@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 const validator = require("validator");
 const User = require("./userModel");
 const Comment = require("./commentModel");
+const Like = require("./likeModel");
 
 const postSchema = new mongoose.Schema({
   text: {
@@ -26,6 +27,12 @@ const postSchema = new mongoose.Schema({
     {
       type: mongoose.Schema.ObjectId,
       ref: "Comment",
+    },
+  ],
+  likes: [
+    {
+      type: mongoose.Schema.ObjectId,
+      ref: "Like",
     },
   ],
 });
