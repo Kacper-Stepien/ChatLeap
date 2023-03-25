@@ -6,15 +6,23 @@ const bcrypt = require("bcryptjs");
 const userSchema = new mongoose.Schema({
   name: {
     type: String,
+    match: [
+      /^[A-Z][a-ząćęłńóśźż]+(\s[A-Z][a-ząćęłńóśźż]+)?$/,
+      "Please enter a valid name",
+    ],
     required: [true, "Please enter a name"],
   },
   surname: {
     type: String,
+    match: [
+      /^[A-Z][a-ząćęłńóśźż]+(-[A-Z][a-ząćęłńóźż]+)?$/,
+      "Please enter a valid surname",
+    ],
     required: [true, "Please enter a surname"],
   },
   email: {
     type: String,
-    required: [true, "Please enter a email"],
+    required: [true, "Please enter an email"],
     unique: true,
     lowercase: true,
     validate: [validator.isEmail, "Please enter a valid email"],
@@ -53,6 +61,10 @@ const userSchema = new mongoose.Schema({
       ref: "Post",
     },
   ],
+});
+
+userSchema.virtual("fullName").get(function () {
+  return `${this.name} ${this.surname}`;
 });
 
 userSchema.pre("save", async function (next) {

@@ -7,12 +7,12 @@ const likeSchema = new mongoose.Schema({
   post: {
     type: mongoose.Schema.ObjectId,
     ref: "Post",
-    required: [true, "Proszę podać post"],
+    required: [true, "Please enter a post ID"],
   },
   author: {
     type: mongoose.Schema.ObjectId,
     ref: "User",
-    required: [true, "Proszę podać użytkownika"],
+    required: [true, "Please enter a user ID"],
   },
 });
 

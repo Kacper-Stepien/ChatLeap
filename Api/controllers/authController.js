@@ -58,12 +58,12 @@ exports.login = catchAsync(async (req, res, next) => {
   const user = await User.findOne({ email: email }).select("+password");
   if (!user) {
     return next(
-      new AppError("User with given email address doesn't exists", 400)
+      new AppError("User with given email address doesn't exists", 404)
     );
   }
   const correctData = await user.correctPassword(password, user.password);
   if (!correctData) {
-    return next(new AppError("Password is incorrect", 400));
+    return next(new AppError("Password is incorrect", 401));
   }
 
   // 3) If everything ok, send token to client

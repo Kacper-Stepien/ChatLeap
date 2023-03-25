@@ -24,7 +24,7 @@ app.use(mongoSanitize()); // Prevent NoSQL query injection
 app.use(xss()); // Sanitize user input coming from POST body, GET queries, and url params
 
 // Routes
-app.use("/chatleap/user", userRouter);
+app.use("/chatleap/users", userRouter);
 app.use("/chatleap/post", postRouter);
 app.use("/chatleap/comment", commentRouter);
 

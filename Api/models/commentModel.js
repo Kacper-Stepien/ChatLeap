@@ -6,9 +6,9 @@ const User = require("./userModel");
 const commentSchema = new mongoose.Schema({
   text: {
     type: String,
-    required: [true, "Proszę podać tekst komentarza"],
-    minlength: [3, "Komentarz musi mieć minimum 3 znaki"],
-    maxlength: [100, "Komentarz może mieć maksymalnie 200 znaków"],
+    required: [true, "Please enter comment text"],
+    minlength: [3, "The comment must be at least 3 characters long"],
+    maxlength: [150, "The comment can be up to 150 characters long"],
   },
   createdAt: {
     type: Date,
