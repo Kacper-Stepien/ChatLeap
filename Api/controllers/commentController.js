@@ -9,7 +9,8 @@ const { commentExists } = require("./../utils/commentExists");
 const { commentBelongsToUser } = require("./../utils/commentBelongsToUser");
 
 exports.createComment = catchAsync(async (req, res, next) => {
-  const { text, postId } = req.body;
+  const { text } = req.body;
+  const postId = req.params.id;
   const authorId = req.user.id;
 
   const post = await Post.findById(postId);
@@ -66,7 +67,7 @@ exports.updateComment = catchAsync(async (req, res, next) => {
   // Check if comment belongs to user
   if (!(await commentBelongsToUser(commentId, authorId))) {
     return next(
-      new AppError("You are not allowed to modify this comment", 400)
+      new AppError("You are not allowed to modify this comment", 403)
     );
   }
 
@@ -96,7 +97,7 @@ exports.deleteComment = catchAsync(async (req, res, next) => {
   // Check if comment belongs to user
   if (!(await commentBelongsToUser(commentId, authorId))) {
     return next(
-      new AppError("You are not allowed to delete this comment", 400)
+      new AppError("You are not allowed to delete this comment", 403)
     );
   }
 

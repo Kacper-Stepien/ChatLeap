@@ -13,15 +13,17 @@ router
 
 router
   .route("/:id")
+  .get(postController.getPost)
   .patch(authController.protect, postController.updatePost)
   .delete(authController.protect, postController.deletePost);
 
 router
   .route("/:id/comments")
+  .post(authController.protect, commentController.createComment)
   .get(authController.protect, postController.getPostComments);
 
 router
-  .route("/:id/like")
+  .route("/:id/likes")
   .post(authController.protect, likeController.createLike)
   .delete(authController.protect, likeController.deleteLike);
 

@@ -25,8 +25,8 @@ app.use(xss()); // Sanitize user input coming from POST body, GET queries, and u
 
 // Routes
 app.use("/chatleap/users", userRouter);
-app.use("/chatleap/post", postRouter);
-app.use("/chatleap/comment", commentRouter);
+app.use("/chatleap/posts", postRouter);
+app.use("/chatleap/comments", commentRouter);
 
 app.all("*", (req, res, next) => {
   // Handle all undefined routes

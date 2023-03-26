@@ -42,7 +42,7 @@ module.exports = (err, req, res, next) => {
   error.message = err.message;
   if (error._message === "User validation failed")
     error = handleValidationError(err);
-  if (error.message.startsWith("Validation failed"))
+  if (error.message.toLowerCase().includes("validation failed"))
     error = handleValidationError(err);
   if (error.message === "jwt malformed") error = invalidToken();
   if (error.message.startsWith("Cast to Object")) error = handleInvalidId();

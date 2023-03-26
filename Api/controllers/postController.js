@@ -4,6 +4,7 @@ const AppError = require("./../utils/appError");
 const Comment = require("./../models/commentModel");
 const Like = require("./../models/likeModel");
 const User = require("./../models/userModel");
+const CustomQuery = require("./../utils/customQuery");
 
 const postExists = async (postId) => {
   return Post.exists({ _id: postId });
@@ -42,7 +43,7 @@ exports.updatePost = catchAsync(async (req, res, next) => {
   }
 
   if (!(await postBelongsToUser(postId, author))) {
-    return next(new AppError("You are not allowed to modify this post", 400));
+    return next(new AppError("You are not allowed to modify this post", 403));
   }
 
   const post = await Post.findByIdAndUpdate(
@@ -75,7 +76,7 @@ exports.deletePost = catchAsync(async (req, res, next) => {
     return next(new AppError("Post not found", 400));
   }
   if (!(await postBelongsToUser(postId, author))) {
-    return next(new AppError("You are not allowed to delete this post", 400));
+    return next(new AppError("You are not allowed to delete this post", 403));
   }
 
   const post = await Post.findOneAndDelete({ _id: postId, author });
@@ -100,7 +101,12 @@ exports.deletePost = catchAsync(async (req, res, next) => {
 });
 
 exports.getAllPosts = catchAsync(async (req, res, next) => {
-  const posts = await Post.find({}).populate("author");
+  console.log(req.query);
+  const features = new CustomQuery(
+    Post.find().populate("author"),
+    req.query
+  ).paginate();
+  const posts = await features.query;
   res.status(200).json({
     status: "success",
     data: {
