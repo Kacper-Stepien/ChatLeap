@@ -71,7 +71,8 @@ userSchema.pre("save", async function (next) {
   // Run before save() and create()
   if (!this.isModified("password")) return next();
 
-  this.password = await bcrypt.hash(this.password, 12); // Hash password with cost of 12
+  const salt = await bcrypt.genSalt();
+  this.password = await bcrypt.hash(this.password, salt);
   this.passwordConfirm = undefined;
   next();
 });
