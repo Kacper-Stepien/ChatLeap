@@ -1,8 +1,8 @@
 const express = require("express");
-const dotenv = require("dotenv"); // Load environment variables from .env file
-const helmet = require("helmet"); // This will set some HTTP headers to help protect your app from some well-known web vulnerabilities
-const mongoSanitize = require("express-mongo-sanitize"); // This will prevent NoSQL query injection
-const xss = require("xss-clean"); // This will sanitize user input coming from POST body, GET queries, and url params
+const dotenv = require("dotenv");
+const helmet = require("helmet");
+const mongoSanitize = require("express-mongo-sanitize");
+const xss = require("xss-clean");
 
 const globalErrorHandler = require("./controllers/errorController");
 const AppError = require("./utils/appError");

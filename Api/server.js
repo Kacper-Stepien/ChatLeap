@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const dotenv = require("dotenv"); // Load environment variables from .env file
+const dotenv = require("dotenv");
 const app = require("./app");
 
 dotenv.config({ path: "./config.env" }); // Load environment variables from .env file
@@ -20,6 +20,5 @@ mongoose
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
-  // Start Express server
   console.log(`Serwer uruchomiony na porcie ${port}`);
 });
