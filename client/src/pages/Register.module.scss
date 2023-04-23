@@ -1,0 +1,257 @@
+@import "./../sass/variables.scss";
+
+.page {
+  width: 100%;
+  min-height: 100vh;
+  padding: 4rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.formArea {
+  min-width: 40rem;
+  width: 70%;
+  min-height: 55rem;
+  padding: 4rem;
+  border-radius: $border-radius;
+  box-shadow: 4px 4px 20px rgba(0, 0, 0, 0.2);
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+
+  form {
+    min-width: 30rem;
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+}
+
+.inputControl {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 2rem;
+
+  input {
+    border: none;
+    outline: none;
+    padding: 0.5rem 1.5rem;
+    border-radius: $border-radius;
+    margin-bottom: 0.5rem;
+    font-size: 1.8rem;
+    font-family: inherit;
+  }
+}
+
+.logo {
+  position: absolute;
+  top: 2rem;
+  left: 2rem;
+  padding: 2rem;
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+h1 {
+  margin-bottom: 2.4rem;
+  font-size: 3rem;
+  font-weight: bold;
+}
+
+.formActions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 2rem;
+  button {
+    width: 100%;
+    padding: 0.6rem 2rem;
+    border-radius: $border-radius;
+    font-size: 1.6rem;
+    font-weight: bold;
+    border: none;
+    outline: none;
+    cursor: pointer;
+  }
+
+  p {
+    font-weight: 100;
+    font-size: 1.2rem;
+    color: $color-grey-dark-1;
+    margin: 1rem;
+  }
+
+  .link {
+    font-weight: bold;
+    font-size: 1.4rem;
+    text-decoration: none;
+  }
+}
+
+// THEMES
+.darkIndigo {
+  &.page {
+    background-color: $color-grey-dark-1;
+  }
+
+  p {
+    color: $color-white;
+  }
+
+  .formArea {
+    background-color: $color-grey-dark-3;
+  }
+
+  h1 {
+    color: $color-indigo-1;
+  }
+
+  .inputControl {
+    input {
+      background-color: $color-grey-dark-1;
+      color: white;
+    }
+  }
+  .formActions {
+    button {
+      background-color: $color-indigo-1;
+      color: $color-white;
+    }
+
+    p {
+      color: $color-white;
+    }
+
+    .link {
+      color: $color-indigo-1;
+    }
+  }
+}
+
+.darkTeal {
+  &.page {
+    background-color: $color-grey-dark-1;
+  }
+
+  p {
+    color: $color-white;
+  }
+
+  .formArea {
+    background-color: $color-grey-dark-3;
+  }
+
+  h1 {
+    color: $color-teal-1;
+  }
+
+  .inputControl {
+    input {
+      background-color: $color-grey-dark-2;
+      color: white;
+    }
+  }
+  .formActions {
+    button {
+      background-color: $color-teal-1;
+      color: $color-white;
+    }
+
+    p {
+      color: $color-white;
+    }
+
+    .link {
+      color: $color-teal-1;
+    }
+  }
+}
+
+.lightIndigo {
+  &.page {
+    background-color: $color-white;
+  }
+
+  p {
+    color: $color-grey-dark-3;
+  }
+
+  .formArea {
+    background-color: $color-grey-light-1;
+  }
+
+  h1 {
+    color: $color-indigo-1;
+  }
+
+  .inputControl {
+    input {
+      background-color: $color-white;
+      color: $color-grey-dark-3;
+    }
+    span {
+      color: $color-grey-dark-3;
+    }
+  }
+  .formActions {
+    button {
+      background-color: $color-indigo-1;
+      color: $color-white;
+    }
+
+    p {
+      color: $color-grey-dark-3;
+    }
+
+    .link {
+      color: $color-indigo-1;
+    }
+  }
+}
+
+.lightTeal {
+  &.page {
+    background-color: $color-white;
+  }
+
+  p {
+    color: $color-grey-dark-3;
+  }
+
+  .formArea {
+    background-color: $color-grey-light-1;
+  }
+
+  h1 {
+    color: $color-teal-1;
+  }
+
+  .inputControl {
+    input {
+      background-color: $color-white;
+      color: $color-grey-dark-3;
+    }
+    span {
+      color: $color-grey-dark-3;
+    }
+  }
+  .formActions {
+    button {
+      background-color: $color-teal-1;
+      color: $color-white;
+    }
+
+    p {
+      color: $color-grey-dark-3;
+    }
+
+    .link {
+      color: $color-teal-1;
+    }
+  }
+}

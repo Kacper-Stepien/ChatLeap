@@ -1,0 +1,30 @@
+@import "variables";
+
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  box-sizing: border-box;
+  font-family: $font-primary;
+
+  color: white;
+}
+
+.green {
+  $color-primary: $color-green-1;
+  $color-primary-light: $color-green-2;
+}
+
+.purple {
+  $color-primary: $color-indigo-1;
+  $color-primary-light: $color-indigo-2;
+}
