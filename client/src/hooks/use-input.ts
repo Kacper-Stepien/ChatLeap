@@ -11,7 +11,6 @@ const useInput = (validate: ValidityFunction) => {
 
   const valueChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     setValue(event.target.value);
-    console.log(event.target.value);
   };
 
   const inputBlurHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -30,6 +29,7 @@ const useInput = (validate: ValidityFunction) => {
     isTouched,
     valueChangeHandler,
     inputBlurHandler,
+    setIsTouched,
   };
 };
 

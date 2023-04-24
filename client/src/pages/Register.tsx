@@ -1,8 +1,9 @@
-import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useContext } from "react";
 import Validator from "../utils/Validator";
 import useInput from "../hooks/use-input";
-import classes from "./Register.module.scss";
+import { ThemeContext } from "../context/ThemeContext";
+import classes from "./Form.module.scss";
 
 const passwordConfirmIsValid = (password: string, confirmPassword: string) => {
   return password === confirmPassword;
@@ -10,7 +11,9 @@ const passwordConfirmIsValid = (password: string, confirmPassword: string) => {
 
 const Register: React.FC = () => {
   const navigate = useNavigate();
-  const styleClasses = [classes.darkTeal, classes.page];
+  const { mode, accent, setMode } = useContext(ThemeContext);
+  const theme = mode + accent;
+  const styleClasses = [classes[theme], classes.page];
 
   const {
     value: enteredName,
@@ -18,6 +21,7 @@ const Register: React.FC = () => {
     hasError: enteredNameHasError,
     valueChangeHandler: nameChangeHandler,
     inputBlurHandler: nameBlurHandler,
+    setIsTouched: setNameIsTouched,
   } = useInput(Validator.isName);
 
   const {
@@ -26,6 +30,7 @@ const Register: React.FC = () => {
     hasError: enteredSurnameHasError,
     valueChangeHandler: surnameChangeHandler,
     inputBlurHandler: surnameBlurHandler,
+    setIsTouched: setSurnameIsTouched,
   } = useInput(Validator.isSurname);
 
   const {
@@ -34,6 +39,7 @@ const Register: React.FC = () => {
     hasError: enteredEmailHasError,
     valueChangeHandler: emailChangeHandler,
     inputBlurHandler: emailBlurHandler,
+    setIsTouched: setEmailIsTouched,
   } = useInput(Validator.isEmail);
 
   const {
@@ -42,6 +48,7 @@ const Register: React.FC = () => {
     hasError: enteredNickHasError,
     valueChangeHandler: nickChangeHandler,
     inputBlurHandler: nickBlurHandler,
+    setIsTouched: setNickIsTouched,
   } = useInput(Validator.isNick);
 
   const {
@@ -50,6 +57,7 @@ const Register: React.FC = () => {
     hasError: enteredPasswordHasError,
     valueChangeHandler: passwordChangeHandler,
     inputBlurHandler: passwordBlurHandler,
+    setIsTouched: setPasswordIsTouched,
   } = useInput(Validator.isPassword);
 
   const {
@@ -59,10 +67,32 @@ const Register: React.FC = () => {
     isTouched: enteredConfirmPasswordIsTouched,
     valueChangeHandler: confirmPasswordChangeHandler,
     inputBlurHandler: confirmPasswordBlurHandler,
+    setIsTouched: setConfirmPasswordIsTouched,
   } = useInput(Validator.isPassword);
+
+  const formIsValid =
+    enteredNameIsValid &&
+    enteredSurnameIsValid &&
+    enteredEmailIsValid &&
+    enteredNickIsValid &&
+    enteredPasswordIsValid &&
+    enteredConfirmPasswordIsValid;
 
   const submitFormHandler = (event: React.FormEvent) => {
     event.preventDefault();
+    setMode("dark");
+
+    if (!formIsValid) {
+      console.log("Form is not valid");
+      setNameIsTouched(true);
+      setSurnameIsTouched(true);
+      setEmailIsTouched(true);
+      setNickIsTouched(true);
+      setPasswordIsTouched(true);
+      setConfirmPasswordIsTouched(true);
+    } else {
+      console.log("Form is valid");
+    }
   };
 
   return (
@@ -137,6 +167,7 @@ const Register: React.FC = () => {
                 <span>Passwords must be the same</span>
               )}
           </div>
+
           <div className={classes.formActions}>
             <button type="submit">Register</button>
             <p>Do you have an account?</p>

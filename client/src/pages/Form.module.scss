@@ -12,14 +12,15 @@
 .formArea {
   min-width: 40rem;
   width: 70%;
+  max-width: 100rem;
   min-height: 55rem;
   padding: 4rem;
   border-radius: $border-radius;
-  box-shadow: 4px 4px 20px rgba(0, 0, 0, 0.2);
+  // box-shadow: 4px 4px 20px rgba(0, 0, 0, 0.2);
   margin: 0 auto;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
 
   form {
@@ -54,8 +55,8 @@
 
 .logo {
   position: absolute;
-  top: 2rem;
-  left: 2rem;
+  top: 1rem;
+  left: 1rem;
   padding: 2rem;
   font-size: 2rem;
   font-weight: bold;
@@ -63,7 +64,7 @@
 }
 
 h1 {
-  margin-bottom: 2.4rem;
+  margin-bottom: 2.6rem;
   font-size: 3rem;
   font-weight: bold;
   cursor: default;
@@ -136,8 +137,7 @@ h1 {
       background-color: $color-indigo-1;
       color: $color-white;
 
-      &:hover,
-      &:focus {
+      &:hover {
         transform: translateY(-3px);
         background-color: $color-indigo-2;
       }
@@ -244,9 +244,6 @@ h1 {
     input:focus {
       border: 2px solid $color-indigo-1;
     }
-    span {
-      color: $color-grey-dark-3;
-    }
   }
   .formActions {
     button {
@@ -299,9 +296,6 @@ h1 {
     }
     input:focus {
       border: 2px solid $color-teal-1;
-    }
-    span {
-      color: $color-grey-dark-3;
     }
   }
   .formActions {

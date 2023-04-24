@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 // import "./sass/base.scss";
+import { ThemeContext } from "./context/ThemeContext";
 import "./App.scss";
 
 import RootLayout from "./pages/Root";
@@ -35,7 +36,14 @@ const router = createBrowserRouter([
 ]);
 
 const App: React.FC = () => {
-  return <RouterProvider router={router} />;
+  const [mode, setMode] = React.useState("light");
+  const [accent, setAccent] = React.useState("Indigo");
+
+  return (
+    <ThemeContext.Provider value={{ mode, accent, setMode, setAccent }}>
+      <RouterProvider router={router} />
+    </ThemeContext.Provider>
+  );
 };
 
 export default App;
