@@ -3,7 +3,7 @@
 .page {
   width: 100%;
   min-height: 100vh;
-  padding: 4rem;
+  padding: 5rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -37,13 +37,18 @@
   margin-bottom: 2rem;
 
   input {
-    border: none;
     outline: none;
     padding: 0.5rem 1.5rem;
     border-radius: $border-radius;
     margin-bottom: 0.5rem;
     font-size: 1.8rem;
     font-family: inherit;
+  }
+
+  span {
+    color: $color-red;
+    font-size: 1.3rem;
+    font-weight: 100;
   }
 }
 
@@ -54,12 +59,14 @@
   padding: 2rem;
   font-size: 2rem;
   font-weight: bold;
+  cursor: default;
 }
 
 h1 {
   margin-bottom: 2.4rem;
   font-size: 3rem;
   font-weight: bold;
+  cursor: default;
 }
 
 .formActions {
@@ -68,6 +75,7 @@ h1 {
   align-items: center;
   justify-content: space-between;
   margin-top: 2rem;
+
   button {
     width: 100%;
     padding: 0.6rem 2rem;
@@ -77,6 +85,7 @@ h1 {
     border: none;
     outline: none;
     cursor: pointer;
+    transition: all 0.2s;
   }
 
   p {
@@ -90,6 +99,7 @@ h1 {
     font-weight: bold;
     font-size: 1.4rem;
     text-decoration: none;
+    cursor: pointer;
   }
 }
 
@@ -114,13 +124,23 @@ h1 {
   .inputControl {
     input {
       background-color: $color-grey-dark-1;
+      border: 2px solid $color-grey-dark-1;
       color: white;
+    }
+    input:focus {
+      border: 2px solid $color-indigo-1;
     }
   }
   .formActions {
     button {
       background-color: $color-indigo-1;
       color: $color-white;
+
+      &:hover,
+      &:focus {
+        transform: translateY(-3px);
+        background-color: $color-indigo-2;
+      }
     }
 
     p {
@@ -129,6 +149,12 @@ h1 {
 
     .link {
       color: $color-indigo-1;
+
+      &:hover,
+      &:focus {
+        color: $color-indigo-2;
+        text-decoration: underline;
+      }
     }
   }
 }
@@ -153,13 +179,27 @@ h1 {
   .inputControl {
     input {
       background-color: $color-grey-dark-2;
+      border: 2px solid $color-grey-dark-2;
       color: white;
+
+      &:autofill {
+        background-color: $color-grey-dark-2;
+      }
+    }
+    input:focus {
+      border: 2px solid $color-teal-1;
     }
   }
   .formActions {
     button {
       background-color: $color-teal-1;
       color: $color-white;
+
+      &:hover,
+      &:focus {
+        transform: translateY(-3px);
+        background-color: $color-teal-2;
+      }
     }
 
     p {
@@ -168,6 +208,12 @@ h1 {
 
     .link {
       color: $color-teal-1;
+
+      &:hover,
+      &:focus {
+        text-decoration: underline;
+        color: $color-teal-2;
+      }
     }
   }
 }
@@ -192,7 +238,11 @@ h1 {
   .inputControl {
     input {
       background-color: $color-white;
+      border: 2px solid $color-white;
       color: $color-grey-dark-3;
+    }
+    input:focus {
+      border: 2px solid $color-indigo-1;
     }
     span {
       color: $color-grey-dark-3;
@@ -202,6 +252,11 @@ h1 {
     button {
       background-color: $color-indigo-1;
       color: $color-white;
+      &:hover,
+      &:focus {
+        transform: translateY(-3px);
+        background-color: $color-indigo-2;
+      }
     }
 
     p {
@@ -210,6 +265,11 @@ h1 {
 
     .link {
       color: $color-indigo-1;
+      &:hover,
+      &:focus {
+        text-decoration: underline;
+        color: $color-indigo-2;
+      }
     }
   }
 }
@@ -234,7 +294,11 @@ h1 {
   .inputControl {
     input {
       background-color: $color-white;
+      border: 2px solid $color-white;
       color: $color-grey-dark-3;
+    }
+    input:focus {
+      border: 2px solid $color-teal-1;
     }
     span {
       color: $color-grey-dark-3;
@@ -244,6 +308,11 @@ h1 {
     button {
       background-color: $color-teal-1;
       color: $color-white;
+      &:hover,
+      &:focus {
+        transform: translateY(-3px);
+        background-color: $color-teal-2;
+      }
     }
 
     p {
@@ -252,6 +321,11 @@ h1 {
 
     .link {
       color: $color-teal-1;
+      &:hover,
+      &:focus {
+        text-decoration: underline;
+        color: $color-teal-2;
+      }
     }
   }
 }

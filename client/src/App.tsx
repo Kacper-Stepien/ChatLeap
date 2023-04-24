@@ -26,12 +26,16 @@ const router = createBrowserRouter([
         path: "login",
         element: <Login />,
       },
+      {
+        path: "user",
+        element: <User />,
+      },
     ],
   },
 ]);
 
-function App() {
+const App: React.FC = () => {
   return <RouterProvider router={router} />;
-}
+};
 
 export default App;
