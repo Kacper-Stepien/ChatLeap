@@ -36,8 +36,8 @@ const router = createBrowserRouter([
 ]);
 
 const App: React.FC = () => {
-  const [mode, setMode] = React.useState("light");
-  const [accent, setAccent] = React.useState("Indigo");
+  const [mode, setMode] = useState("light");
+  const [accent, setAccent] = useState("Indigo");
 
   return (
     <ThemeContext.Provider value={{ mode, accent, setMode, setAccent }}>
