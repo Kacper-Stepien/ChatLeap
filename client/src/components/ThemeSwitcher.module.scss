@@ -1,0 +1,22 @@
+@import ".././sass/variables.scss";
+
+.themeButton {
+  font-size: 1.6rem;
+  font-weight: bold;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+
+  &.light {
+    color: $color-grey-dark-3;
+  }
+
+  &.dark {
+    color: $color-white;
+  }
+
+  &:hover {
+    transform: scale(1.2);
+  }
+}

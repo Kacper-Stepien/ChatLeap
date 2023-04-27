@@ -1,0 +1,16 @@
+@import ".././sass/variables.scss";
+
+.footer {
+  width: 100%;
+  padding: 2.4rem;
+  font-size: 1rem;
+  text-align: center;
+
+  &.dark {
+    color: $color-white;
+  }
+
+  &.light {
+    color: $color-grey-dark-3;
+  }
+}

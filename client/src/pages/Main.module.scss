@@ -1,0 +1,51 @@
+@import ".././sass/variables.scss";
+
+.page {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  justify-content: space-between;
+  background-color: black;
+}
+
+.aside {
+  min-width: 25rem;
+  position: static;
+  padding: 2rem;
+  background-color: red;
+}
+
+.main {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  background-color: blue;
+}
+
+.darkIndigo {
+  .aside {
+    background-color: $color-grey-dark-3;
+  }
+}
+
+.darkTeal {
+  .aside {
+    background-color: $color-grey-dark-3;
+  }
+}
+
+.lightIndigo {
+  .aside {
+    background: linear-gradient(
+      to right bottom,
+      $color-indigo-2,
+      $color-indigo-1
+    );
+  }
+}
+
+.lightTeal {
+  .aside {
+    background: linear-gradient(to right bottom, $color-teal-2, $color-teal-1);
+  }
+}

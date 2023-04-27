@@ -1,0 +1,9 @@
+@import ".././sass/variables.scss";
+
+.navbar {
+  width: 100%;
+  min-height: 6rem;
+  padding: 1rem 3rem;
+  display: flex;
+  justify-content: space-between;
+}

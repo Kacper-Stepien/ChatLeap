@@ -1,32 +1,23 @@
 import { useContext } from "react";
 import { ThemeContext } from "../context/ThemeContext";
-import { FaSun, FaMoon } from "react-icons/fa";
+import SimpleNavbar from "../components/SimpleNavbar";
 import RegisterForm from "../components/RegisterForm";
+import Footer from "../components/Footer";
 import classes from "./Form.module.scss";
 
 const Register: React.FC = () => {
-  const { mode, accent, setMode } = useContext(ThemeContext);
+  const { mode, accent } = useContext(ThemeContext);
   const theme = mode + accent;
   const styleClasses = [classes[theme], classes.page];
 
-  const toggleModeHandler = () => {
-    if (mode === "light") {
-      setMode("dark");
-    } else {
-      setMode("light");
-    }
-  };
-
   return (
     <div className={styleClasses.join(" ")}>
-      <p className={classes.logo}>ChatLeap</p>
-      <button className={classes.themeButton} onClick={toggleModeHandler}>
-        {mode === "light" ? <FaMoon /> : <FaSun />}
-      </button>
+      <SimpleNavbar mode={mode} />
       <div className={classes.formArea}>
         <h1>Register</h1>
         <RegisterForm mode={mode} accent={accent} />
       </div>
+      <Footer mode={mode} />
     </div>
   );
 };

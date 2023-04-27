@@ -1,0 +1,35 @@
+@import ".././sass/variables.scss";
+
+.navbar {
+  min-height: 6rem;
+  padding: 2rem;
+  display: flex;
+  justify-content: end;
+  align-items: center;
+}
+
+.darkIndigo {
+  &.navbar {
+    background-color: $color-grey-dark-3;
+  }
+}
+
+.darkTeal {
+  &.navbar {
+    background-color: $color-grey-dark-3;
+  }
+}
+
+.lightIndigo {
+  &.navbar {
+    background-color: $color-grey-light-1;
+    color: $color-grey-dark-3;
+  }
+}
+
+.lightTeal {
+  &.navbar {
+    background-color: $color-grey-light-1;
+    color: $color-grey-dark-3;
+  }
+}

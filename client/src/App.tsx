@@ -36,7 +36,7 @@ const router = createBrowserRouter([
 ]);
 
 const App: React.FC = () => {
-  const [mode, setMode] = useState("light");
+  const [mode, setMode] = useState("dark");
   const [accent, setAccent] = useState("Indigo");
 
   return (

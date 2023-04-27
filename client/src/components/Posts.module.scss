@@ -1,0 +1,28 @@
+@import ".././sass/variables.scss";
+.posts {
+  padding: 2rem;
+  flex-grow: 1;
+}
+
+.darkIndigo {
+  &.posts {
+    background-color: $color-grey-dark-2;
+  }
+}
+.darkTeal {
+  &.posts {
+    background-color: $color-grey-dark-2;
+  }
+}
+
+.lightIndigo {
+  &.posts {
+    background-color: $color-white;
+  }
+}
+
+.lightTeal {
+  &.posts {
+    background-color: $color-white;
+  }
+}
