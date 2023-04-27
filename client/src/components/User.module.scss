@@ -1,0 +1,46 @@
+@import ".././sass/variables.scss";
+
+.user {
+  width: 100%;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+img {
+  max-width: 10rem;
+  max-height: 10rem;
+  margin-bottom: 1.6rem;
+  border-radius: 50%;
+  transition: all 0.2s ease-in-out;
+
+  &:hover {
+    cursor: pointer;
+    transform: scale(0.9);
+  }
+}
+
+.userName {
+  font-size: 1.6rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.userNick {
+  font-size: 1.2rem;
+  font-weight: 400;
+  margin-bottom: 1rem;
+}
+
+button {
+  color: $color-white;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+
+  &:hover {
+    transform: translateX(5px) scale(1.1);
+  }
+}

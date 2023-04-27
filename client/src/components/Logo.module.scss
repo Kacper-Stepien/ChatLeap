@@ -1,12 +1,14 @@
 @import ".././sass/variables.scss";
 .logo {
-  //   position: absolute;
-  //   top: 1rem;
-  //   left: 1rem;
   padding: 2rem;
   font-size: 2rem;
   font-weight: bold;
   cursor: default;
+  transition: all 0.2s;
+
+  &:hover {
+    animation: hithere 1s;
+  }
 
   &.dark {
     color: $color-white;
@@ -14,5 +16,40 @@
 
   &.light {
     color: $color-grey-dark-3;
+  }
+}
+
+@keyframes gelatine {
+  from,
+  to {
+    transform: scale(1, 1);
+  }
+  25% {
+    transform: scale(0.9, 1.1);
+  }
+  50% {
+    transform: scale(1.1, 0.9);
+  }
+  75% {
+    transform: scale(0.95, 1.05);
+  }
+}
+
+@keyframes hithere {
+  30% {
+    transform: scale(1.2);
+  }
+  40%,
+  60% {
+    transform: rotate(-20deg) scale(1.2);
+  }
+  50% {
+    transform: rotate(20deg) scale(1.2);
+  }
+  70% {
+    transform: rotate(0deg) scale(1.2);
+  }
+  100% {
+    transform: scale(1);
   }
 }
