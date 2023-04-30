@@ -1,7 +1,10 @@
 import React, { useState } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { ProtectedRoute } from "./ProtectedRoute";
 // import "./sass/base.scss";
 import { ThemeContext } from "./context/ThemeContext";
+import { AuthContext } from "./context/AuthContext";
+import ErrorPage from "./pages/Error";
 import "./App.scss";
 
 import RootLayout from "./pages/Root";
@@ -17,7 +20,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: "",
-        element: <Main />,
+        element: <ProtectedRoute element={<Main />} />,
       },
       {
         path: "register",
@@ -29,20 +32,43 @@ const router = createBrowserRouter([
       },
       {
         path: "user",
-        element: <User />,
+        element: <ProtectedRoute element={<User />} />,
       },
     ],
+    errorElement: <ErrorPage />,
   },
 ]);
 
 const App: React.FC = () => {
   const [mode, setMode] = useState("dark");
   const [accent, setAccent] = useState("Indigo");
+  const [loggedIn, setLoggedIn] = useState(false);
+  const [user, setUser] = useState({
+    userID: "",
+    userName: "",
+    userSurname: "",
+    userNick: "",
+  });
+  const [token, setToken] = useState("");
 
   return (
-    <ThemeContext.Provider value={{ mode, accent, setMode, setAccent }}>
-      <RouterProvider router={router} />
-    </ThemeContext.Provider>
+    <AuthContext.Provider
+      value={{
+        loggedIn,
+        setLoggedIn,
+        userID: "",
+        userName: "",
+        userSurname: "",
+        userNick: "",
+        token,
+        setUser: setUser,
+        setToken,
+      }}
+    >
+      <ThemeContext.Provider value={{ mode, accent, setMode, setAccent }}>
+        <RouterProvider router={router} />
+      </ThemeContext.Provider>
+    </AuthContext.Provider>
   );
 };
 

@@ -1,0 +1,63 @@
+@import ".././sass/variables.scss";
+
+.error {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  color: black;
+
+  h1 {
+    font-size: 10rem;
+  }
+
+  p {
+    font-size: 4rem;
+  }
+}
+
+.darkIndigo {
+  &.error {
+    background-color: $color-grey-dark-3;
+    color: $color-white;
+  }
+
+  h1 {
+    color: $color-indigo-1;
+  }
+}
+
+.lightIndigo {
+  &.error {
+    background-color: $color-white;
+    color: $color-grey-dark-3;
+  }
+
+  h1 {
+    color: $color-indigo-1;
+  }
+}
+
+.darkTeal {
+  &.error {
+    background-color: $color-grey-dark-3;
+    color: $color-white;
+  }
+
+  h1 {
+    color: $color-teal-1;
+  }
+}
+
+.lightTeal {
+  &.error {
+    background-color: $color-white;
+    color: $color-grey-dark-3;
+  }
+
+  h1 {
+    color: $color-teal-1;
+  }
+}
