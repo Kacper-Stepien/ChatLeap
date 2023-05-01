@@ -2,13 +2,8 @@ import { useRef } from "react";
 import { Link } from "react-router-dom";
 import Validator from "../utils/Validator";
 import useInput from "../hooks/use-input";
+import { ModalType } from "../hooks/use-modal";
 import classes from "./Form.module.scss";
-
-enum ModalType {
-  SUCCESS,
-  ERROR,
-  WARNING,
-}
 
 type Props = {
   mode: string;
@@ -105,8 +100,7 @@ const RegisterForm: React.FC<Props> = (props) => {
     enteredConfirmPasswordIsValid;
 
   const createUser = async () => {
-    console.log(process.env.SERVER);
-    const address = "http://127.0.01:3000/chatleap" + "/users/signup";
+    const address = process.env.REACT_APP_SERVER + "/users/signup";
     const data = {
       name: enteredName,
       surname: enteredSurname,
@@ -145,7 +139,7 @@ const RegisterForm: React.FC<Props> = (props) => {
       } else if (response.status === "success") {
         props.openModal(
           "Success",
-          "Account has been created",
+          "Account has been created. You can log in.",
           ModalType.SUCCESS
         );
         resetForm();

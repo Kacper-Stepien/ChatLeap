@@ -33,4 +33,5 @@ const useModal = () => {
   };
 };
 
+export { ModalType };
 export default useModal;

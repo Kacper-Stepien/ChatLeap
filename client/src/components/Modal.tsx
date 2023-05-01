@@ -1,4 +1,5 @@
 import ReactDom from "react-dom";
+import { redirect } from "react-router-dom";
 import { useContext } from "react";
 import { ThemeContext } from "../context/ThemeContext";
 import classes from "./Modal.module.scss";
