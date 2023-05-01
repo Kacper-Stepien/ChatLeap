@@ -30,6 +30,7 @@ const useInput = (validate: ValidityFunction) => {
     valueChangeHandler,
     inputBlurHandler,
     setIsTouched,
+    reset,
   };
 };
 

@@ -23,6 +23,16 @@ app.use(mongoSanitize()); // Prevent NoSQL query injection
 
 app.use(xss()); // Sanitize user input coming from POST body, GET queries, and url params
 
+app.use((req, res, next) => {
+  res.setHeader("Access-Control-Allow-Origin", "http://localhost:3001"); // zamiast http://localhost:3001 wpisz adres swojej aplikacji klienckiej
+  res.setHeader(
+    "Access-Control-Allow-Methods",
+    "GET, POST, OPTIONS, PUT, PATCH, DELETE"
+  );
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
+  next();
+});
+
 // Routes
 app.use("/chatleap/users", userRouter);
 app.use("/chatleap/posts", postRouter);

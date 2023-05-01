@@ -1,11 +1,20 @@
+import { useRef } from "react";
 import { Link } from "react-router-dom";
 import Validator from "../utils/Validator";
 import useInput from "../hooks/use-input";
 import classes from "./Form.module.scss";
 
+enum ModalType {
+  SUCCESS,
+  ERROR,
+  WARNING,
+}
+
 type Props = {
   mode: string;
   accent: string;
+  openModal: (title: string, content: string, type: ModalType) => void;
+  closeModal: () => void;
 };
 
 const passwordConfirmIsValid = (password: string, confirmPassword: string) => {
@@ -15,37 +24,46 @@ const passwordConfirmIsValid = (password: string, confirmPassword: string) => {
 const RegisterForm: React.FC<Props> = (props) => {
   const theme = props.mode + props.accent;
   const styleClasses = [classes[theme], classes.form];
+  const form = useRef<HTMLFormElement>(null);
 
   const {
+    value: enteredName,
     isValid: enteredNameIsValid,
     hasError: enteredNameHasError,
     valueChangeHandler: nameChangeHandler,
     inputBlurHandler: nameBlurHandler,
     setIsTouched: setNameIsTouched,
+    reset: resetName,
   } = useInput(Validator.isName);
 
   const {
+    value: enteredSurname,
     isValid: enteredSurnameIsValid,
     hasError: enteredSurnameHasError,
     valueChangeHandler: surnameChangeHandler,
     inputBlurHandler: surnameBlurHandler,
     setIsTouched: setSurnameIsTouched,
+    reset: resetSurname,
   } = useInput(Validator.isSurname);
 
   const {
+    value: enteredEmail,
     isValid: enteredEmailIsValid,
     hasError: enteredEmailHasError,
     valueChangeHandler: emailChangeHandler,
     inputBlurHandler: emailBlurHandler,
     setIsTouched: setEmailIsTouched,
+    reset: resetEmail,
   } = useInput(Validator.isEmail);
 
   const {
+    value: enteredNick,
     isValid: enteredNickIsValid,
     hasError: enteredNickHasError,
     valueChangeHandler: nickChangeHandler,
     inputBlurHandler: nickBlurHandler,
     setIsTouched: setNickIsTouched,
+    reset: resetNick,
   } = useInput(Validator.isNick);
 
   const {
@@ -55,6 +73,7 @@ const RegisterForm: React.FC<Props> = (props) => {
     valueChangeHandler: passwordChangeHandler,
     inputBlurHandler: passwordBlurHandler,
     setIsTouched: setPasswordIsTouched,
+    reset: resetPassword,
   } = useInput(Validator.isPassword);
 
   const {
@@ -64,7 +83,18 @@ const RegisterForm: React.FC<Props> = (props) => {
     valueChangeHandler: confirmPasswordChangeHandler,
     inputBlurHandler: confirmPasswordBlurHandler,
     setIsTouched: setConfirmPasswordIsTouched,
+    reset: resetConfirmPassword,
   } = useInput(Validator.isPassword);
+
+  const resetForm = () => {
+    resetName();
+    resetSurname();
+    resetEmail();
+    resetNick();
+    resetPassword();
+    resetConfirmPassword();
+    form.current?.reset();
+  };
 
   const formIsValid =
     enteredNameIsValid &&
@@ -74,10 +104,31 @@ const RegisterForm: React.FC<Props> = (props) => {
     enteredPasswordIsValid &&
     enteredConfirmPasswordIsValid;
 
-  const submitFormHandler = (event: React.FormEvent) => {
+  const createUser = async () => {
+    console.log(process.env.SERVER);
+    const address = "http://127.0.01:3000/chatleap" + "/users/signup";
+    const data = {
+      name: enteredName,
+      surname: enteredSurname,
+      email: enteredEmail,
+      nick: enteredNick,
+      password: enteredPassword,
+      passwordConfirm: enteredConfirmPassword,
+    };
+
+    const response = await fetch(address, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+    return await response.json();
+  };
+
+  const submitFormHandler = async (event: React.FormEvent) => {
     event.preventDefault();
     if (!formIsValid) {
-      console.log("Form is not valid");
       setNameIsTouched(true);
       setSurnameIsTouched(true);
       setEmailIsTouched(true);
@@ -86,10 +137,27 @@ const RegisterForm: React.FC<Props> = (props) => {
       setConfirmPasswordIsTouched(true);
     } else {
       console.log("Form is valid");
+      const response = await createUser();
+      console.log(response);
+      if (response.status === "fail") {
+        console.log(response.message);
+        props.openModal("Error", response.message, ModalType.ERROR);
+      } else if (response.status === "success") {
+        props.openModal(
+          "Success",
+          "Account has been created",
+          ModalType.SUCCESS
+        );
+        resetForm();
+      }
     }
   };
   return (
-    <form className={styleClasses.join(" ")} onSubmit={submitFormHandler}>
+    <form
+      ref={form}
+      className={styleClasses.join(" ")}
+      onSubmit={submitFormHandler}
+    >
       <div className={classes.inputControl}>
         <input
           type="text"

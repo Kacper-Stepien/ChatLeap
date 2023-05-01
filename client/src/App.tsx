@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { ProtectedRoute } from "./ProtectedRoute";
-// import "./sass/base.scss";
 import { ThemeContext } from "./context/ThemeContext";
 import { AuthContext } from "./context/AuthContext";
 import ErrorPage from "./pages/Error";
@@ -42,7 +41,7 @@ const router = createBrowserRouter([
 const App: React.FC = () => {
   const [mode, setMode] = useState("dark");
   const [accent, setAccent] = useState("Indigo");
-  const [loggedIn, setLoggedIn] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(true);
   const [user, setUser] = useState({
     userID: "",
     userName: "",
