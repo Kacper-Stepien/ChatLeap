@@ -1,5 +1,4 @@
 import ReactDom from "react-dom";
-import { redirect } from "react-router-dom";
 import { useContext } from "react";
 import { ThemeContext } from "../context/ThemeContext";
 import classes from "./Modal.module.scss";
@@ -18,13 +17,11 @@ type Props = {
 };
 
 const Modal: React.FC<Props> = ({ title, content, type, close }) => {
-  const { mode, accent } = useContext(ThemeContext);
-  const theme = mode + accent;
+  const { mode } = useContext(ThemeContext);
   const styleClasses = [classes[mode], classes.modal];
   if (type === ModalType.SUCCESS) {
     styleClasses.push(classes.success);
-  }
-  if (type === ModalType.ERROR) {
+  } else if (type === ModalType.ERROR) {
     styleClasses.push(classes.error);
   }
 

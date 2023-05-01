@@ -1,8 +1,11 @@
 import { useContext } from "react";
 import LoginForm from "../components/LoginForm";
 import { ThemeContext } from "../context/ThemeContext";
+import { AuthContext } from "../context/AuthContext";
 import SimpleNavbar from "../components/SimpleNavbar";
 import Footer from "../components/Footer";
+import Modal from "../components/Modal";
+import useModal from ".././hooks/use-modal";
 import classes from "./Form.module.scss";
 
 const Login: React.FC = () => {
@@ -10,14 +13,36 @@ const Login: React.FC = () => {
   const theme = mode + accent;
   const styleClasses = [classes[theme], classes.page];
 
+  const {
+    modalTitle,
+    modalContent,
+    modalType,
+    isModalOpen,
+    openModal,
+    closeModal,
+  } = useModal();
+
   return (
     <div className={styleClasses.join(" ")}>
       <SimpleNavbar mode={mode} />
       <div className={classes.formArea}>
         <h1>Login</h1>
-        <LoginForm mode={mode} accent={accent} />
+        <LoginForm
+          mode={mode}
+          accent={accent}
+          openModal={openModal}
+          closeModal={closeModal}
+        />
       </div>
       <Footer mode={mode} />
+      {isModalOpen && (
+        <Modal
+          title={modalTitle}
+          content={modalContent}
+          type={modalType}
+          close={closeModal}
+        />
+      )}
     </div>
   );
 };

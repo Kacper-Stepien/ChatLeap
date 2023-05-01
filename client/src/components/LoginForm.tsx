@@ -1,19 +1,29 @@
-import { Link } from "react-router-dom";
+import { useState } from "react";
+import { Link, Navigate, redirect } from "react-router-dom";
+import { useContext } from "react";
+import { AuthContext } from "../context/AuthContext";
 import Validator from "../utils/Validator";
 import useInput from "../hooks/use-input";
-
+import logIn from "../utils/Login";
+import { ModalType } from "../hooks/use-modal";
 import classes from "./Form.module.scss";
 
 type Props = {
   mode: string;
   accent: string;
+  openModal: (title: string, content: string, type: ModalType) => void;
+  closeModal: () => void;
 };
 
 const LoginForm: React.FC<Props> = (props) => {
   const theme = props.mode + props.accent;
   const styleClasses = [classes[theme], classes.form];
 
+  const { setLoggedIn, setUser, setToken } = useContext(AuthContext);
+  const [redirectToHome, setRedirectToHome] = useState(false);
+
   const {
+    value: enteredEmail,
     isValid: enteredEmailIsValid,
     hasError: enteredEmailHasError,
     valueChangeHandler: emailChangeHandler,
@@ -22,6 +32,7 @@ const LoginForm: React.FC<Props> = (props) => {
   } = useInput(Validator.isEmail);
 
   const {
+    value: enteredPassword,
     isValid: enteredPasswordIsValid,
     hasError: enteredPasswordHasError,
     valueChangeHandler: passwordChangeHandler,
@@ -31,14 +42,39 @@ const LoginForm: React.FC<Props> = (props) => {
 
   const formIsValid = enteredEmailIsValid && enteredPasswordIsValid;
 
-  const submitHandler = (event: React.FormEvent<HTMLFormElement>) => {
+  const submitHandler = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (!formIsValid) {
       setEmailIsTouched(true);
       setPasswordIsTouched(true);
-      console.log("Invalid form");
-    } else {
-      console.log("Valid form");
+      return;
+    }
+    try {
+      const result = await logIn(enteredEmail, enteredPassword);
+      if (result.status === "fail") {
+        props.openModal("Error", result.message, ModalType.ERROR);
+        console.log(result.status);
+      } else if (result.status === "success") {
+        setLoggedIn(true);
+        setUser({
+          userID: result.data._id,
+          userName: result.data.name,
+          userSurname: result.data.surname,
+          userNick: result.data.nick,
+        });
+        setToken(result.token);
+        props.openModal("Success", result.message, ModalType.SUCCESS);
+        setTimeout(() => {
+          setRedirectToHome(true);
+        }, 2000);
+        console.log(result);
+      }
+    } catch (error) {
+      props.openModal(
+        "Error",
+        "Problem with server. Please try again later.",
+        ModalType.ERROR
+      );
     }
   };
 
@@ -72,6 +108,7 @@ const LoginForm: React.FC<Props> = (props) => {
           Register
         </Link>
       </div>
+      {redirectToHome && <Navigate to="/" />}
     </form>
   );
 };

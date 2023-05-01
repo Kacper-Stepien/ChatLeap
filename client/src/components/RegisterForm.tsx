@@ -1,8 +1,9 @@
-import { useRef } from "react";
-import { Link } from "react-router-dom";
+import { useRef, useState } from "react";
+import { Link, Navigate } from "react-router-dom";
 import Validator from "../utils/Validator";
 import useInput from "../hooks/use-input";
 import { ModalType } from "../hooks/use-modal";
+import createUser from "../utils/CreateUser";
 import classes from "./Form.module.scss";
 
 type Props = {
@@ -20,6 +21,7 @@ const RegisterForm: React.FC<Props> = (props) => {
   const theme = props.mode + props.accent;
   const styleClasses = [classes[theme], classes.form];
   const form = useRef<HTMLFormElement>(null);
+  const [redirectToLogin, setRedirectToLogin] = useState(false);
 
   const {
     value: enteredName,
@@ -81,6 +83,14 @@ const RegisterForm: React.FC<Props> = (props) => {
     reset: resetConfirmPassword,
   } = useInput(Validator.isPassword);
 
+  const formIsValid =
+    enteredNameIsValid &&
+    enteredSurnameIsValid &&
+    enteredEmailIsValid &&
+    enteredNickIsValid &&
+    enteredPasswordIsValid &&
+    enteredConfirmPasswordIsValid;
+
   const resetForm = () => {
     resetName();
     resetSurname();
@@ -91,51 +101,35 @@ const RegisterForm: React.FC<Props> = (props) => {
     form.current?.reset();
   };
 
-  const formIsValid =
-    enteredNameIsValid &&
-    enteredSurnameIsValid &&
-    enteredEmailIsValid &&
-    enteredNickIsValid &&
-    enteredPasswordIsValid &&
-    enteredConfirmPasswordIsValid;
-
-  const createUser = async () => {
-    const address = process.env.REACT_APP_SERVER + "/users/signup";
-    const data = {
-      name: enteredName,
-      surname: enteredSurname,
-      email: enteredEmail,
-      nick: enteredNick,
-      password: enteredPassword,
-      passwordConfirm: enteredConfirmPassword,
-    };
-
-    const response = await fetch(address, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    });
-    return await response.json();
+  const setFormTouched = () => {
+    setNameIsTouched(true);
+    setSurnameIsTouched(true);
+    setEmailIsTouched(true);
+    setNickIsTouched(true);
+    setPasswordIsTouched(true);
+    setConfirmPasswordIsTouched(true);
   };
 
   const submitFormHandler = async (event: React.FormEvent) => {
     event.preventDefault();
     if (!formIsValid) {
-      setNameIsTouched(true);
-      setSurnameIsTouched(true);
-      setEmailIsTouched(true);
-      setNickIsTouched(true);
-      setPasswordIsTouched(true);
-      setConfirmPasswordIsTouched(true);
-    } else {
-      console.log("Form is valid");
-      const response = await createUser();
-      console.log(response);
+      setFormTouched();
+      return;
+    }
+
+    try {
+      const response = await createUser(
+        enteredName,
+        enteredSurname,
+        enteredEmail,
+        enteredNick,
+        enteredPassword,
+        enteredConfirmPassword
+      );
+
       if (response.status === "fail") {
-        console.log(response.message);
         props.openModal("Error", response.message, ModalType.ERROR);
+        return;
       } else if (response.status === "success") {
         props.openModal(
           "Success",
@@ -143,7 +137,16 @@ const RegisterForm: React.FC<Props> = (props) => {
           ModalType.SUCCESS
         );
         resetForm();
+        setTimeout(() => {
+          setRedirectToLogin(true);
+        }, 2000);
       }
+    } catch (error) {
+      props.openModal(
+        "Error",
+        "Problem with server. Please try again later.",
+        ModalType.ERROR
+      );
     }
   };
   return (
@@ -224,6 +227,7 @@ const RegisterForm: React.FC<Props> = (props) => {
           Login
         </Link>
       </div>
+      {redirectToLogin && <Navigate to="/" />}
     </form>
   );
 };

@@ -41,7 +41,7 @@ const router = createBrowserRouter([
 const App: React.FC = () => {
   const [mode, setMode] = useState("dark");
   const [accent, setAccent] = useState("Indigo");
-  const [loggedIn, setLoggedIn] = useState(true);
+  const [loggedIn, setLoggedIn] = useState(false);
   const [user, setUser] = useState({
     userID: "",
     userName: "",
