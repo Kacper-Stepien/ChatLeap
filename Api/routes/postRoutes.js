@@ -24,7 +24,6 @@ router
 
 router
   .route("/:id/likes")
-  .post(authController.protect, likeController.createLike)
-  .delete(authController.protect, likeController.deleteLike);
+  .post(authController.protect, likeController.toggleLike);
 
 module.exports = router;

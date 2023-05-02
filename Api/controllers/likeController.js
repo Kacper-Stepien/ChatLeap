@@ -64,3 +64,36 @@ exports.deleteLike = catchAsync(async (req, res, next) => {
     },
   });
 });
+
+exports.toggleLike = catchAsync(async (req, res, next) => {
+  const postId = req.params.id;
+  const userId = req.user.id;
+
+  if (!(await postExists(postId))) {
+    return next(new AppError("Post not found", 400));
+  }
+
+  const like = await Like.findOne({ post: postId, author: userId });
+  if (like) {
+    await Like.deleteOne({ post: postId, author: userId });
+    console.log(like);
+
+    // Remove like from post
+    await Post.findByIdAndUpdate(
+      postId,
+      { $pull: { likes: like._id } },
+      { new: true }
+    );
+  } else {
+    const newLike = await Like.create({ author: userId, post: postId });
+    const post = await Post.findById(postId);
+    post.likes.push(newLike);
+    await post.save();
+  }
+
+  const post = await Post.findById(postId).populate("likes");
+  res.status(200).json({
+    status: "success",
+    data: post,
+  });
+});

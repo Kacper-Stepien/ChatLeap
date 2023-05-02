@@ -19,7 +19,7 @@ const LoginForm: React.FC<Props> = (props) => {
   const theme = props.mode + props.accent;
   const styleClasses = [classes[theme], classes.form];
 
-  const { setLoggedIn, setUser, setToken } = useContext(AuthContext);
+  const { setLoggedIn, setUser, setToken, userName } = useContext(AuthContext);
   const [redirectToHome, setRedirectToHome] = useState(false);
 
   const {
@@ -63,11 +63,10 @@ const LoginForm: React.FC<Props> = (props) => {
           userNick: result.data.nick,
         });
         setToken(result.token);
-        props.openModal("Success", result.message, ModalType.SUCCESS);
+        // props.openModal("Success", result.message, ModalType.SUCCESS);
         setTimeout(() => {
           setRedirectToHome(true);
-        }, 2000);
-        console.log(result);
+        }, 200);
       }
     } catch (error) {
       props.openModal(

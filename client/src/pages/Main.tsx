@@ -19,20 +19,6 @@ function Main() {
   }
 
   return (
-    // <div>
-    //   <ul>
-    //     <li>
-    //       Go to <Link to="register">Register</Link>
-    //     </li>
-    //     <li>
-    //       Go to <Link to="login">Login</Link>
-    //     </li>
-    //     <li>
-    //       Go to <Link to="user">User</Link>
-    //     </li>
-    //   </ul>
-    //   <h1>Main</h1>
-    // </div>
     <div className={styleClasses.join(" ")}>
       <aside className={classes.aside}>
         <Sidebar />

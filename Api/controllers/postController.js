@@ -106,7 +106,7 @@ exports.getAllPosts = catchAsync(async (req, res, next) => {
     Post.find().populate("author"),
     req.query
   ).paginate();
-  const posts = await features.query;
+  const posts = await features.query.populate("likes").populate("comments");
   res.status(200).json({
     status: "success",
     data: {
