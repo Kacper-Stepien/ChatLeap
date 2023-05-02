@@ -30,10 +30,14 @@ exports.createComment = catchAsync(async (req, res, next) => {
   post.comments.push(comment);
   await post.save();
 
+  const result = await Comment.find({ post: postId, text: text }).populate(
+    "author"
+  );
+
   res.status(201).json({
     status: "success",
     data: {
-      comment,
+      comment: result[0],
     },
   });
 });

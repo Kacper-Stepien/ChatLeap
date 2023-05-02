@@ -1,0 +1,65 @@
+@import ".././sass/variables.scss";
+
+.comment {
+  width: 100%;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  gap: 2rem;
+}
+
+.userPhoto {
+  width: 4rem;
+  height: 4rem;
+  img {
+    width: 4rem;
+    height: 4rem;
+    border-radius: 50%;
+  }
+}
+
+.input {
+  flex-grow: 1;
+  padding: 0.8rem 1rem;
+  border-radius: $border-radius;
+  border: none;
+  outline: none;
+}
+
+.addButton {
+  padding: 0.5rem 1rem;
+  border-radius: $border-radius;
+  transition: all 0.2s ease-in;
+  &:hover {
+    transform: none;
+  }
+}
+
+.dark {
+  .input {
+    background-color: $color-grey-dark-2;
+    color: $color-white;
+  }
+  .addButton {
+    border: 2px solid $color-grey-dark-2;
+    &:hover {
+      background-color: $color-grey-dark-2;
+    }
+  }
+}
+
+.light {
+  .input {
+    background-color: $color-grey-light-1;
+    color: $color-grey-dark-3;
+  }
+
+  .addButton {
+    color: $color-grey-dark-3;
+    border: 2px solid $color-grey-light-1;
+
+    &:hover {
+      background-color: $color-grey-light-1;
+    }
+  }
+}

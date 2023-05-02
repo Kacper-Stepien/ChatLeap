@@ -1,12 +1,18 @@
 @import ".././sass/variables.scss";
 
-.post {
+.allPost {
+  border-radius: $border-radius;
   max-width: 60rem;
+  width: 100%;
+  box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.2);
+}
+
+.post {
   width: 100%;
   padding: 2rem 3rem;
   border-radius: $border-radius;
   background-color: $color-grey-dark-3;
-  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.2);
+  box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.2);
 }
 
 .postHeader {
@@ -85,7 +91,18 @@
   font-size: 1.2rem;
 }
 
+.comments {
+  width: 100%;
+  padding: 2rem 3rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
 .darkIndigo {
+  &.allPost {
+    background-color: $color-grey-dark-3;
+  }
   &.post {
     background-color: $color-grey-dark-3;
     color: $color-white;
@@ -93,7 +110,10 @@
 }
 
 .lightIndigo {
-  &.post {
+  &.allPost {
+    background-color: $color-white;
+  }
+  .post {
     background-color: $color-white;
     color: $color-grey-dark-3;
   }
@@ -101,6 +121,10 @@
   .postFooterAction,
   .postFooterHashtags p {
     color: $color-indigo-1;
+  }
+
+  .comments {
+    color: $color-grey-dark-3;
   }
 }
 
@@ -125,5 +149,9 @@
   .postFooterAction,
   .postFooterHashtags p {
     color: $color-teal-1;
+  }
+
+  .comments {
+    color: $color-grey-dark-3;
   }
 }
