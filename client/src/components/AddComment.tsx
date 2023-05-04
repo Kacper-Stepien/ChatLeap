@@ -41,6 +41,8 @@ const AddComment: React.FC<AddCommentProps> = ({
       if (data.status === "success") {
         setComments([...comments, data.data.comment]);
         inputRef.current!.value = "";
+      } else {
+        console.log(data.message);
       }
     } catch (err) {
       console.log(err);

@@ -1,0 +1,84 @@
+@import ".././sass/variables.scss";
+
+.addPost {
+  max-width: 60rem;
+  width: 100%;
+  padding: 2rem 3rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  border-radius: $border-radius;
+  box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.2);
+}
+
+.userPhoto {
+  img {
+    width: 6rem;
+    height: 6rem;
+    border-radius: 50%;
+  }
+}
+
+.textarea {
+  resize: none;
+  flex-grow: 1;
+  padding: 1rem;
+  border: none;
+  outline: none;
+  font-size: 1.6rem;
+  background-color: transparent;
+}
+
+.shareButton {
+  flex-basis: 100%;
+  justify-self: flex-end;
+  padding: 0.5rem;
+  border-radius: $border-radius;
+  border: none;
+  outline: none;
+  background-color: transparent;
+  font-size: 1.4rem;
+  cursor: pointer;
+
+  &:hover {
+    transform: translateY(-3px);
+  }
+}
+
+.darkIndigo {
+  background-color: $color-grey-dark-3;
+  color: $color-white;
+
+  .textarea {
+    color: $color-white;
+  }
+
+  .shareButton {
+    background-color: $color-indigo-1;
+  }
+}
+
+.lightIndigo {
+  .shareButton {
+    background-color: $color-indigo-1;
+  }
+}
+
+.darkTeal {
+  background-color: $color-grey-dark-3;
+  color: $color-white;
+
+  .textarea {
+    color: $color-white;
+  }
+
+  .shareButton {
+    background-color: $color-teal-1;
+  }
+}
+
+.lightTeal {
+  .shareButton {
+    background-color: $color-teal-1;
+  }
+}

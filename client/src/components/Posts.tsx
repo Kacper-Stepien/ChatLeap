@@ -1,9 +1,9 @@
 import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { ThemeContext } from "../context/ThemeContext";
+import AddPost from "./AddPost";
 import Post from "./Post";
 import PostModel from ".././models/Post";
-import formatDate from "../utils/FormatDate";
 import classes from "./Posts.module.scss";
 
 type Post = {
@@ -53,23 +53,90 @@ const Posts: React.FC = () => {
     }
   };
 
+  const addPost = async (text: string) => {
+    const address = process.env.REACT_APP_SERVER + "/posts";
+    try {
+      const response = await fetch(address, {
+        method: "POST",
+        headers: {
+          Authorization: "Bearer " + token,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ text }),
+      });
+      const data = await response.json();
+      if (data.status === "success") {
+        setPosts([...posts, data.data.post]);
+      } else {
+        console.log(data.message);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const deletePost = async (id: string) => {
+    const address = process.env.REACT_APP_SERVER + "/posts/" + id;
+    try {
+      const response = await fetch(address, {
+        method: "DELETE",
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      });
+
+      if (response.status === 204) {
+        setPosts(posts.filter((post) => post._id !== id));
+        console.log(posts);
+        return;
+      }
+
+      const data = await response.json();
+      console.log(data.message);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const updatePost = async (id: string, text: string) => {
+    const address = process.env.REACT_APP_SERVER + "/posts/" + id;
+    try {
+      const response = await fetch(address, {
+        method: "PATCH",
+        headers: {
+          Authorization: "Bearer " + token,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ text }),
+      });
+
+      const data = await response.json();
+      if (data.status === "success") {
+        // update new post
+        const newPosts = posts.map((post) => {
+          if (post._id === id) {
+            return data.data.post;
+          }
+          return post;
+        });
+        setPosts(newPosts);
+      } else {
+        console.log(data.message);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
     getPosts();
   }, []);
 
   return (
     <div className={styleClasses.join(" ")}>
+      <AddPost addPost={addPost} />
       {posts.map((post) => (
-        <Post
-          key={post._id}
-          _id={post._id}
-          author={post.author}
-          createdAt={formatDate(post.createdAt)}
-          modifiedAt={formatDate(post.modifiedAt)}
-          text={post.text}
-          likes={post.likes}
-          comments={post.comments}
-        />
+        <Post post={post} deletePost={deletePost} updatePost={updatePost} />
       ))}
       {/* <Post
         userName="Elizabeth Cooper"

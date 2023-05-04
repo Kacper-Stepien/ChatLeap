@@ -19,7 +19,9 @@ exports.createPost = catchAsync(async (req, res, next) => {
   const author = req.user.id;
   const user = await User.findById(author);
 
-  const post = await Post.create({ text, author });
+  let post = await Post.create({ text, author });
+  post.author = user;
+  console.log(post);
 
   // add post to user
   user.posts.push(post);
@@ -46,7 +48,7 @@ exports.updatePost = catchAsync(async (req, res, next) => {
     return next(new AppError("You are not allowed to modify this post", 403));
   }
 
-  const post = await Post.findByIdAndUpdate(
+  let post = await Post.findByIdAndUpdate(
     {
       _id: postId,
     },
@@ -59,6 +61,8 @@ exports.updatePost = catchAsync(async (req, res, next) => {
       runValidators: true,
     }
   );
+
+  post = await Post.findById(postId).populate("author");
 
   res.status(200).json({
     status: "success",

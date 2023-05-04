@@ -1,41 +1,52 @@
-import { useContext, useState } from "react";
+import { useContext, useState, useRef } from "react";
 import { ThemeContext } from "../context/ThemeContext";
 import { AuthContext } from "../context/AuthContext";
-import { FaRegComment, FaRegHeart, FaHeart } from "react-icons/fa";
+import {
+  FaRegComment,
+  FaRegHeart,
+  FaHeart,
+  FaAngleUp,
+  FaTrashAlt,
+  FaEdit,
+} from "react-icons/fa";
 import Comment from "./Comment";
 import AddComment from "./AddComment";
 import PostModel from ".././models/Post";
 import LikeModel from ".././models/Like";
 import CommentModel from ".././models/Comment";
+import formatDate from "../utils/FormatDate";
 
 import classes from "./Post.module.scss";
 
-const Post: React.FC<PostModel> = ({
-  _id,
-  text,
-  createdAt,
-  modifiedAt,
-  author,
-  comments,
-  likes,
-}) => {
+type PostProps = {
+  post: PostModel;
+  deletePost: (id: string) => void;
+  updatePost: (id: string, text: string) => void;
+};
+
+const Post: React.FC<PostProps> = ({ post, deletePost, updatePost }) => {
   const { mode, accent } = useContext(ThemeContext);
   const theme = mode + accent;
   const styleClasses = [classes[theme], classes.allPost];
   const { userID, token } = useContext(AuthContext);
   const [commentsOpen, setCommentsOpen] = useState<boolean>(false);
-  const [postLikes, setPostLikes] = useState<LikeModel[]>(likes);
-  const [postComments, setPostComments] = useState<CommentModel[]>(comments);
+  const [postLikes, setPostLikes] = useState<LikeModel[]>(post.likes);
+  const [postComments, setPostComments] = useState<CommentModel[]>(
+    post.comments
+  );
+  const [updateOpen, setUpdateOpen] = useState<boolean>(false);
   const [userLike, setUserLike] = useState<boolean>(
     postLikes.some((like) => like.author === userID)
   );
+  const textAreaRef = useRef<HTMLTextAreaElement>(null);
 
   let userIsAnAuthor: boolean = false;
 
-  if (author._id === userID) userIsAnAuthor = true;
+  if (post.author._id === userID) userIsAnAuthor = true;
 
   const toggleLike = async () => {
-    const address = process.env.REACT_APP_SERVER + "/posts/" + _id + "/likes";
+    const address =
+      process.env.REACT_APP_SERVER + "/posts/" + post._id + "/likes";
     try {
       const response = await fetch(address, {
         method: "POST",
@@ -59,7 +70,7 @@ const Post: React.FC<PostModel> = ({
     }
 
     const address =
-      process.env.REACT_APP_SERVER + "/posts/" + _id + "/comments";
+      process.env.REACT_APP_SERVER + "/posts/" + post._id + "/comments";
     try {
       const response = await fetch(address, {
         method: "GET",
@@ -76,22 +87,57 @@ const Post: React.FC<PostModel> = ({
     } catch (err) {}
   };
 
+  const toggleUpdate = () => {
+    setUpdateOpen(!updateOpen);
+  };
+
   return (
-    <div key={_id} className={styleClasses.join(" ")}>
+    <div key={post._id} className={styleClasses.join(" ")}>
       <div className={classes.post}>
         <div className={classes.postHeader}>
           <div className={classes.postUser}>
             <img className={classes.postUserImage} src="/user.jpg" />
             <div className={classes.postUserData}>
               <p className={classes.postUsername}>
-                {author.name + " " + author.surname}
+                {post.author.name + " " + post.author.surname}
               </p>
-              <p className={classes.postUserNick}>{author.nick}</p>
+              <p className={classes.postUserNick}>{post.author.nick}</p>
             </div>
           </div>
-          <p className={classes.postDate}>{createdAt}</p>
+          <div className={classes.postMenu}>
+            {userIsAnAuthor && (
+              <>
+                <button
+                  onClick={() => {
+                    deletePost(post._id);
+                  }}
+                >
+                  <FaTrashAlt />
+                </button>
+                <button onClick={toggleUpdate}>
+                  <FaEdit />
+                </button>
+              </>
+            )}
+            <p className={classes.postDate}>{formatDate(post.createdAt)}</p>
+          </div>
         </div>
-        <div className={classes.postContent}>{text} </div>
+        {updateOpen && (
+          <div className={classes.postContent}>
+            {<textarea ref={textAreaRef} defaultValue={post.text}></textarea>}{" "}
+            <button
+              onClick={() => {
+                if (textAreaRef.current) {
+                  updatePost(post._id, textAreaRef.current.value);
+                  toggleUpdate();
+                }
+              }}
+            >
+              Update
+            </button>
+          </div>
+        )}
+        {!updateOpen && <div className={classes.postContent}>{post.text} </div>}
         <div className={classes.postFooter}>
           <div className={classes.postFooterActions}>
             <div className={classes.postFooterAction}>
@@ -106,9 +152,8 @@ const Post: React.FC<PostModel> = ({
                 <FaRegComment />
               </button>
 
-              <p>{comments.length}</p>
+              <p>{postComments.length}</p>
             </div>
-            {userIsAnAuthor && <p>Jestem autorem</p>}
           </div>
           {/* <div className={classes.postFooterHashtags}>
           {hastags.map((hashtag) => (
@@ -121,7 +166,7 @@ const Post: React.FC<PostModel> = ({
         <div className={classes.comments}>
           <AddComment
             mode={mode}
-            postID={_id}
+            postID={post._id}
             userID={userID}
             token={token}
             comments={postComments}
@@ -130,6 +175,9 @@ const Post: React.FC<PostModel> = ({
           {postComments.map((comment) => (
             <Comment {...comment} />
           ))}
+          <button className={classes.closeComments} onClick={showComments}>
+            <FaAngleUp />
+          </button>
         </div>
       )}
     </div>

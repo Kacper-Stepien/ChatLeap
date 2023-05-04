@@ -11,7 +11,7 @@
   width: 100%;
   padding: 2rem 3rem;
   border-radius: $border-radius;
-  background-color: $color-grey-dark-3;
+
   box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.2);
 }
 
@@ -47,9 +47,27 @@
   border-radius: 50%;
 }
 
+.postMenu {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+
+  button {
+    color: inherit;
+    transition: all 0.2s ease-in;
+    &:hover {
+      transform: scale(1.1);
+    }
+  }
+}
+
 .postDate {
   font-size: 1.4rem;
   font-weight: 300;
+  flex-basis: 100%;
+  text-align: end;
 }
 
 .postContent {
@@ -57,6 +75,16 @@
   margin-bottom: 1.6rem;
   font-size: 1.6rem;
   font-weight: 100;
+
+  textarea {
+    width: 100%;
+    resize: none;
+    border: none;
+    outline: none;
+    background-color: inherit;
+    font-size: 1.6rem;
+    color: inherit;
+  }
 }
 
 .postFooter {
@@ -89,6 +117,13 @@
   justify-content: space-between;
   gap: 1rem;
   font-size: 1.2rem;
+
+  button {
+    color: inherit;
+    &:hover {
+      transform: scale(1.1);
+    }
+  }
 }
 
 .comments {
@@ -99,6 +134,16 @@
   gap: 2rem;
 }
 
+.closeComments {
+  margin-top: 0;
+  font-size: 1.4rem;
+  color: inherit;
+
+  &:hover {
+    transform: translate(0, -2px);
+  }
+}
+
 .darkIndigo {
   &.allPost {
     background-color: $color-grey-dark-3;
@@ -106,6 +151,15 @@
   &.post {
     background-color: $color-grey-dark-3;
     color: $color-white;
+  }
+
+  .postMenu {
+    button {
+      color: $color-grey-dark-2;
+      &:hover {
+        color: $color-white;
+      }
+    }
   }
 }
 
@@ -126,10 +180,19 @@
   .comments {
     color: $color-grey-dark-3;
   }
+
+  .postMenu {
+    button {
+      color: $color-grey-light-1;
+      &:hover {
+        color: $color-grey-dark-3;
+      }
+    }
+  }
 }
 
 .darkTeal {
-  &.post {
+  &.allPost {
     background-color: $color-grey-dark-3;
     color: $color-white;
   }
@@ -138,10 +201,19 @@
   .postFooterHashtags p {
     color: $color-teal-1;
   }
+
+  .postMenu {
+    button {
+      color: $color-grey-dark-2;
+      &:hover {
+        color: $color-white;
+      }
+    }
+  }
 }
 
 .lightTeal {
-  &.post {
+  &.allPost {
     background-color: $color-white;
     color: $color-grey-dark-3;
   }
@@ -153,5 +225,14 @@
 
   .comments {
     color: $color-grey-dark-3;
+  }
+
+  .postMenu {
+    button {
+      color: $color-grey-light-1;
+      &:hover {
+        color: $color-grey-dark-3;
+      }
+    }
   }
 }
