@@ -10,6 +10,10 @@
   gap: 3rem;
 }
 
+.noPosts {
+  font-size: 1.8rem;
+}
+
 .darkIndigo {
   &.posts {
     background-color: $color-grey-dark-2;
@@ -25,10 +29,18 @@
   &.posts {
     background-color: $color-white;
   }
+
+  .noPosts {
+    color: $color-grey-dark-3;
+  }
 }
 
 .lightTeal {
   &.posts {
     background-color: $color-white;
+  }
+
+  .noPosts {
+    color: $color-grey-dark-3;
   }
 }

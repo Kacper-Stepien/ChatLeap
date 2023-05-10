@@ -6,7 +6,11 @@ import Menu from "./Menu";
 import Footer from "./Footer";
 import classes from "./Sidebar.module.scss";
 
-const Sidebar: React.FC = () => {
+type Props = {
+  changeOpenTab: (isOpen: string) => void;
+};
+
+const Sidebar: React.FC<Props> = ({ changeOpenTab }) => {
   const { mode, accent } = useContext(ThemeContext);
   const theme = mode + accent;
   const styleClasses: string[] = [classes.sidebar, classes[theme]];
@@ -14,7 +18,7 @@ const Sidebar: React.FC = () => {
     <div className={styleClasses.join(" ")}>
       <Logo mode={"dark"} />
       <User />
-      <Menu mode={mode} accent={accent} />
+      <Menu mode={mode} accent={accent} changeOpenTab={changeOpenTab} />
       <Footer mode={"dark"} />
     </div>
   );

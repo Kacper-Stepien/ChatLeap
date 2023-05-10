@@ -3,6 +3,7 @@ import { ThemeContext } from "../context/ThemeContext";
 import { AuthContext } from "../context/AuthContext";
 import {
   FaRegComment,
+  FaComment,
   FaRegHeart,
   FaHeart,
   FaAngleUp,
@@ -38,6 +39,10 @@ const Post: React.FC<PostProps> = ({ post, deletePost, updatePost }) => {
   const [userLike, setUserLike] = useState<boolean>(
     postLikes.some((like) => like.author === userID)
   );
+  const [userComment, setUserComment] = useState<boolean>(
+    postComments.some((comment) => comment.author._id === userID)
+  );
+
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
 
   let userIsAnAuthor: boolean = false;
@@ -88,6 +93,7 @@ const Post: React.FC<PostProps> = ({ post, deletePost, updatePost }) => {
   };
 
   const toggleUpdate = () => {
+    textAreaRef.current?.focus();
     setUpdateOpen(!updateOpen);
   };
 
@@ -124,8 +130,15 @@ const Post: React.FC<PostProps> = ({ post, deletePost, updatePost }) => {
         </div>
         {updateOpen && (
           <div className={classes.postContent}>
-            {<textarea ref={textAreaRef} defaultValue={post.text}></textarea>}{" "}
+            {
+              <textarea
+                ref={textAreaRef}
+                defaultValue={post.text}
+                maxLength={150}
+              ></textarea>
+            }{" "}
             <button
+              className={classes.updateButton}
               onClick={() => {
                 if (textAreaRef.current) {
                   updatePost(post._id, textAreaRef.current.value);
@@ -149,7 +162,7 @@ const Post: React.FC<PostProps> = ({ post, deletePost, updatePost }) => {
             </div>
             <div className={classes.postFooterAction}>
               <button onClick={showComments}>
-                <FaRegComment />
+                {userComment ? <FaComment /> : <FaRegComment />}
               </button>
 
               <p>{postComments.length}</p>

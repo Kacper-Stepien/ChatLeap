@@ -6,23 +6,23 @@ import Post from "./Post";
 import PostModel from ".././models/Post";
 import classes from "./Posts.module.scss";
 
-type Post = {
-  author: {
-    _id: string;
-    author_id: string;
-    email: string;
-    name: string;
-    surname: string;
-    nick: string;
-    posts: string[];
-  };
-  comments: string[];
-  likes: string[];
-  createdAt: string;
-  modifiedAt: string;
-  _id: string;
-  text: string;
-};
+// type Post = {
+//   author: {
+//     _id: string;
+//     author_id: string;
+//     email: string;
+//     name: string;
+//     surname: string;
+//     nick: string;
+//     posts: string[];
+//   };
+//   comments: string[];
+//   likes: string[];
+//   createdAt: string;
+//   modifiedAt: string;
+//   _id: string;
+//   text: string;
+// };
 
 const Posts: React.FC = () => {
   const { mode, accent } = useContext(ThemeContext);
@@ -138,6 +138,9 @@ const Posts: React.FC = () => {
       {posts.map((post) => (
         <Post post={post} deletePost={deletePost} updatePost={updatePost} />
       ))}
+      {posts.length === 0 && (
+        <h2 className={classes.noPosts}>There are no posts yet!</h2>
+      )}
       {/* <Post
         userName="Elizabeth Cooper"
         userNick="@Elza"

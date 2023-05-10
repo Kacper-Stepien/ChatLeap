@@ -78,12 +78,23 @@
 
   textarea {
     width: 100%;
+    height: 7rem;
     resize: none;
     border: none;
     outline: none;
     background-color: inherit;
     font-size: 1.6rem;
     color: inherit;
+  }
+
+  .updateButton {
+    width: 100%;
+    padding: 0.5rem 2rem;
+    border-radius: $border-radius;
+
+    &:hover {
+      transform: translate(0, -2px);
+    }
   }
 }
 
@@ -161,6 +172,10 @@
       }
     }
   }
+
+  .updateButton {
+    background-color: $color-indigo-1;
+  }
 }
 
 .lightIndigo {
@@ -189,6 +204,10 @@
       }
     }
   }
+
+  .updateButton {
+    background-color: $color-indigo-1;
+  }
 }
 
 .darkTeal {
@@ -209,6 +228,10 @@
         color: $color-white;
       }
     }
+  }
+
+  .updateButton {
+    background-color: $color-teal-1;
   }
 }
 
@@ -234,5 +257,9 @@
         color: $color-grey-dark-3;
       }
     }
+  }
+
+  .updateButton {
+    background-color: $color-teal-1;
   }
 }

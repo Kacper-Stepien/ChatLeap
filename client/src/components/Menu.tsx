@@ -3,12 +3,22 @@ import { AiFillSetting } from "react-icons/ai";
 
 import classes from "./Menu.module.scss";
 
-const Menu: React.FC<{ mode: string; accent: string }> = ({ mode, accent }) => {
+type Props = {
+  mode: string;
+  accent: string;
+  changeOpenTab: (isOpen: string) => void;
+};
+
+const Menu: React.FC<Props> = ({ mode, accent, changeOpenTab }) => {
   const theme: string = mode + accent;
   const styleClasses: string[] = [classes.menu, classes[theme]];
   return (
     <nav className={styleClasses.join(" ")}>
-      <button>
+      <button
+        onClick={() => {
+          changeOpenTab("main");
+        }}
+      >
         <FaHome className={classes.icon} />
         Main
       </button>
@@ -20,7 +30,11 @@ const Menu: React.FC<{ mode: string; accent: string }> = ({ mode, accent }) => {
         <FaBookmark className={classes.icon} />
         Bookmarks
       </button>
-      <button>
+      <button
+        onClick={() => {
+          changeOpenTab("settings");
+        }}
+      >
         <AiFillSetting className={classes.icon} />
         Settings
       </button>
