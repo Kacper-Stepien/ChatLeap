@@ -4,31 +4,16 @@ import { ThemeContext } from "../context/ThemeContext";
 import AddPost from "./AddPost";
 import Post from "./Post";
 import PostModel from ".././models/Post";
+import LoadingSPpinner from "./LoadingSpinner";
 import classes from "./Posts.module.scss";
-
-// type Post = {
-//   author: {
-//     _id: string;
-//     author_id: string;
-//     email: string;
-//     name: string;
-//     surname: string;
-//     nick: string;
-//     posts: string[];
-//   };
-//   comments: string[];
-//   likes: string[];
-//   createdAt: string;
-//   modifiedAt: string;
-//   _id: string;
-//   text: string;
-// };
 
 const Posts: React.FC = () => {
   const { mode, accent } = useContext(ThemeContext);
   const theme = mode + accent;
   const styleClasses = [classes[theme], classes.posts];
   const { token } = useContext(AuthContext);
+
+  const [loading, setLoading] = useState<boolean>(false);
 
   const [posts, setPosts] = useState<PostModel[]>([]);
 
@@ -56,6 +41,7 @@ const Posts: React.FC = () => {
   const addPost = async (text: string) => {
     const address = process.env.REACT_APP_SERVER + "/posts";
     try {
+      setLoading(true);
       const response = await fetch(address, {
         method: "POST",
         headers: {
@@ -66,11 +52,14 @@ const Posts: React.FC = () => {
       });
       const data = await response.json();
       if (data.status === "success") {
+        setLoading(false);
         setPosts([...posts, data.data.post]);
       } else {
+        setLoading(false);
         console.log(data.message);
       }
     } catch (err) {
+      setLoading(false);
       console.log(err);
     }
   };
@@ -78,6 +67,7 @@ const Posts: React.FC = () => {
   const deletePost = async (id: string) => {
     const address = process.env.REACT_APP_SERVER + "/posts/" + id;
     try {
+      setLoading(true);
       const response = await fetch(address, {
         method: "DELETE",
         headers: {
@@ -86,14 +76,17 @@ const Posts: React.FC = () => {
       });
 
       if (response.status === 204) {
+        setLoading(false);
         setPosts(posts.filter((post) => post._id !== id));
         console.log(posts);
         return;
       }
 
       const data = await response.json();
+      setLoading(false);
       console.log(data.message);
     } catch (err) {
+      setLoading(false);
       console.log(err);
     }
   };
@@ -101,6 +94,7 @@ const Posts: React.FC = () => {
   const updatePost = async (id: string, text: string) => {
     const address = process.env.REACT_APP_SERVER + "/posts/" + id;
     try {
+      setLoading(true);
       const response = await fetch(address, {
         method: "PATCH",
         headers: {
@@ -110,6 +104,7 @@ const Posts: React.FC = () => {
         body: JSON.stringify({ text }),
       });
 
+      setLoading(false);
       const data = await response.json();
       if (data.status === "success") {
         // update new post
@@ -155,6 +150,7 @@ const Posts: React.FC = () => {
         postContent="Today I'm 40 years old! I can't believe it! I'm so thankful for everything I have in my life. I'm so blessed!"
         hastags={["#birthday", "#happy", "#blessed"]}
       /> */}
+      {loading && <LoadingSPpinner />}
     </div>
   );
 };

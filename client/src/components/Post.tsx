@@ -16,6 +16,7 @@ import PostModel from ".././models/Post";
 import LikeModel from ".././models/Like";
 import CommentModel from ".././models/Comment";
 import formatDate from "../utils/FormatDate";
+import LoadingSPpinner from "./LoadingSpinner";
 
 import classes from "./Post.module.scss";
 
@@ -44,8 +45,9 @@ const Post: React.FC<PostProps> = ({ post, deletePost, updatePost }) => {
   );
 
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
-
   let userIsAnAuthor: boolean = false;
+
+  const [loading, setLoading] = useState<boolean>(false);
 
   if (post.author._id === userID) userIsAnAuthor = true;
 
@@ -92,6 +94,65 @@ const Post: React.FC<PostProps> = ({ post, deletePost, updatePost }) => {
     } catch (err) {}
   };
 
+  const updateComment = async (id: string, text: string) => {
+    const address = process.env.REACT_APP_SERVER + "/comments/" + id;
+    try {
+      setLoading(true);
+      const response = await fetch(address, {
+        method: "PATCH",
+        headers: {
+          Authorization: "Bearer " + token,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ text }),
+      });
+
+      const data = await response.json();
+      setLoading(false);
+      if (data.status === "success") {
+        setPostComments(
+          postComments.map((comment) => {
+            if (comment._id === id) {
+              return { ...comment, text };
+            }
+            return comment;
+          })
+        );
+      } else if (data.status === "fail" || data.status === "error") {
+        alert(data.message);
+      }
+    } catch (err) {
+      setLoading(false);
+    }
+  };
+
+  const deleteComment = async (id: string) => {
+    const address = process.env.REACT_APP_SERVER + "/comments/" + id;
+    try {
+      setLoading(true);
+      const response = await fetch(address, {
+        method: "DELETE",
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      });
+
+      if (response.status === 204) {
+        setPostComments(postComments.filter((comment) => comment._id !== id));
+        setLoading(false);
+        return;
+      }
+
+      const data = await response.json();
+      setLoading(false);
+      if (data.status === "fail" || data.status === "error") {
+        alert(data.message);
+      }
+    } catch (err) {
+      setLoading(false);
+    }
+  };
+
   const toggleUpdate = () => {
     textAreaRef.current?.focus();
     setUpdateOpen(!updateOpen);
@@ -126,6 +187,11 @@ const Post: React.FC<PostProps> = ({ post, deletePost, updatePost }) => {
               </>
             )}
             <p className={classes.postDate}>{formatDate(post.createdAt)}</p>
+            {post.modifiedAt !== post.createdAt && (
+              <p className={classes.postDateUpdate}>
+                Edit {formatDate(post.modifiedAt)}
+              </p>
+            )}
           </div>
         </div>
         {updateOpen && (
@@ -134,7 +200,7 @@ const Post: React.FC<PostProps> = ({ post, deletePost, updatePost }) => {
               <textarea
                 ref={textAreaRef}
                 defaultValue={post.text}
-                maxLength={150}
+                maxLength={250}
               ></textarea>
             }{" "}
             <button
@@ -186,13 +252,20 @@ const Post: React.FC<PostProps> = ({ post, deletePost, updatePost }) => {
             setComments={setPostComments}
           />
           {postComments.map((comment) => (
-            <Comment {...comment} />
+            <Comment
+              comment={comment}
+              userID={userID}
+              mode={mode}
+              updateComment={updateComment}
+              deleteComment={deleteComment}
+            />
           ))}
           <button className={classes.closeComments} onClick={showComments}>
             <FaAngleUp />
           </button>
         </div>
       )}
+      {loading && <LoadingSPpinner />}
     </div>
   );
 };

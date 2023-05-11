@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useContext, useState } from "react";
 import { ThemeContext } from "../context/ThemeContext";
 
@@ -11,15 +11,10 @@ import Settings from "../components/Settings";
 import classes from "./Main.module.scss";
 
 function Main() {
-  const navigate = useNavigate();
-  const { mode, accent, setMode } = useContext(ThemeContext);
+  const { mode, accent } = useContext(ThemeContext);
   const theme = mode + accent;
   const styleClasses = [classes[theme], classes.page];
   const [openTab, setOpenTab] = useState("main");
-
-  function handleClick() {
-    navigate("/login");
-  }
 
   return (
     <div className={styleClasses.join(" ")}>

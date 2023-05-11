@@ -3,7 +3,9 @@ const formatDate = (date: string): string => {
   const now = new Date();
   const diff = (now.getTime() - then.getTime()) / 1000;
 
-  if (diff < 60) {
+  if (diff < 5) {
+    return "Now";
+  } else if (diff < 60) {
     return `${Math.floor(diff)} seconds ago`;
   } else if (diff < 3600) {
     return `${Math.floor(diff / 60)} minutes ago`;

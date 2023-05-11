@@ -38,6 +38,7 @@ const AddPost: React.FC<AddPostProps> = ({ addPost }) => {
       <textarea
         ref={textAreaRef}
         className={classes.textarea}
+        maxLength={250}
         placeholder={"What's on your mind " + userName + "?"}
       ></textarea>
       <button className={classes.shareButton} onClick={handleClick}>
