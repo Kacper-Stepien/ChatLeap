@@ -51,6 +51,7 @@ const LoginForm: React.FC<Props> = (props) => {
     }
     try {
       const result = await logIn(enteredEmail, enteredPassword);
+      console.log(result);
       if (result.status === "fail") {
         props.openModal("Error", result.message, ModalType.ERROR);
         console.log(result.status);
@@ -67,8 +68,11 @@ const LoginForm: React.FC<Props> = (props) => {
         setTimeout(() => {
           setRedirectToHome(true);
         }, 200);
+      } else if (result.status === "error") {
+        props.openModal("Error", result.message, ModalType.ERROR);
       }
     } catch (error) {
+      console.log(error);
       props.openModal(
         "Error",
         "Problem with server. Please try again later.",

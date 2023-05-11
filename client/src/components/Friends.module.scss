@@ -1,0 +1,56 @@
+@import "./../sass/variables.scss";
+.container {
+  height: 100%;
+  max-height: calc(100vh - 6rem);
+  overflow-y: scroll;
+  width: 100%;
+
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3rem;
+}
+
+.header {
+  width: 100%;
+  font-size: 2.8rem;
+  text-align: center;
+}
+
+.friends {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  align-items: center;
+  padding: 0 2rem;
+}
+
+.darkIndigo {
+  &.container {
+    background-color: $color-grey-dark-2;
+    color: $color-white;
+  }
+}
+
+.lightIndigo {
+  &.container {
+    background-color: $color-white;
+    color: $color-grey-dark-3;
+  }
+}
+
+.darkTeal {
+  &.container {
+    background-color: $color-grey-dark-1;
+    color: $color-white;
+  }
+}
+
+.lightTeal {
+  &.container {
+    background-color: $color-white;
+    color: $color-grey-dark-3;
+  }
+}

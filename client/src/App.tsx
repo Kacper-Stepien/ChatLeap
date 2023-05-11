@@ -30,7 +30,7 @@ const router = createBrowserRouter([
         element: <Login />,
       },
       {
-        path: "user",
+        path: "user/:id",
         element: <ProtectedRoute element={<User />} />,
       },
     ],

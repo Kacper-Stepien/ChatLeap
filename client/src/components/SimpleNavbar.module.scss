@@ -7,3 +7,9 @@
   display: flex;
   justify-content: space-between;
 }
+
+.dark {
+  &.navbar {
+    background-color: $color-grey-dark-3;
+  }
+}

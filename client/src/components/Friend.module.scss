@@ -1,0 +1,96 @@
+@import "./../sass/variables.scss";
+.friend {
+  min-width: 25rem;
+  width: 40%;
+  padding: 2rem 2rem;
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  border-radius: $border-radius;
+}
+
+.userPhoto {
+  display: block;
+  width: 4rem;
+  height: 4rem;
+
+  img {
+    width: 100%;
+    height: 100%;
+    &:hover {
+      transform: none;
+    }
+  }
+}
+
+.userInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.userFullName {
+  font-size: 1.6rem;
+}
+
+.userNick {
+  font-size: 1.2rem;
+}
+
+.darkIndigo {
+  &.friend {
+    background-color: $color-grey-dark-3;
+    color: $color-white;
+
+    &:hover {
+      background: linear-gradient(
+        to right bottom,
+        $color-indigo-1,
+        $color-indigo-2
+      );
+      cursor: pointer;
+    }
+  }
+}
+
+.lightIndigo {
+  &.friend {
+    background-color: $color-grey-light-1;
+    color: $color-grey-dark-3;
+
+    &:hover {
+      background: linear-gradient(to right, $color-indigo-1, $color-indigo-2);
+      color: $color-white;
+      cursor: pointer;
+    }
+  }
+}
+
+.darkTeal {
+  &.friend {
+    background-color: $color-grey-dark-3;
+    color: $color-white;
+
+    &:hover {
+      background: linear-gradient(
+        to right bottom,
+        $color-teal-1,
+        $color-teal-2
+      );
+      cursor: pointer;
+    }
+  }
+}
+
+.lightTeal {
+  &.friend {
+    background-color: $color-grey-light-1;
+    color: $color-grey-dark-3;
+
+    &:hover {
+      background: linear-gradient(to right, $color-teal-1, $color-teal-2);
+      color: $color-white;
+      cursor: pointer;
+    }
+  }
+}

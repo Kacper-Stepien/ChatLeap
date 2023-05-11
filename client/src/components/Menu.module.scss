@@ -29,28 +29,39 @@
 
 .darkIndigo {
   button {
-    background-color: $color-indigo-1;
-    color: $color-white;
+    &.active {
+      background-color: $color-indigo-1;
+    }
   }
 }
 
 .lightIndigo {
   button {
-    background-color: $color-white;
-    color: $color-indigo-1;
+    color: $color-white;
+
+    &.active {
+      background-color: $color-white;
+      color: $color-indigo-1;
+    }
   }
 }
 
 .darkTeal {
   button {
-    background-color: $color-teal-1;
     color: $color-white;
+    &.active {
+      background-color: $color-teal-1;
+    }
   }
 }
 
 .lightTeal {
   button {
-    background-color: $color-white;
-    color: $color-teal-1;
+    color: $color-white;
+
+    &.active {
+      background-color: $color-white;
+      color: $color-teal-1;
+    }
   }
 }

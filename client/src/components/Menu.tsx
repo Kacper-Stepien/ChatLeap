@@ -6,15 +6,17 @@ import classes from "./Menu.module.scss";
 type Props = {
   mode: string;
   accent: string;
+  openTab: string;
   changeOpenTab: (isOpen: string) => void;
 };
 
-const Menu: React.FC<Props> = ({ mode, accent, changeOpenTab }) => {
+const Menu: React.FC<Props> = ({ mode, accent, openTab, changeOpenTab }) => {
   const theme: string = mode + accent;
   const styleClasses: string[] = [classes.menu, classes[theme]];
   return (
     <nav className={styleClasses.join(" ")}>
       <button
+        className={openTab === "main" ? classes.active : ""}
         onClick={() => {
           changeOpenTab("main");
         }}
@@ -22,7 +24,12 @@ const Menu: React.FC<Props> = ({ mode, accent, changeOpenTab }) => {
         <FaHome className={classes.icon} />
         Main
       </button>
-      <button>
+      <button
+        className={openTab === "friends" ? classes.active : ""}
+        onClick={() => {
+          changeOpenTab("friends");
+        }}
+      >
         <FaUserFriends className={classes.icon} />
         Friends
       </button>
@@ -31,6 +38,7 @@ const Menu: React.FC<Props> = ({ mode, accent, changeOpenTab }) => {
         Bookmarks
       </button>
       <button
+        className={openTab === "settings" ? classes.active : ""}
         onClick={() => {
           changeOpenTab("settings");
         }}

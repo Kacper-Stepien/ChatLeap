@@ -5,6 +5,7 @@ import { ThemeContext } from "../context/ThemeContext";
 import Sidebar from ".././components/Sidebar";
 import Navbar from "../components/Navbar";
 import Posts from "../components/Posts";
+import Friends from "../components/Friends";
 import Settings from "../components/Settings";
 
 import classes from "./Main.module.scss";
@@ -14,7 +15,7 @@ function Main() {
   const { mode, accent, setMode } = useContext(ThemeContext);
   const theme = mode + accent;
   const styleClasses = [classes[theme], classes.page];
-  const [isOpen, setIsOpen] = useState("main");
+  const [openTab, setOpenTab] = useState("main");
 
   function handleClick() {
     navigate("/login");
@@ -23,12 +24,13 @@ function Main() {
   return (
     <div className={styleClasses.join(" ")}>
       <aside className={classes.aside}>
-        <Sidebar changeOpenTab={setIsOpen} />
+        <Sidebar changeOpenTab={setOpenTab} openTab={openTab} />
       </aside>
       <div className={classes.main}>
         <Navbar />
-        {isOpen === "main" && <Posts />}
-        {isOpen === "settings" && <Settings />}
+        {openTab === "main" && <Posts />}
+        {openTab === "settings" && <Settings />}
+        {openTab === "friends" && <Friends />}
       </div>
     </div>
   );

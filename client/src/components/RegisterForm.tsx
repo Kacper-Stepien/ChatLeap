@@ -140,6 +140,9 @@ const RegisterForm: React.FC<Props> = (props) => {
         setTimeout(() => {
           setRedirectToLogin(true);
         }, 2000);
+      } else if (response.status === "error") {
+        props.openModal("Error", response.message, ModalType.ERROR);
+        return;
       }
     } catch (error) {
       props.openModal(
