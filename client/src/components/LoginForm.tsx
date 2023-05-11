@@ -6,6 +6,7 @@ import Validator from "../utils/Validator";
 import useInput from "../hooks/use-input";
 import logIn from "../utils/Login";
 import { ModalType } from "../hooks/use-modal";
+import LoadingSPpinner from "../components/LoadingSpinner";
 import classes from "./Form.module.scss";
 
 type Props = {
@@ -21,6 +22,8 @@ const LoginForm: React.FC<Props> = (props) => {
 
   const { setLoggedIn, setUser, setToken, userName } = useContext(AuthContext);
   const [redirectToHome, setRedirectToHome] = useState(false);
+
+  const [isLoading, setIsLoading] = useState(false);
 
   const {
     value: enteredEmail,
@@ -50,12 +53,15 @@ const LoginForm: React.FC<Props> = (props) => {
       return;
     }
     try {
+      setIsLoading(true);
       const result = await logIn(enteredEmail, enteredPassword);
       console.log(result);
       if (result.status === "fail") {
+        setIsLoading(false);
         props.openModal("Error", result.message, ModalType.ERROR);
         console.log(result.status);
       } else if (result.status === "success") {
+        setIsLoading(false);
         setLoggedIn(true);
         setUser({
           userID: result.data._id,
@@ -69,9 +75,11 @@ const LoginForm: React.FC<Props> = (props) => {
           setRedirectToHome(true);
         }, 200);
       } else if (result.status === "error") {
+        setIsLoading(false);
         props.openModal("Error", result.message, ModalType.ERROR);
       }
     } catch (error) {
+      setIsLoading(false);
       console.log(error);
       props.openModal(
         "Error",
@@ -112,6 +120,7 @@ const LoginForm: React.FC<Props> = (props) => {
         </Link>
       </div>
       {redirectToHome && <Navigate to="/" />}
+      {isLoading && <LoadingSPpinner />}
     </form>
   );
 };

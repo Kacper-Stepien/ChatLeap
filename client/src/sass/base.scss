@@ -15,16 +15,12 @@ html {
 body {
   box-sizing: border-box;
   font-family: $font-primary;
-
   color: white;
 }
 
-.green {
-  $color-primary: $color-green-1;
-  $color-primary-light: $color-green-2;
-}
-
-.purple {
-  $color-primary: $color-indigo-1;
-  $color-primary-light: $color-indigo-2;
+// Media Queries
+@media only screen and (max-width: 500px) {
+  html {
+    font-size: 50%;
+  }
 }

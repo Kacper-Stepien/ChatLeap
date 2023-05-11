@@ -217,3 +217,11 @@
     }
   }
 }
+
+// Media queries
+@media only screen and (max-width: 500px) {
+  .form {
+    min-width: auto;
+    width: 100%;
+  }
+}

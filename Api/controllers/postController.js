@@ -18,8 +18,9 @@ exports.createPost = catchAsync(async (req, res, next) => {
   const { text } = req.body;
   const author = req.user.id;
   const user = await User.findById(author);
+  const date = Date.now();
 
-  let post = await Post.create({ text, author });
+  let post = await Post.create({ text, author, createdAt: date });
   post.author = user;
   console.log(post);
 
