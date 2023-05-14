@@ -2,7 +2,7 @@
 
 .user {
   width: 100%;
-  padding: 1rem;
+  padding: 0.5rem;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -44,3 +44,29 @@ button {
     transform: translateX(5px) scale(1.1);
   }
 }
+
+@media only screen and (max-width: 800px) {
+  // .user {
+  //   padding: 0.5rem 0;
+  // }
+
+  // img {
+  //   max-width: 8rem;
+  //   max-height: 8rem;
+  // }
+
+  // .userName {
+  //   font-size: 1.4rem;
+  // }
+
+  // .userNick {
+  //   font-size: 1rem;
+  // }
+}
+
+// @media only screen and (max-width: 600px) {
+//   img {
+//     max-width: 6rem;
+//     max-height: 6rem;
+//   }
+// }

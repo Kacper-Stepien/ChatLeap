@@ -8,6 +8,12 @@
   align-items: center;
 }
 
+.menu {
+  align-self: center;
+  margin-right: auto;
+  padding-right: 2rem;
+}
+
 .darkIndigo {
   &.navbar {
     background-color: $color-grey-dark-3;
@@ -31,5 +37,12 @@
   &.navbar {
     background-color: $color-grey-light-1;
     color: $color-grey-dark-3;
+  }
+}
+
+// MEDIA QUERIES
+@media only screen and (min-width: 600px) {
+  .menu {
+    display: none;
   }
 }

@@ -9,7 +9,8 @@
 }
 
 .aside {
-  min-width: 25rem;
+  max-width: 25rem;
+  width: 100%;
   position: static;
   background-color: red;
 }
@@ -46,5 +47,18 @@
 .lightTeal {
   .aside {
     background: linear-gradient(to right bottom, $color-teal-2, $color-teal-1);
+  }
+}
+
+// MEDIA QUERIES
+@media only screen and (max-width: 800px) {
+  .aside {
+    max-width: 20rem;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .aside {
+    display: none;
   }
 }
