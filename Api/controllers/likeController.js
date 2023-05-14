@@ -48,7 +48,6 @@ exports.deleteLike = catchAsync(async (req, res, next) => {
   }
 
   await Like.deleteOne({ post: postId, author: userId });
-  console.log(like);
 
   // Remove like from post
   await Post.findByIdAndUpdate(
@@ -76,7 +75,6 @@ exports.toggleLike = catchAsync(async (req, res, next) => {
   const like = await Like.findOne({ post: postId, author: userId });
   if (like) {
     await Like.deleteOne({ post: postId, author: userId });
-    console.log(like);
 
     // Remove like from post
     await Post.findByIdAndUpdate(

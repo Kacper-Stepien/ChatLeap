@@ -75,6 +75,14 @@
   &:hover {
     transform: translateY(-2px);
   }
+
+  &:disabled {
+    cursor: not-allowed;
+    filter: brightness(0.7);
+    &:hover {
+      transform: translateY(0);
+    }
+  }
 }
 
 .dark {

@@ -1,6 +1,7 @@
 import React, { useRef } from "react";
 import classes from "./AddComment.module.scss";
 import CommentModel from ".././models/Comment";
+import LoadingSPpinner from "./LoadingSpinner";
 
 type AddCommentProps = {
   mode: string;
@@ -21,11 +22,13 @@ const AddComment: React.FC<AddCommentProps> = ({
 }) => {
   const styleClasses = [classes[mode], classes.comment];
   const inputRef = useRef<HTMLInputElement>(null);
+  const [loading, setLoading] = React.useState(false);
 
   const addComment = async () => {
     const address =
       process.env.REACT_APP_SERVER + "/posts/" + postID + "/comments";
     try {
+      setLoading(true);
       const response = await fetch(address, {
         method: "POST",
         headers: {
@@ -38,6 +41,7 @@ const AddComment: React.FC<AddCommentProps> = ({
       });
 
       const data = await response.json();
+      setLoading(false);
       if (data.status === "success") {
         setComments([...comments, data.data.comment]);
         inputRef.current!.value = "";
@@ -64,6 +68,7 @@ const AddComment: React.FC<AddCommentProps> = ({
       <button className={classes.addButton} onClick={addComment}>
         Add
       </button>
+      {loading && <LoadingSPpinner />}
     </div>
   );
 };

@@ -17,6 +17,7 @@ import LikeModel from ".././models/Like";
 import CommentModel from ".././models/Comment";
 import formatDate from "../utils/FormatDate";
 import LoadingSPpinner from "./LoadingSpinner";
+import { ModalType } from "../hooks/use-modal";
 
 import classes from "./Post.module.scss";
 
@@ -24,9 +25,15 @@ type PostProps = {
   post: PostModel;
   deletePost: (id: string) => void;
   updatePost: (id: string, text: string) => void;
+  openModal: (title: string, content: string, type: ModalType) => void;
 };
 
-const Post: React.FC<PostProps> = ({ post, deletePost, updatePost }) => {
+const Post: React.FC<PostProps> = ({
+  post,
+  deletePost,
+  updatePost,
+  openModal,
+}) => {
   const { mode, accent } = useContext(ThemeContext);
   const theme = mode + accent;
   const styleClasses = [classes[theme], classes.allPost];
@@ -67,7 +74,9 @@ const Post: React.FC<PostProps> = ({ post, deletePost, updatePost }) => {
         setUserLike(!userLike);
         setPostLikes(data.data.likes);
       }
-    } catch (err) {}
+    } catch (err) {
+      openModal("Error", "Problem with server", ModalType.ERROR);
+    }
   };
 
   const showComments = async () => {
@@ -86,12 +95,15 @@ const Post: React.FC<PostProps> = ({ post, deletePost, updatePost }) => {
         },
       });
       const data = await response.json();
-      console.log(data);
       if (data.status === "success") {
         setPostComments(data.data.comments);
         setCommentsOpen(true);
+      } else {
+        openModal("Error", data.message, ModalType.ERROR);
       }
-    } catch (err) {}
+    } catch (err) {
+      openModal("Error", "Problem with server", ModalType.ERROR);
+    }
   };
 
   const updateComment = async (id: string, text: string) => {
@@ -119,10 +131,11 @@ const Post: React.FC<PostProps> = ({ post, deletePost, updatePost }) => {
           })
         );
       } else if (data.status === "fail" || data.status === "error") {
-        alert(data.message);
+        openModal("Error", data.message, ModalType.ERROR);
       }
     } catch (err) {
       setLoading(false);
+      openModal("Error", "Problem with server", ModalType.ERROR);
     }
   };
 
@@ -146,10 +159,10 @@ const Post: React.FC<PostProps> = ({ post, deletePost, updatePost }) => {
       const data = await response.json();
       setLoading(false);
       if (data.status === "fail" || data.status === "error") {
-        alert(data.message);
+        openModal("Error", data.message, ModalType.ERROR);
       }
     } catch (err) {
-      setLoading(false);
+      openModal("Error", "Problem with server", ModalType.ERROR);
     }
   };
 

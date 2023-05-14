@@ -100,7 +100,6 @@ exports.getPostsByUser = catchAsync(async (req, res, next) => {
     .populate("comments")
     .populate("likes");
 
-  console.log(posts);
   res.status(200).json({
     status: "success",
     data: {

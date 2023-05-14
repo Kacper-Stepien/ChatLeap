@@ -27,7 +27,6 @@ exports.createPost = catchAsync(async (req, res, next) => {
     modifiedAt: date,
   });
   post.author = user;
-  console.log(post);
 
   // add post to user
   user.posts.push(post);
@@ -111,12 +110,14 @@ exports.deletePost = catchAsync(async (req, res, next) => {
 });
 
 exports.getAllPosts = catchAsync(async (req, res, next) => {
-  console.log(req.query);
   const features = new CustomQuery(
     Post.find().populate("author"),
     req.query
   ).paginate();
-  const posts = await features.query.populate("likes").populate("comments");
+  const posts = await features.query
+    .populate("likes")
+    .populate("comments")
+    .sort({ createdAt: -1 });
   res.status(200).json({
     status: "success",
     data: {

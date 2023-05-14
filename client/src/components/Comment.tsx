@@ -28,6 +28,16 @@ const Comment: React.FC<Props> = ({
     setUpdateOpen(!updateOpen);
   };
 
+  const [disableUpdateBtn, setDisableUpdateBtn] = useState(false);
+
+  const handleTextAreaChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    if (e.target.value.length >= 3) {
+      setDisableUpdateBtn(false);
+    } else {
+      setDisableUpdateBtn(true);
+    }
+  };
+
   return (
     <div key={comment._id} className={styleClasses.join(" ")}>
       <div className={classes.userPhoto}>
@@ -42,8 +52,10 @@ const Comment: React.FC<Props> = ({
             <textarea
               className={classes.textArea}
               ref={textAreaRef}
+              minLength={3}
               maxLength={150}
               defaultValue={comment.text}
+              onChange={handleTextAreaChange}
             />
             <button
               className={classes.updateCommentBtn}
@@ -53,6 +65,7 @@ const Comment: React.FC<Props> = ({
                   toggleUpdate();
                 }
               }}
+              disabled={disableUpdateBtn}
             >
               Update
             </button>

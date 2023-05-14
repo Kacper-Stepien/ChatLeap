@@ -1,5 +1,4 @@
 class AppError extends Error {
-  // Custom error class
   constructor(message, statusCode, errors = undefined) {
     super(message);
     this.statusCode = statusCode;

@@ -11,11 +11,6 @@ router
   .patch(authController.protect, commentController.updateComment)
   .delete(authController.protect, commentController.deleteComment);
 
-// router
-//   .route("/:id/comment")
-//   .post(authController.protect, commentController.createComment)
-//   .patch(authController.protect, commentController.updateComment);
-
 router;
 
 module.exports = router;

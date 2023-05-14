@@ -43,6 +43,14 @@
   &:hover {
     transform: translateY(-3px);
   }
+
+  &:disabled {
+    cursor: not-allowed;
+    filter: brightness(0.7);
+    &:hover {
+      transform: translateY(0);
+    }
+  }
 }
 
 .darkIndigo {

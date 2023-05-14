@@ -4,6 +4,8 @@ import { AuthContext } from "../context/AuthContext";
 import { ThemeContext } from "../context/ThemeContext";
 import UserModel from "../models/Author";
 import PostModel from "../models/Post";
+import useModal from "../hooks/use-modal";
+import { ModalType } from "../hooks/use-modal";
 
 import SimpleNavbar from "../components/SimpleNavbar";
 import UserInfo from "./../components/UserInfo";
@@ -19,6 +21,15 @@ const User: React.FC = () => {
   const { mode, accent } = useContext(ThemeContext);
   const theme = mode + accent;
   const styleClasses = [classes[theme], classes.container];
+
+  const {
+    modalTitle,
+    modalContent,
+    modalType,
+    isModalOpen,
+    openModal,
+    closeModal,
+  } = useModal();
 
   const getUser = async () => {
     const address = process.env.REACT_APP_SERVER + "/users/" + id;
@@ -127,7 +138,12 @@ const User: React.FC = () => {
       <div className={styleClasses.join(" ")}>
         <UserInfo user={user} posts={posts} theme={theme} />
         {posts.map((post) => (
-          <Post post={post} deletePost={deletePost} updatePost={updatePost} />
+          <Post
+            post={post}
+            deletePost={deletePost}
+            updatePost={updatePost}
+            openModal={openModal}
+          />
         ))}
       </div>
     </>

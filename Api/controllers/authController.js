@@ -37,7 +37,7 @@ exports.signUp = catchAsync(async (req, res, next) => {
     passwordConfirm,
   });
 
-  newUser.password = undefined; // Hide password from response
+  newUser.password = undefined;
   newUser.passwordConfirm = undefined;
 
   res.status(201).json({
@@ -94,7 +94,6 @@ exports.protect = catchAsync(async (req, res, next) => {
   let decodedToken;
 
   decodedToken = await jwt.verify(token, process.env.JWT_SECRET);
-  console.log(decodedToken);
 
   if (!decodedToken) {
     return next(new AppError("You're not logged in. Please login", 401));

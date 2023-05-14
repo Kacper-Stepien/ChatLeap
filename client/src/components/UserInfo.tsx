@@ -11,13 +11,15 @@ type Props = {
 
 const UserInfo: React.FC<Props> = ({ user, posts, theme }) => {
   const styleClasses = [classes[theme], classes.container];
+  let userFullName = "";
+  if (user) userFullName = user.name + " " + user.surname;
   return (
     <div className={styleClasses.join(" ")}>
       <div className={classes.userPhoto}>
         <img src="/user.jpg" />
       </div>
       <div className={classes.userInfo}>
-        <p className={classes.userName}>{user?.name + " " + user?.surname}</p>
+        <p className={classes.userName}>{userFullName}</p>
         <p className={classes.userNick}>{user?.nick}</p>
       </div>
     </div>

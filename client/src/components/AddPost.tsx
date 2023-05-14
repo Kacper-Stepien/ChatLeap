@@ -1,4 +1,4 @@
-import { useContext, useRef } from "react";
+import { useContext, useRef, useState } from "react";
 import { ThemeContext } from "../context/ThemeContext";
 import { AuthContext } from "../context/AuthContext";
 import classes from "./AddPost.module.scss";
@@ -13,6 +13,7 @@ const AddPost: React.FC<AddPostProps> = ({ addPost }) => {
   const styleClasses = [classes[theme], classes.addPost];
 
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
+  const [showButton, setShowButton] = useState<boolean>(false);
 
   const clearTextArea = () => {
     textAreaRef.current!.value = "";
@@ -22,7 +23,7 @@ const AddPost: React.FC<AddPostProps> = ({ addPost }) => {
     if (
       textAreaRef.current?.value &&
       textAreaRef.current?.value?.length >= 3 &&
-      textAreaRef.current?.value?.length <= 150
+      textAreaRef.current?.value?.length <= 250
     ) {
       addPost(textAreaRef.current.value);
       clearTextArea();
@@ -38,10 +39,22 @@ const AddPost: React.FC<AddPostProps> = ({ addPost }) => {
       <textarea
         ref={textAreaRef}
         className={classes.textarea}
+        minLength={3}
         maxLength={250}
         placeholder={"What's on your mind " + userName + "?"}
+        onChange={(e) => {
+          if (e.target.value.length >= 3) {
+            setShowButton(true);
+          } else {
+            setShowButton(false);
+          }
+        }}
       ></textarea>
-      <button className={classes.shareButton} onClick={handleClick}>
+      <button
+        className={classes.shareButton}
+        onClick={handleClick}
+        disabled={!showButton}
+      >
         Share
       </button>
     </div>
