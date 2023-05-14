@@ -25,12 +25,14 @@ img {
   font-size: 1.6rem;
   font-weight: 700;
   margin-bottom: 1rem;
+  cursor: pointer;
 }
 
 .userNick {
   font-size: 1.2rem;
   font-weight: 400;
   margin-bottom: 1rem;
+  cursor: pointer;
 }
 
 button {
@@ -44,29 +46,3 @@ button {
     transform: translateX(5px) scale(1.1);
   }
 }
-
-@media only screen and (max-width: 800px) {
-  // .user {
-  //   padding: 0.5rem 0;
-  // }
-
-  // img {
-  //   max-width: 8rem;
-  //   max-height: 8rem;
-  // }
-
-  // .userName {
-  //   font-size: 1.4rem;
-  // }
-
-  // .userNick {
-  //   font-size: 1rem;
-  // }
-}
-
-// @media only screen and (max-width: 600px) {
-//   img {
-//     max-width: 6rem;
-//     max-height: 6rem;
-//   }
-// }

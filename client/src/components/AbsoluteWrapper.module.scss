@@ -18,13 +18,11 @@
   background-color: white;
 }
 
-.darkIndigo {
-  .box {
-    background-color: $color-grey-dark-3;
-  }
-}
-
-.darkTeal {
+.darkIndigo,
+.darkTeal,
+.darkOrange,
+.darkPink,
+.darkGreen {
   .box {
     background-color: $color-grey-dark-3;
   }
@@ -32,13 +30,43 @@
 
 .lightIndigo {
   .box {
-    background-color: $color-indigo-1;
+    background: linear-gradient(
+      to right bottom,
+      $color-indigo-1,
+      $color-indigo-2
+    );
   }
 }
 
 .lightTeal {
   .box {
-    background-color: $color-teal-1;
+    background: linear-gradient(to right bottom, $color-teal-1, $color-teal-2);
+  }
+}
+
+.lightOrange {
+  .box {
+    background: linear-gradient(
+      to right bottom,
+      $color-orange-1,
+      $color-orange-2
+    );
+  }
+}
+
+.lightPink {
+  .box {
+    background: linear-gradient(to right bottom, $color-pink-1, $color-pink-2);
+  }
+}
+
+.lightGreen {
+  .box {
+    background: linear-gradient(
+      to right bottom,
+      $color-green-1,
+      $color-green-2
+    );
   }
 }
 

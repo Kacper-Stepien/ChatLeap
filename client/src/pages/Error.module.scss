@@ -61,3 +61,69 @@
     color: $color-teal-1;
   }
 }
+
+.darkOrange {
+  &.error {
+    background-color: $color-grey-dark-3;
+    color: $color-white;
+  }
+
+  h1 {
+    color: $color-orange-1;
+  }
+}
+
+.lightOrange {
+  &.error {
+    background-color: $color-white;
+    color: $color-grey-dark-3;
+  }
+
+  h1 {
+    color: $color-orange-1;
+  }
+}
+
+.darkPink {
+  &.error {
+    background-color: $color-grey-dark-3;
+    color: $color-white;
+  }
+
+  h1 {
+    color: $color-pink-1;
+  }
+}
+
+.lightPink {
+  &.error {
+    background-color: $color-white;
+    color: $color-grey-dark-3;
+  }
+
+  h1 {
+    color: $color-pink-1;
+  }
+}
+
+.darkGreen {
+  &.error {
+    background-color: $color-grey-dark-3;
+    color: $color-white;
+  }
+
+  h1 {
+    color: $color-green-1;
+  }
+}
+
+.lightGreen {
+  &.error {
+    background-color: $color-white;
+    color: $color-grey-dark-3;
+  }
+
+  h1 {
+    color: $color-green-1;
+  }
+}

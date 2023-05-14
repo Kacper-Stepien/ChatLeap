@@ -65,3 +65,60 @@
     }
   }
 }
+
+.darkOrange {
+  button {
+    &.active {
+      background-color: $color-orange-1;
+    }
+  }
+}
+
+.lightOrange {
+  button {
+    color: $color-white;
+
+    &.active {
+      background-color: $color-white;
+      color: $color-orange-1;
+    }
+  }
+}
+
+.darkPink {
+  button {
+    &.active {
+      background-color: $color-pink-1;
+    }
+  }
+}
+
+.lightPink {
+  button {
+    color: $color-white;
+
+    &.active {
+      background-color: $color-white;
+      color: $color-pink-1;
+    }
+  }
+}
+
+.darkGreen {
+  button {
+    &.active {
+      background-color: $color-green-1;
+    }
+  }
+}
+
+.lightGreen {
+  button {
+    color: $color-white;
+
+    &.active {
+      background-color: $color-white;
+      color: $color-green-1;
+    }
+  }
+}

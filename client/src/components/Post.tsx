@@ -1,6 +1,7 @@
 import { useContext, useState, useRef } from "react";
 import { ThemeContext } from "../context/ThemeContext";
 import { AuthContext } from "../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 import {
   FaRegComment,
   FaComment,
@@ -55,6 +56,7 @@ const Post: React.FC<PostProps> = ({
   let userIsAnAuthor: boolean = false;
 
   const [loading, setLoading] = useState<boolean>(false);
+  const navigate = useNavigate();
 
   if (post.author._id === userID) userIsAnAuthor = true;
 
@@ -171,17 +173,27 @@ const Post: React.FC<PostProps> = ({
     setUpdateOpen(!updateOpen);
   };
 
+  const openUserPage = () => {
+    navigate("/user/" + post.author._id);
+  };
+
   return (
     <div key={post._id} className={styleClasses.join(" ")}>
       <div className={classes.post}>
         <div className={classes.postHeader}>
           <div className={classes.postUser}>
-            <img className={classes.postUserImage} src="/user.jpg" />
+            <img
+              className={classes.postUserImage}
+              src="/user.jpg"
+              onClick={openUserPage}
+            />
             <div className={classes.postUserData}>
-              <p className={classes.postUsername}>
+              <p className={classes.postUsername} onClick={openUserPage}>
                 {post.author.name + " " + post.author.surname}
               </p>
-              <p className={classes.postUserNick}>{post.author.nick}</p>
+              <p className={classes.postUserNick} onClick={openUserPage}>
+                {post.author.nick}
+              </p>
             </div>
           </div>
           <div className={classes.postMenu}>

@@ -43,12 +43,54 @@
 
 .darkTeal {
   &.container {
-    background-color: $color-grey-dark-1;
+    background-color: $color-grey-dark-2;
     color: $color-white;
   }
 }
 
 .lightTeal {
+  &.container {
+    background-color: $color-white;
+    color: $color-grey-dark-3;
+  }
+}
+
+.darkOrange {
+  &.container {
+    background-color: $color-grey-dark-2;
+    color: $color-white;
+  }
+}
+
+.lightOrange {
+  &.container {
+    background-color: $color-white;
+    color: $color-grey-dark-3;
+  }
+}
+
+.darkPink {
+  &.container {
+    background-color: $color-grey-dark-2;
+    color: $color-white;
+  }
+}
+
+.lightPink {
+  &.container {
+    background-color: $color-white;
+    color: $color-grey-dark-3;
+  }
+}
+
+.darkGreen {
+  &.container {
+    background-color: $color-grey-dark-2;
+    color: $color-white;
+  }
+}
+
+.lightGreen {
   &.container {
     background-color: $color-white;
     color: $color-grey-dark-3;

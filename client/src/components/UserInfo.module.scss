@@ -58,3 +58,50 @@
     color: $color-white;
   }
 }
+
+.darkOrange {
+  &.container {
+    background: linear-gradient(to right, $color-orange-1, $color-orange-2);
+  }
+}
+
+.lightOrange {
+  &.container {
+    background: linear-gradient(to right, $color-orange-1, $color-orange-2);
+    color: $color-white;
+  }
+}
+
+.darkPink {
+  &.container {
+    background: linear-gradient(to right bottom, $color-pink-1, $color-pink-2);
+  }
+}
+
+.lightPink {
+  &.container {
+    background: linear-gradient(to right bottom, $color-pink-1, $color-pink-2);
+    color: $color-white;
+  }
+}
+
+.darkGreen {
+  &.container {
+    background: linear-gradient(
+      to right bottom,
+      $color-green-1,
+      $color-green-2
+    );
+  }
+}
+
+.lightGreen {
+  &.container {
+    background: linear-gradient(
+      to right bottom,
+      $color-green-1,
+      $color-green-2
+    );
+    color: $color-white;
+  }
+}

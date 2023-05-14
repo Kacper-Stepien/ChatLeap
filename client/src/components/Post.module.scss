@@ -33,11 +33,13 @@
 .postUsername {
   font-size: 1.8rem;
   font-weight: 500;
+  cursor: pointer;
 }
 
 .postUserNick {
   font-size: 1.4rem;
   font-weight: 300;
+  cursor: pointer;
 }
 
 .postUserImage {
@@ -45,6 +47,7 @@
   height: 6rem;
   margin-bottom: 0;
   border-radius: 50%;
+  cursor: pointer;
 }
 
 .postMenu {
@@ -266,5 +269,167 @@
 
   .updateButton {
     background-color: $color-teal-1;
+  }
+}
+
+.darkOrange {
+  &.allPost {
+    background-color: $color-grey-dark-3;
+    color: $color-white;
+  }
+
+  .postFooterAction,
+  .postFooterHashtags p {
+    color: $color-orange-1;
+  }
+
+  .postMenu {
+    button {
+      color: $color-grey-dark-2;
+      &:hover {
+        color: $color-white;
+      }
+    }
+  }
+
+  .updateButton {
+    background-color: $color-orange-1;
+  }
+}
+
+.lightOrange {
+  &.allPost {
+    background-color: $color-white;
+    color: $color-grey-dark-3;
+  }
+
+  .postFooterAction,
+  .postFooterHashtags p {
+    color: $color-orange-1;
+  }
+
+  .comments {
+    color: $color-grey-dark-3;
+  }
+
+  .postMenu {
+    button {
+      color: $color-grey-light-1;
+      &:hover {
+        color: $color-grey-dark-3;
+      }
+    }
+  }
+
+  .updateButton {
+    background-color: $color-orange-1;
+  }
+}
+
+.darkPink {
+  &.allPost {
+    background-color: $color-grey-dark-3;
+    color: $color-white;
+  }
+
+  .postFooterAction,
+  .postFooterHashtags p {
+    color: $color-pink-1;
+  }
+
+  .postMenu {
+    button {
+      color: $color-grey-dark-2;
+      &:hover {
+        color: $color-white;
+      }
+    }
+  }
+
+  .updateButton {
+    background-color: $color-pink-1;
+  }
+}
+
+.lightPink {
+  &.allPost {
+    background-color: $color-white;
+    color: $color-grey-dark-3;
+  }
+
+  .postFooterAction,
+  .postFooterHashtags p {
+    color: $color-pink-1;
+  }
+
+  .comments {
+    color: $color-grey-dark-3;
+  }
+
+  .postMenu {
+    button {
+      color: $color-grey-light-1;
+      &:hover {
+        color: $color-grey-dark-3;
+      }
+    }
+  }
+
+  .updateButton {
+    background-color: $color-pink-1;
+  }
+}
+
+.darkGreen {
+  &.allPost {
+    background-color: $color-grey-dark-3;
+    color: $color-white;
+  }
+
+  .postFooterAction,
+  .postFooterHashtags p {
+    color: $color-green-1;
+  }
+
+  .postMenu {
+    button {
+      color: $color-grey-dark-2;
+      &:hover {
+        color: $color-white;
+      }
+    }
+  }
+
+  .updateButton {
+    background-color: $color-green-1;
+  }
+}
+
+.lightGreen {
+  &.allPost {
+    background-color: $color-white;
+    color: $color-grey-dark-3;
+  }
+
+  .postFooterAction,
+  .postFooterHashtags p {
+    color: $color-green-1;
+  }
+
+  .comments {
+    color: $color-grey-dark-3;
+  }
+
+  .postMenu {
+    button {
+      color: $color-grey-light-1;
+      &:hover {
+        color: $color-grey-dark-3;
+      }
+    }
+  }
+
+  .updateButton {
+    background-color: $color-green-1;
   }
 }

@@ -34,3 +34,39 @@
     background-color: $color-grey-light-1;
   }
 }
+
+.darkOrange {
+  &.container {
+    background-color: $color-grey-dark-2;
+  }
+}
+
+.lightOrange {
+  &.container {
+    background-color: $color-grey-light-1;
+  }
+}
+
+.darkPink {
+  &.container {
+    background-color: $color-grey-dark-2;
+  }
+}
+
+.lightPink {
+  &.container {
+    background-color: $color-grey-light-1;
+  }
+}
+
+.darkGreen {
+  &.container {
+    background-color: $color-grey-dark-2;
+  }
+}
+
+.lightGreen {
+  &.container {
+    background-color: $color-grey-light-1;
+  }
+}

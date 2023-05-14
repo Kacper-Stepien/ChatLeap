@@ -72,6 +72,59 @@ h1 {
   }
 }
 
+.darkOrange {
+  &.page {
+    background-color: $color-grey-dark-1;
+  }
+
+  .formArea {
+    background-color: $color-grey-dark-3;
+  }
+
+  h1 {
+    color: $color-orange-1;
+  }
+  .themeButton {
+    color: $color-white;
+  }
+}
+
+.darkPink {
+  &.page {
+    background-color: $color-grey-dark-1;
+  }
+
+  .formArea {
+    background-color: $color-grey-dark-3;
+  }
+
+  h1 {
+    color: $color-pink-1;
+  }
+
+  .themeButton {
+    color: $color-white;
+  }
+}
+
+.darkGreen {
+  &.page {
+    background-color: $color-grey-dark-1;
+  }
+
+  .formArea {
+    background-color: $color-grey-dark-3;
+  }
+
+  h1 {
+    color: $color-green-1;
+  }
+
+  .themeButton {
+    color: $color-white;
+  }
+}
+
 .lightIndigo {
   &.page {
     background-color: $color-white;
@@ -101,6 +154,60 @@ h1 {
 
   h1 {
     color: $color-teal-1;
+  }
+
+  .themeButton {
+    color: $color-grey-dark-3;
+  }
+}
+
+.lightOrange {
+  &.page {
+    background-color: $color-white;
+  }
+
+  .formArea {
+    background-color: $color-grey-light-1;
+  }
+
+  h1 {
+    color: $color-orange-1;
+  }
+
+  .themeButton {
+    color: $color-grey-dark-3;
+  }
+}
+
+.lightPink {
+  &.page {
+    background-color: $color-white;
+  }
+
+  .formArea {
+    background-color: $color-grey-light-1;
+  }
+
+  h1 {
+    color: $color-pink-1;
+  }
+
+  .themeButton {
+    color: $color-grey-dark-3;
+  }
+}
+
+.lightGreen {
+  &.page {
+    background-color: $color-white;
+  }
+
+  .formArea {
+    background-color: $color-grey-light-1;
+  }
+
+  h1 {
+    color: $color-green-1;
   }
 
   .themeButton {

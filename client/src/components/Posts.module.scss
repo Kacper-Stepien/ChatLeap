@@ -25,6 +25,24 @@
   }
 }
 
+.darkOrange {
+  &.posts {
+    background-color: $color-grey-dark-2;
+  }
+}
+
+.darkPink {
+  &.posts {
+    background-color: $color-grey-dark-2;
+  }
+}
+
+.darkGreen {
+  &.posts {
+    background-color: $color-grey-dark-2;
+  }
+}
+
 .lightIndigo {
   &.posts {
     background-color: $color-white;
@@ -36,6 +54,36 @@
 }
 
 .lightTeal {
+  &.posts {
+    background-color: $color-white;
+  }
+
+  .noPosts {
+    color: $color-grey-dark-3;
+  }
+}
+
+.lightOrange {
+  &.posts {
+    background-color: $color-white;
+  }
+
+  .noPosts {
+    color: $color-grey-dark-3;
+  }
+}
+
+.lightPink {
+  &.posts {
+    background-color: $color-white;
+  }
+
+  .noPosts {
+    color: $color-grey-dark-3;
+  }
+}
+
+.lightGreen {
   &.posts {
     background-color: $color-white;
   }

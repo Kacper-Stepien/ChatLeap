@@ -11,6 +11,9 @@ const Settings: React.FC = () => {
   const lightBtnClasses: string[] = [classes.modeLightBtn];
   const indigoBtnClasses: string[] = [classes.accentIndigoBtn];
   const tealBtnClasses: string[] = [classes.accentTealBtn];
+  const orangeBtnClasses: string[] = [classes.accentOrangeBtn];
+  const pinkBtnClasses: string[] = [classes.accentPinkBtn];
+  const greenBtnClasses: string[] = [classes.accentGreenBtn];
 
   if (mode === "dark") {
     darkBtnClasses.push(classes.active);
@@ -25,6 +28,18 @@ const Settings: React.FC = () => {
 
   if (accent === "Teal") {
     tealBtnClasses.push(classes.active);
+  }
+
+  if (accent === "Orange") {
+    orangeBtnClasses.push(classes.active);
+  }
+
+  if (accent === "Pink") {
+    pinkBtnClasses.push(classes.active);
+  }
+
+  if (accent === "Green") {
+    greenBtnClasses.push(classes.active);
   }
 
   return (
@@ -61,6 +76,24 @@ const Settings: React.FC = () => {
               className={tealBtnClasses.join(" ")}
               onClick={() => {
                 setAccent("Teal");
+              }}
+            ></button>
+            <button
+              className={orangeBtnClasses.join(" ")}
+              onClick={() => {
+                setAccent("Orange");
+              }}
+            ></button>
+            <button
+              className={pinkBtnClasses.join(" ")}
+              onClick={() => {
+                setAccent("Pink");
+              }}
+            ></button>
+            <button
+              className={greenBtnClasses.join(" ")}
+              onClick={() => {
+                setAccent("Green");
               }}
             ></button>
           </div>
