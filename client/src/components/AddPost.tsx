@@ -1,6 +1,8 @@
 import { useContext, useRef, useState } from "react";
+
 import { ThemeContext } from "../context/ThemeContext";
 import { AuthContext } from "../context/AuthContext";
+
 import classes from "./AddPost.module.scss";
 
 type AddPostProps = {
@@ -51,6 +53,7 @@ const AddPost: React.FC<AddPostProps> = ({ addPost }) => {
         }}
       ></textarea>
       <button
+        aria-label="Add post button"
         className={classes.shareButton}
         onClick={handleClick}
         disabled={!showButton}

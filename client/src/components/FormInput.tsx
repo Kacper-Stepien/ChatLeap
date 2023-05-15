@@ -1,16 +1,6 @@
 import classes from "./../pages/Register.module.scss";
 
 type FormInputProps = {
-  //   id: string;
-  //   type: string;
-  //   placeholder: string;
-  //   value: string;
-  //   isValid: boolean;
-  //   isTouched: boolean;
-  //   hasError: boolean;
-  //   errorMessage: string;
-  //   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  //   onBlur: (event: React.FocusEvent<HTMLInputElement>) => void;
   id: string;
   type: string;
   placeholder: string;
@@ -24,16 +14,6 @@ type FormInputProps = {
 };
 
 const FormInput: React.FC<FormInputProps> = ({
-  //   id,
-  //   type,
-  //   placeholder,
-  //   value,
-  //   isValid,
-  //   isTouched,
-  //   hasError,
-  //   errorMessage,
-  //   onChange,
-  //   onBlur,
   id,
   type,
   placeholder,

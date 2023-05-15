@@ -23,5 +23,5 @@ export const ProtectedRoute = ({ element }: ProtectedRouteProps) => {
     setToken(token);
     return element;
   }
-  return loggedIn ? element : <Navigate to="/login" />;
+  return <Navigate to="/login" />;
 };

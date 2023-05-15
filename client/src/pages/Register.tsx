@@ -6,6 +6,7 @@ import { LoadingSpinnerContext } from "../context/LoadinSpinnerContext";
 import SimpleNavbar from "../components/SimpleNavbar";
 import RegisterForm from "../components/RegisterForm";
 import Footer from "../components/Footer";
+
 import Modal from "../components/Modal";
 import useModal from ".././hooks/use-modal";
 

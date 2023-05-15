@@ -1,8 +1,10 @@
 import { useContext, useState, useRef } from "react";
+import { useNavigate } from "react-router-dom";
+
 import { ThemeContext } from "../context/ThemeContext";
 import { AuthContext } from "../context/AuthContext";
 import { LoadingSpinnerContext } from "../context/LoadinSpinnerContext";
-import { useNavigate } from "react-router-dom";
+
 import {
   FaRegComment,
   FaComment,
@@ -12,13 +14,14 @@ import {
   FaTrashAlt,
   FaEdit,
 } from "react-icons/fa";
+
 import Comment from "./Comment";
 import AddComment from "./AddComment";
 import PostModel from ".././models/Post";
 import LikeModel from ".././models/Like";
 import CommentModel from ".././models/Comment";
-import formatDate from "../utils/FormatDate";
 import { ModalType } from "../hooks/use-modal";
+import formatDate from "../utils/FormatDate";
 
 import classes from "./Post.module.scss";
 
@@ -35,16 +38,20 @@ const Post: React.FC<PostProps> = ({
   updatePost,
   openModal,
 }) => {
+  const { setIsLoading } = useContext(LoadingSpinnerContext);
   const { mode, accent } = useContext(ThemeContext);
   const theme = mode + accent;
   const styleClasses = [classes[theme], classes.allPost];
+
   const { userID, token } = useContext(AuthContext);
+
   const [commentsOpen, setCommentsOpen] = useState<boolean>(false);
+  const [updateOpen, setUpdateOpen] = useState<boolean>(false);
+
   const [postLikes, setPostLikes] = useState<LikeModel[]>(post.likes);
   const [postComments, setPostComments] = useState<CommentModel[]>(
     post.comments
   );
-  const [updateOpen, setUpdateOpen] = useState<boolean>(false);
   const [userLike, setUserLike] = useState<boolean>(
     postLikes.some((like) => like.author === userID)
   );
@@ -55,7 +62,6 @@ const Post: React.FC<PostProps> = ({
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
   let userIsAnAuthor: boolean = false;
 
-  const { setIsLoading } = useContext(LoadingSpinnerContext);
   const navigate = useNavigate();
 
   if (post.author._id === userID) userIsAnAuthor = true;
@@ -185,6 +191,7 @@ const Post: React.FC<PostProps> = ({
             <img
               className={classes.postUserImage}
               src="/user.jpg"
+              alt="User"
               onClick={openUserPage}
             />
             <div className={classes.postUserData}>
@@ -200,13 +207,17 @@ const Post: React.FC<PostProps> = ({
             {userIsAnAuthor && (
               <>
                 <button
+                  aria-label="Delete post button"
                   onClick={() => {
                     deletePost(post._id);
                   }}
                 >
                   <FaTrashAlt />
                 </button>
-                <button onClick={toggleUpdate}>
+                <button
+                  aria-label="Open post edit mode button"
+                  onClick={toggleUpdate}
+                >
                   <FaEdit />
                 </button>
               </>
@@ -229,6 +240,7 @@ const Post: React.FC<PostProps> = ({
               ></textarea>
             }{" "}
             <button
+              aria-label="Update post button"
               className={classes.updateButton}
               onClick={() => {
                 if (textAreaRef.current) {
@@ -245,14 +257,17 @@ const Post: React.FC<PostProps> = ({
         <div className={classes.postFooter}>
           <div className={classes.postFooterActions}>
             <div className={classes.postFooterAction}>
-              <button onClick={toggleLike}>
+              <button
+                aria-label="Add/remove like from post button"
+                onClick={toggleLike}
+              >
                 {userLike ? <FaHeart /> : <FaRegHeart />}
               </button>
 
               <p>{postLikes.length}</p>
             </div>
             <div className={classes.postFooterAction}>
-              <button onClick={showComments}>
+              <button aria-label="Show comments button" onClick={showComments}>
                 {userComment ? <FaComment /> : <FaRegComment />}
               </button>
 
@@ -275,9 +290,11 @@ const Post: React.FC<PostProps> = ({
             token={token}
             comments={postComments}
             setComments={setPostComments}
+            openModal={openModal}
           />
           {postComments.map((comment) => (
             <Comment
+              key={comment._id}
               comment={comment}
               userID={userID}
               mode={mode}
@@ -285,7 +302,11 @@ const Post: React.FC<PostProps> = ({
               deleteComment={deleteComment}
             />
           ))}
-          <button className={classes.closeComments} onClick={showComments}>
+          <button
+            aria-label="Close comments button"
+            className={classes.closeComments}
+            onClick={showComments}
+          >
             <FaAngleUp />
           </button>
         </div>

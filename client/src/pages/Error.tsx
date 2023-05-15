@@ -1,5 +1,7 @@
 import React, { useContext } from "react";
+
 import { ThemeContext } from "../context/ThemeContext";
+
 import styles from "./Error.module.scss";
 
 const ErrorPage: React.FC = () => {

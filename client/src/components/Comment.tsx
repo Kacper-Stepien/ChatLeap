@@ -1,7 +1,10 @@
 import React, { useState, useRef } from "react";
+
 import CommentModel from ".././models/Comment";
+
 import formatDate from "../utils/FormatDate";
 import { FaEdit, FaTrashAlt } from "react-icons/fa";
+
 import classes from "./Comment.module.scss";
 
 type Props = {
@@ -20,15 +23,15 @@ const Comment: React.FC<Props> = ({
   deleteComment,
 }) => {
   const styleClasses = [classes[mode], classes.comment];
+
   const [updateOpen, setUpdateOpen] = useState<boolean>(false);
+  const [disableUpdateBtn, setDisableUpdateBtn] = useState(false);
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
 
   const toggleUpdate = () => {
     textAreaRef.current?.focus();
     setUpdateOpen(!updateOpen);
   };
-
-  const [disableUpdateBtn, setDisableUpdateBtn] = useState(false);
 
   const handleTextAreaChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     if (e.target.value.length >= 3) {
@@ -39,9 +42,9 @@ const Comment: React.FC<Props> = ({
   };
 
   return (
-    <div key={comment._id} className={styleClasses.join(" ")}>
+    <div className={styleClasses.join(" ")}>
       <div className={classes.userPhoto}>
-        <img src="/user.jpg" />
+        <img src="/user.jpg" alt="User" />
       </div>
       <div className={classes.content}>
         <p className={classes.authorName}>
@@ -58,6 +61,7 @@ const Comment: React.FC<Props> = ({
               onChange={handleTextAreaChange}
             />
             <button
+              aria-label="Update comment button"
               className={classes.updateCommentBtn}
               onClick={() => {
                 if (textAreaRef.current) {
@@ -79,6 +83,7 @@ const Comment: React.FC<Props> = ({
           {comment.author._id === userID && (
             <>
               <button
+                aria-label="Delete comment button"
                 className={classes.deleteCommentBtn}
                 onClick={() => {
                   deleteComment(comment._id);
@@ -86,7 +91,11 @@ const Comment: React.FC<Props> = ({
               >
                 <FaTrashAlt />
               </button>
-              <button className={classes.editCommentBtn} onClick={toggleUpdate}>
+              <button
+                aria-label="Open comment edit mode button"
+                className={classes.editCommentBtn}
+                onClick={toggleUpdate}
+              >
                 <FaEdit />
               </button>
             </>

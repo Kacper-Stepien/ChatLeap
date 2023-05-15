@@ -33,6 +33,11 @@
   &:hover {
     transform: none;
   }
+
+  &:disabled {
+    cursor: not-allowed;
+    filter: brightness(0.7);
+  }
 }
 
 .dark {
@@ -42,7 +47,7 @@
   }
   .addButton {
     border: 2px solid $color-grey-dark-2;
-    &:hover {
+    &:hover:not(:disabled) {
       background-color: $color-grey-dark-2;
     }
   }
@@ -58,7 +63,7 @@
     color: $color-grey-dark-3;
     border: 2px solid $color-grey-light-1;
 
-    &:hover {
+    &:hover:not(:disabled) {
       background-color: $color-grey-light-1;
     }
   }

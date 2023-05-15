@@ -32,7 +32,7 @@ const User: React.FC = () => {
       <p className={classes.userNick} onClick={openUserPage}>
         {userNick}
       </p>
-      <button onClick={logoutHandler}>
+      <button aria-label="Logout button" onClick={logoutHandler}>
         <FaSignOutAlt />
       </button>
     </div>

@@ -65,13 +65,13 @@ const App: React.FC = () => {
     if (accent) setAccent(accent);
 
     const token: string = localStorage.readToken();
-    if (token) {
+    const user = localStorage.readUser();
+
+    if (token && user) {
       setLoggedIn(true);
       setToken(token);
+      setUser(user);
     }
-
-    const user = localStorage.readUser();
-    if (user) setUser(user);
   }, []);
 
   return (

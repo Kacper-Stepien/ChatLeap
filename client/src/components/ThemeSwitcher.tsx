@@ -1,6 +1,8 @@
 import { useContext } from "react";
-import { ThemeContext } from "../context/ThemeContext";
 import { FaSun, FaMoon } from "react-icons/fa";
+
+import { ThemeContext } from "../context/ThemeContext";
+
 import LocalStorage from "../utils/LocalStorage";
 
 import classes from "./ThemeSwitcher.module.scss";
@@ -21,7 +23,11 @@ const ThemeSwitcher: React.FC = () => {
   };
 
   return (
-    <button className={styleClasses.join(" ")} onClick={toggleModeHandler}>
+    <button
+      aria-label="Theme switcher button"
+      className={styleClasses.join(" ")}
+      onClick={toggleModeHandler}
+    >
       {mode === "light" ? <FaMoon /> : <FaSun />}
     </button>
   );

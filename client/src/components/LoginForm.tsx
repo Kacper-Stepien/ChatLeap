@@ -58,7 +58,6 @@ const LoginForm: React.FC<Props> = (props) => {
     try {
       setIsLoading(true);
       const result = await logIn(enteredEmail, enteredPassword);
-      console.log(result);
       if (result.status === "fail") {
         setIsLoading(false);
         props.openModal("Error", result.message, ModalType.ERROR);
@@ -91,7 +90,6 @@ const LoginForm: React.FC<Props> = (props) => {
       }
     } catch (error) {
       setIsLoading(false);
-      console.log(error);
       props.openModal(
         "Error",
         "Problem with server. Please try again later.",
@@ -124,7 +122,9 @@ const LoginForm: React.FC<Props> = (props) => {
       </div>
 
       <div className={classes.formActions}>
-        <button type="submit">Login</button>
+        <button aria-label="Login button" type="submit">
+          Login
+        </button>
         <p>Doesn't have an account?</p>
         <Link to="/register" className={classes.link}>
           Register

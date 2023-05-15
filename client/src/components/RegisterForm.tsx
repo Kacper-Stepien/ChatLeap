@@ -1,9 +1,11 @@
 import { useRef, useState } from "react";
 import { Link, Navigate } from "react-router-dom";
+
 import Validator from "../utils/Validator";
 import useInput from "../hooks/use-input";
 import { ModalType } from "../hooks/use-modal";
 import createUser from "../utils/CreateUser";
+
 import classes from "./Form.module.scss";
 
 type Props = {
@@ -227,7 +229,9 @@ const RegisterForm: React.FC<Props> = (props) => {
       </div>
 
       <div className={classes.formActions}>
-        <button type="submit">Register</button>
+        <button aria-label="Register button" type="submit">
+          Register
+        </button>
         <p>Do you have an account?</p>
         <Link to="/login" className={classes.link}>
           Login

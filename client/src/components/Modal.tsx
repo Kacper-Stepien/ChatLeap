@@ -1,6 +1,8 @@
-import ReactDom from "react-dom";
 import { useContext } from "react";
+import ReactDom from "react-dom";
+
 import { ThemeContext } from "../context/ThemeContext";
+
 import classes from "./Modal.module.scss";
 
 enum ModalType {
@@ -19,6 +21,7 @@ type Props = {
 const Modal: React.FC<Props> = ({ title, content, type, close }) => {
   const { mode } = useContext(ThemeContext);
   const styleClasses = [classes[mode], classes.modal];
+
   if (type === ModalType.SUCCESS) {
     styleClasses.push(classes.success);
   } else if (type === ModalType.ERROR) {
@@ -35,7 +38,11 @@ const Modal: React.FC<Props> = ({ title, content, type, close }) => {
       <div className={classes.content}>
         <h2>{title}</h2>
         <p>{content}</p>
-        <button className={classes.closeModal} onClick={closeModal}>
+        <button
+          aria-label="Close modal button"
+          className={classes.closeModal}
+          onClick={closeModal}
+        >
           OK
         </button>
       </div>

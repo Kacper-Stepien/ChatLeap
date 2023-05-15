@@ -1,5 +1,7 @@
 import { useNavigate } from "react-router-dom";
+
 import userModel from "../models/Author";
+
 import classes from "./Friend.module.scss";
 
 type Props = {
@@ -18,7 +20,7 @@ const Friend: React.FC<Props> = ({ friend, theme }) => {
   return (
     <div className={styleClasses.join(" ")} onClick={handleClick}>
       <div className={classes.userPhoto}>
-        <img src="/user.jpg" alt="avatar" />
+        <img src="/user.jpg" alt="User" />
       </div>
       <div className={classes.userInfo}>
         <p className={classes.userFullName}>

@@ -16,7 +16,7 @@ const UserInfo: React.FC<Props> = ({ user, posts, theme }) => {
   return (
     <div className={styleClasses.join(" ")}>
       <div className={classes.userPhoto}>
-        <img src="/user.jpg" />
+        <img src="/user.jpg" alt="User" />
       </div>
       <div className={classes.userInfo}>
         <p className={classes.userName}>{userFullName}</p>

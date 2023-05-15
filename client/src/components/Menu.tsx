@@ -16,6 +16,7 @@ const Menu: React.FC<Props> = ({ mode, accent, openTab, changeOpenTab }) => {
   return (
     <nav className={styleClasses.join(" ")}>
       <button
+        aria-label="Main page button"
         className={openTab === "main" ? classes.active : ""}
         onClick={() => {
           changeOpenTab("main");
@@ -25,6 +26,7 @@ const Menu: React.FC<Props> = ({ mode, accent, openTab, changeOpenTab }) => {
         Main
       </button>
       <button
+        aria-label="Friends page button"
         className={openTab === "friends" ? classes.active : ""}
         onClick={() => {
           changeOpenTab("friends");
@@ -38,6 +40,7 @@ const Menu: React.FC<Props> = ({ mode, accent, openTab, changeOpenTab }) => {
         Bookmarks
       </button> */}
       <button
+        aria-label="Settings page button"
         className={openTab === "settings" ? classes.active : ""}
         onClick={() => {
           changeOpenTab("settings");

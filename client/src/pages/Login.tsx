@@ -2,11 +2,13 @@ import { useContext } from "react";
 
 import { ThemeContext } from "../context/ThemeContext";
 
+import useModal from ".././hooks/use-modal";
+
 import LoginForm from "../components/LoginForm";
 import SimpleNavbar from "../components/SimpleNavbar";
 import Footer from "../components/Footer";
 import Modal from "../components/Modal";
-import useModal from ".././hooks/use-modal";
+
 import classes from "./Form.module.scss";
 
 const Login: React.FC = () => {

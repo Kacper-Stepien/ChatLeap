@@ -1,10 +1,13 @@
 import React, { useContext } from "react";
+import { FaAngleLeft } from "react-icons/fa";
+
 import { ThemeContext } from "../context/ThemeContext";
+
 import Logo from "./Logo";
 import User from "./User";
 import Menu from "./Menu";
 import Footer from "./Footer";
-import { FaAngleLeft } from "react-icons/fa";
+
 import classes from "./Sidebar.module.scss";
 
 type Props = {
@@ -20,6 +23,7 @@ const Sidebar: React.FC<Props> = ({ openTab, changeOpenTab, setShowAside }) => {
   return (
     <div className={styleClasses.join(" ")}>
       <button
+        aria-label="Hide menu button"
         className={classes.backBtn}
         onClick={() => {
           setShowAside(false);

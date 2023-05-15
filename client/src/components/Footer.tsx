@@ -6,8 +6,15 @@ const Footer: React.FC<{ mode: string }> = ({ mode }) => {
     <footer className={styleClasses.join(" ")}>
       <span>
         © Designed by{" "}
-        <a href="https://github.com/Kacper-Stepien">Kacper Stępień</a>. All
-        rights reserved.
+        <a
+          aria-label="Link to author GitHub profile"
+          href="https://github.com/Kacper-Stepien"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Kacper Stępień
+        </a>
+        . All rights reserved.
       </span>
     </footer>
   );

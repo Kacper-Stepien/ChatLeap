@@ -1,22 +1,25 @@
 import React, { useContext, useEffect, useState } from "react";
+
 import { AuthContext } from "../context/AuthContext";
 import { ThemeContext } from "../context/ThemeContext";
 import { LoadingSpinnerContext } from "../context/LoadinSpinnerContext";
+
 import AddPost from "./AddPost";
 import Post from "./Post";
 import PostModel from ".././models/Post";
 import useModal from ".././hooks/use-modal";
 import Modal from "./Modal";
 import { ModalType } from ".././hooks/use-modal";
+
 import classes from "./Posts.module.scss";
 
 const Posts: React.FC = () => {
+  const { setIsLoading } = useContext(LoadingSpinnerContext);
   const { mode, accent } = useContext(ThemeContext);
   const theme = mode + accent;
-  const styleClasses = [classes[theme], classes.posts];
   const { token } = useContext(AuthContext);
 
-  const { setIsLoading } = useContext(LoadingSpinnerContext);
+  const styleClasses = [classes[theme], classes.posts];
 
   const [posts, setPosts] = useState<PostModel[]>([]);
 
@@ -89,7 +92,6 @@ const Posts: React.FC = () => {
       if (response.status === 204) {
         setIsLoading(false);
         setPosts(posts.filter((post) => post._id !== id));
-        console.log(posts);
         return;
       }
 

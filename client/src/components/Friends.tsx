@@ -1,8 +1,11 @@
 import { useContext, useState, useEffect } from "react";
+
 import { ThemeContext } from "../context/ThemeContext";
 import { AuthContext } from "../context/AuthContext";
+
 import UserModel from ".././models/Author";
 import Friend from "./Friend";
+
 import classes from "./Friends.module.scss";
 
 const Friends = () => {
@@ -25,11 +28,9 @@ const Friends = () => {
       const data = await response.json();
       if (data.status === "success") {
         setFriends(data.data.users);
-        console.log(data.data.users);
       } else {
         console.log(data.message);
       }
-      console.log(data.data.posts);
     } catch (err) {
       console.log(err);
     }

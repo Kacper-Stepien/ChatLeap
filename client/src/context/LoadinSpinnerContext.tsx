@@ -1,5 +1,4 @@
-import { createContext, useState } from "react";
-import LoadingSPpinner from "../components/LoadingSpinner";
+import { createContext } from "react";
 
 export const LoadingSpinnerContext = createContext({
   isLoading: false,

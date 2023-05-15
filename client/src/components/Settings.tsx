@@ -52,6 +52,7 @@ const Settings: React.FC = () => {
           <h3 className={classes.option}>Mode</h3>
           <div className={classes.buttons}>
             <button
+              aria-label="Dark mode button"
               className={darkBtnClasses.join(" ")}
               onClick={() => {
                 setMode("dark");
@@ -59,6 +60,7 @@ const Settings: React.FC = () => {
               }}
             ></button>
             <button
+              aria-label="Light mode button"
               className={lightBtnClasses.join(" ")}
               onClick={() => {
                 setMode("light");
@@ -71,6 +73,7 @@ const Settings: React.FC = () => {
           <h3 className={classes.option}>Accent</h3>
           <div className={classes.buttons}>
             <button
+              aria-label="Indigo accent button"
               className={indigoBtnClasses.join(" ")}
               onClick={() => {
                 setAccent("Indigo");
@@ -78,6 +81,7 @@ const Settings: React.FC = () => {
               }}
             ></button>
             <button
+              aria-label="Teal accent button"
               className={tealBtnClasses.join(" ")}
               onClick={() => {
                 setAccent("Teal");
@@ -85,6 +89,7 @@ const Settings: React.FC = () => {
               }}
             ></button>
             <button
+              aria-label="Orange accent button"
               className={orangeBtnClasses.join(" ")}
               onClick={() => {
                 setAccent("Orange");
@@ -92,6 +97,7 @@ const Settings: React.FC = () => {
               }}
             ></button>
             <button
+              aria-label="Pink accent button"
               className={pinkBtnClasses.join(" ")}
               onClick={() => {
                 setAccent("Pink");
@@ -99,6 +105,7 @@ const Settings: React.FC = () => {
               }}
             ></button>
             <button
+              aria-label="Green accent button"
               className={greenBtnClasses.join(" ")}
               onClick={() => {
                 setAccent("Green");

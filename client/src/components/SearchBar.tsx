@@ -12,7 +12,7 @@ const SearchBar: React.FC<{ mode: string }> = ({ mode }) => {
 
   return (
     <div className={styleClasses.join(" ")} onClick={clickHandler}>
-      <input ref={inputRef}></input>
+      <input aria-label="Search Bar" ref={inputRef}></input>
       <FaSearch className={classes.icon} />
     </div>
   );

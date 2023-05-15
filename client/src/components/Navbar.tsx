@@ -1,5 +1,7 @@
 import React, { useContext } from "react";
+
 import { ThemeContext } from "../context/ThemeContext";
+
 import SearchBar from "./SearchBar";
 import ThemeSwitcher from "./ThemeSwitcher";
 import { FaBars } from "react-icons/fa";
@@ -18,6 +20,7 @@ const Navbar: React.FC<Props> = ({ setShowAside }) => {
   return (
     <div className={styleClasses.join(" ")}>
       <button
+        aria-label="Menu button"
         className={classes.menu}
         onClick={() => {
           setShowAside(true);
