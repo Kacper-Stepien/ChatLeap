@@ -8,6 +8,8 @@ import Validator from "../utils/Validator";
 import useInput from "../hooks/use-input";
 import logIn from "../utils/Login";
 import { ModalType } from "../hooks/use-modal";
+import LocalStorage from "../utils/LocalStorage";
+
 import classes from "./Form.module.scss";
 
 type Props = {
@@ -62,6 +64,7 @@ const LoginForm: React.FC<Props> = (props) => {
         props.openModal("Error", result.message, ModalType.ERROR);
         console.log(result.status);
       } else if (result.status === "success") {
+        const localStorage = new LocalStorage();
         setIsLoading(false);
         setLoggedIn(true);
         setUser({
@@ -71,6 +74,13 @@ const LoginForm: React.FC<Props> = (props) => {
           userNick: result.data.nick,
         });
         setToken(result.token);
+        localStorage.writeToken(result.token);
+        localStorage.writeUser({
+          userID: result.data._id,
+          userName: result.data.name,
+          userSurname: result.data.surname,
+          userNick: result.data.nick,
+        });
         // props.openModal("Success", result.message, ModalType.SUCCESS);
         setTimeout(() => {
           setRedirectToHome(true);

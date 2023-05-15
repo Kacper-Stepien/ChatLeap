@@ -11,8 +11,6 @@ const userRouter = require("./routes/userRoutes");
 const postRouter = require("./routes/postRoutes");
 const commentRouter = require("./routes/commentRoutes");
 
-dotenv.config({ path: "./config.env" });
-
 const app = express();
 
 // Middlewares

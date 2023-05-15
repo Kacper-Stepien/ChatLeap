@@ -2,6 +2,8 @@ import { useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { FaSignOutAlt } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
+import LocalStorage from "../utils/LocalStorage";
+
 import classes from "./User.module.scss";
 
 const User: React.FC = () => {
@@ -11,7 +13,10 @@ const User: React.FC = () => {
   const navigate = useNavigate();
 
   const logoutHandler = () => {
+    const localStorage = new LocalStorage();
     setLoggedIn(false);
+    localStorage.clearToken();
+    localStorage.clearUser();
   };
 
   const openUserPage = () => {

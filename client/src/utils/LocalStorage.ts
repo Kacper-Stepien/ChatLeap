@@ -17,7 +17,7 @@ class LocalStorage {
     return null;
   };
 
-  private writeValue = (key: string, value: string) => {
+  private writeValue = (key: string, value: string | object) => {
     const storage = this.readStorage();
     if (storage) {
       storage[key] = value;
@@ -39,6 +39,10 @@ class LocalStorage {
     return this.readValue("token");
   };
 
+  readUser = () => {
+    return this.readValue("user");
+  };
+
   writeMode = (mode: string) => {
     this.writeValue("mode", mode);
   };
@@ -49,6 +53,23 @@ class LocalStorage {
 
   writeToken = (token: string) => {
     this.writeValue("token", token);
+  };
+
+  writeUser = (user: {
+    userID: string;
+    userName: string;
+    userSurname: string;
+    userNick: string;
+  }) => {
+    this.writeValue("user", user);
+  };
+
+  clearToken = () => {
+    this.writeValue("token", "");
+  };
+
+  clearUser = () => {
+    this.writeValue("user", {});
   };
 }
 

@@ -5,15 +5,16 @@ import { ProtectedRoute } from "./ProtectedRoute";
 import { ThemeContext } from "./context/ThemeContext";
 import { AuthContext } from "./context/AuthContext";
 import { LoadingSpinnerContext } from "./context/LoadinSpinnerContext";
+
 import LoadingSPpinner from "./components/LoadingSpinner";
 import ErrorPage from "./pages/Error";
+import LocalStorage from "./utils/LocalStorage";
 
 import RootLayout from "./pages/Root";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
 import Main from "./pages/Main";
 import User from "./pages/User";
-import LocalStorage from "./utils/LocalStorage";
 
 import "./App.scss";
 
@@ -68,6 +69,9 @@ const App: React.FC = () => {
       setLoggedIn(true);
       setToken(token);
     }
+
+    const user = localStorage.readUser();
+    if (user) setUser(user);
   }, []);
 
   return (
