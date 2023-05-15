@@ -1,5 +1,6 @@
 import { useContext } from "react";
 import { ThemeContext } from "../context/ThemeContext";
+import LocalStorage from "../utils/LocalStorage";
 
 import classes from "./Settings.module.scss";
 
@@ -14,6 +15,7 @@ const Settings: React.FC = () => {
   const orangeBtnClasses: string[] = [classes.accentOrangeBtn];
   const pinkBtnClasses: string[] = [classes.accentPinkBtn];
   const greenBtnClasses: string[] = [classes.accentGreenBtn];
+  const localStorage = new LocalStorage();
 
   if (mode === "dark") {
     darkBtnClasses.push(classes.active);
@@ -53,12 +55,14 @@ const Settings: React.FC = () => {
               className={darkBtnClasses.join(" ")}
               onClick={() => {
                 setMode("dark");
+                localStorage.writeMode("dark");
               }}
             ></button>
             <button
               className={lightBtnClasses.join(" ")}
               onClick={() => {
                 setMode("light");
+                localStorage.writeMode("light");
               }}
             ></button>
           </div>
@@ -70,30 +74,35 @@ const Settings: React.FC = () => {
               className={indigoBtnClasses.join(" ")}
               onClick={() => {
                 setAccent("Indigo");
+                localStorage.writeAccent("Indigo");
               }}
             ></button>
             <button
               className={tealBtnClasses.join(" ")}
               onClick={() => {
                 setAccent("Teal");
+                localStorage.writeAccent("Teal");
               }}
             ></button>
             <button
               className={orangeBtnClasses.join(" ")}
               onClick={() => {
                 setAccent("Orange");
+                localStorage.writeAccent("Orange");
               }}
             ></button>
             <button
               className={pinkBtnClasses.join(" ")}
               onClick={() => {
                 setAccent("Pink");
+                localStorage.writeAccent("Pink");
               }}
             ></button>
             <button
               className={greenBtnClasses.join(" ")}
               onClick={() => {
                 setAccent("Green");
+                localStorage.writeAccent("Green");
               }}
             ></button>
           </div>

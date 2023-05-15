@@ -33,10 +33,10 @@ const Menu: React.FC<Props> = ({ mode, accent, openTab, changeOpenTab }) => {
         <FaUserFriends className={classes.icon} />
         Friends
       </button>
-      <button>
+      {/* <button>
         <FaBookmark className={classes.icon} />
         Bookmarks
-      </button>
+      </button> */}
       <button
         className={openTab === "settings" ? classes.active : ""}
         onClick={() => {

@@ -5,21 +5,18 @@
   min-height: 100vh;
   display: flex;
   justify-content: space-between;
-  background-color: black;
 }
 
 .aside {
   max-width: 25rem;
   width: 100%;
   position: static;
-  background-color: red;
 }
 
 .main {
   flex-grow: 1;
   display: flex;
   flex-direction: column;
-  background-color: blue;
 }
 
 .darkIndigo {

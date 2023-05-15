@@ -12,6 +12,11 @@
   align-self: center;
   margin-right: auto;
   padding-right: 2rem;
+  color: inherit;
+
+  &:hover {
+    transform: scale(1.1);
+  }
 }
 
 .darkIndigo {

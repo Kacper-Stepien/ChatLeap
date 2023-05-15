@@ -20,8 +20,7 @@
   color: inherit;
   border-radius: 50%;
   &:hover {
-    border: 2px solid $color-white;
-    transform: scale(1.1) translateX(-5px);
+    transform: scale(1.1) translateX(-3px);
   }
 }
 

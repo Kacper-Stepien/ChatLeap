@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { ProtectedRoute } from "./ProtectedRoute";
 import { ThemeContext } from "./context/ThemeContext";
@@ -11,6 +11,7 @@ import Register from "./pages/Register";
 import Login from "./pages/Login";
 import Main from "./pages/Main";
 import User from "./pages/User";
+import LocalStorage from "./utils/LocalStorage";
 
 const router = createBrowserRouter([
   {
@@ -50,6 +51,22 @@ const App: React.FC = () => {
   });
   const [token, setToken] = useState("");
 
+  useEffect(() => {
+    const localStorage = new LocalStorage();
+    const mode = localStorage.readMode();
+    const accent = localStorage.readAccent();
+    // if (mode !== null) setMode(mode);
+    // if (accent !== null) setAccent(accent);
+    if (mode) setMode(mode);
+    if (accent) setAccent(accent);
+
+    const token = localStorage.readToken();
+    if (token) {
+      setLoggedIn(true);
+      setToken(token);
+    }
+  }, []);
+
   return (
     <AuthContext.Provider
       value={{
@@ -60,7 +77,7 @@ const App: React.FC = () => {
         userSurname: user.userSurname,
         userNick: user.userNick,
         token,
-        setUser: setUser,
+        setUser,
         setToken,
       }}
     >

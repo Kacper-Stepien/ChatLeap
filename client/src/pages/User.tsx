@@ -133,7 +133,7 @@ const User: React.FC = () => {
   }, []);
 
   return (
-    <>
+    <div className={classes.page}>
       <SimpleNavbar mode={mode} />
       <div className={styleClasses.join(" ")}>
         <UserInfo user={user} posts={posts} theme={theme} />
@@ -146,7 +146,7 @@ const User: React.FC = () => {
           />
         ))}
       </div>
-    </>
+    </div>
   );
 };
 

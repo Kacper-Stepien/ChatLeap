@@ -27,10 +27,33 @@
   padding: 0 2rem;
 }
 
+// Scrollbar
+::-webkit-scrollbar {
+  width: 1.2rem;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
 .darkIndigo {
   &.container {
     background-color: $color-grey-dark-2;
     color: $color-white;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: $color-grey-dark-3;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: $color-indigo-1;
   }
 }
 
@@ -39,12 +62,28 @@
     background-color: $color-white;
     color: $color-grey-dark-3;
   }
+
+  &::-webkit-scrollbar-track {
+    background: $color-grey-light-1;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: $color-indigo-1;
+  }
 }
 
 .darkTeal {
   &.container {
     background-color: $color-grey-dark-2;
     color: $color-white;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: $color-grey-dark-3;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: $color-teal-1;
   }
 }
 
@@ -53,12 +92,28 @@
     background-color: $color-white;
     color: $color-grey-dark-3;
   }
+
+  &::-webkit-scrollbar-track {
+    background: $color-grey-light-1;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: $color-teal-1;
+  }
 }
 
 .darkOrange {
   &.container {
     background-color: $color-grey-dark-2;
     color: $color-white;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: $color-grey-dark-3;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: $color-orange-1;
   }
 }
 
@@ -67,12 +122,28 @@
     background-color: $color-white;
     color: $color-grey-dark-3;
   }
+
+  &::-webkit-scrollbar-track {
+    background: $color-grey-light-1;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: $color-orange-1;
+  }
 }
 
 .darkPink {
   &.container {
     background-color: $color-grey-dark-2;
     color: $color-white;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: $color-grey-dark-3;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: $color-pink-1;
   }
 }
 
@@ -81,6 +152,13 @@
     background-color: $color-white;
     color: $color-grey-dark-3;
   }
+  &::-webkit-scrollbar-track {
+    background: $color-grey-light-1;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: $color-pink-1;
+  }
 }
 
 .darkGreen {
@@ -88,11 +166,26 @@
     background-color: $color-grey-dark-2;
     color: $color-white;
   }
+
+  &::-webkit-scrollbar-track {
+    background: $color-grey-dark-3;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: $color-green-1;
+  }
 }
 
 .lightGreen {
   &.container {
     background-color: $color-white;
     color: $color-grey-dark-3;
+  }
+  &::-webkit-scrollbar-track {
+    background: $color-grey-light-1;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: $color-green-1;
   }
 }

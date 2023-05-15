@@ -14,14 +14,46 @@
   font-size: 1.8rem;
 }
 
+// Scrollbar
+::-webkit-scrollbar {
+  width: 1.2rem;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+// THEME
 .darkIndigo {
   &.posts {
     background-color: $color-grey-dark-2;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: $color-grey-dark-3;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: $color-indigo-1;
   }
 }
 .darkTeal {
   &.posts {
     background-color: $color-grey-dark-2;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: $color-grey-dark-3;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: $color-teal-1;
   }
 }
 
@@ -29,17 +61,41 @@
   &.posts {
     background-color: $color-grey-dark-2;
   }
+
+  &::-webkit-scrollbar-track {
+    background: $color-grey-dark-3;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: $color-orange-1;
+  }
 }
 
 .darkPink {
   &.posts {
     background-color: $color-grey-dark-2;
   }
+
+  &::-webkit-scrollbar-track {
+    background: $color-grey-dark-3;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: $color-pink-1;
+  }
 }
 
 .darkGreen {
   &.posts {
     background-color: $color-grey-dark-2;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: $color-grey-dark-3;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: $color-green-1;
   }
 }
 
@@ -51,6 +107,14 @@
   .noPosts {
     color: $color-grey-dark-3;
   }
+
+  &::-webkit-scrollbar-track {
+    background: $color-grey-light-1;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: $color-indigo-1;
+  }
 }
 
 .lightTeal {
@@ -60,6 +124,14 @@
 
   .noPosts {
     color: $color-grey-dark-3;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: $color-grey-light-1;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: $color-teal-1;
   }
 }
 
@@ -71,6 +143,14 @@
   .noPosts {
     color: $color-grey-dark-3;
   }
+
+  &::-webkit-scrollbar-track {
+    background: $color-grey-light-1;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: $color-orange-1;
+  }
 }
 
 .lightPink {
@@ -81,6 +161,13 @@
   .noPosts {
     color: $color-grey-dark-3;
   }
+  &::-webkit-scrollbar-track {
+    background: $color-grey-light-1;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: $color-pink-1;
+  }
 }
 
 .lightGreen {
@@ -90,5 +177,13 @@
 
   .noPosts {
     color: $color-grey-dark-3;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: $color-grey-light-1;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: $color-green-1;
   }
 }
