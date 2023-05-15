@@ -1,6 +1,13 @@
 # ChatLeap
 ChatLeap is a social networking application similar to Twitter. It consists of a REST API  and a client-side web application.
 
+## Table of contents
+- [Technologies used in the project](#technologies-used-in-the-project)
+- [Features](#features)
+- [App screenshots](#app-screenshots)
+- [Getting started](#getting-started)
+- [Contact](#contact)
+
 ## Technologies used in the project:
 - <b>Frontend:</b> <br>
 [![](https://skills.thijs.gg/icons?i=react,ts,sass,xd,&theme=dark)](https://skills.thijs.gg)
@@ -39,6 +46,32 @@ ChatLeap is a social networking application similar to Twitter. It consists of a
 - <b>Persistent Login:</b> After logging in, the user's token and profile data are stored in the browser's LocalStorage, allowing the user to stay logged in even after refreshing the page.
 
 - <b>Responsiveness:</b> The application is fully responsive and renders correctly on devices with a minimum width of 300px.
+
+## App screenshots
+### Register form
+![landing_page](/Screens/RegisterForm.png)
+### Login form
+![landing_page](/Screens/LoginForm.png)
+![landing_page](/Screens/LoginForm2.png)
+### Main
+![login_page](/Screens/Main.png)
+![login_page](/Screens/Main2.png)
+![login_page](/Screens/Main3.png)
+### Update post
+![login_page](/Screens/UpdatePost.png)
+### Update comment
+![login_page](/Screens/UpdateComment.png)
+### Friends
+![login_page](/Screens/Friends.png)
+### User Page
+![login_page](/Screens/UserPage.png)
+### Setings
+![login_page](/Screens/Settings.png)
+![login_page](/Screens/Settings2.png)
+## Mobile
+![login_page](/Screens/MobileMain.png)
+![login_page](/Screens/MobileMenu.png)
+
 
 ## Getting started
 To get started with ChatLeap, follow these steps:
