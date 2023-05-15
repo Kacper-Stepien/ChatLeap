@@ -1,11 +1,14 @@
-import { useContext, useState } from "react";
+import { useContext } from "react";
+
 import { ThemeContext } from "../context/ThemeContext";
+import { LoadingSpinnerContext } from "../context/LoadinSpinnerContext";
+
 import SimpleNavbar from "../components/SimpleNavbar";
 import RegisterForm from "../components/RegisterForm";
 import Footer from "../components/Footer";
 import Modal from "../components/Modal";
 import useModal from ".././hooks/use-modal";
-import LoadingSPpinner from "../components/LoadingSpinner";
+
 import classes from "./Form.module.scss";
 
 const Register: React.FC = () => {
@@ -13,7 +16,7 @@ const Register: React.FC = () => {
   const theme = mode + accent;
   const styleClasses = [classes[theme], classes.page];
 
-  const [isLoading, setIsLoading] = useState(false);
+  const { setIsLoading } = useContext(LoadingSpinnerContext);
   const {
     modalTitle,
     modalContent,
@@ -33,9 +36,9 @@ const Register: React.FC = () => {
           accent={accent}
           openModal={openModal}
           closeModal={closeModal}
+          setIsLoading={setIsLoading}
         />
       </div>
-      {isLoading && <LoadingSPpinner />}
       <Footer mode={mode} />
       {isModalOpen && (
         <Modal

@@ -1,6 +1,7 @@
 import { useContext, useState, useRef } from "react";
 import { ThemeContext } from "../context/ThemeContext";
 import { AuthContext } from "../context/AuthContext";
+import { LoadingSpinnerContext } from "../context/LoadinSpinnerContext";
 import { useNavigate } from "react-router-dom";
 import {
   FaRegComment,
@@ -17,7 +18,6 @@ import PostModel from ".././models/Post";
 import LikeModel from ".././models/Like";
 import CommentModel from ".././models/Comment";
 import formatDate from "../utils/FormatDate";
-import LoadingSPpinner from "./LoadingSpinner";
 import { ModalType } from "../hooks/use-modal";
 
 import classes from "./Post.module.scss";
@@ -55,7 +55,7 @@ const Post: React.FC<PostProps> = ({
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
   let userIsAnAuthor: boolean = false;
 
-  const [loading, setLoading] = useState<boolean>(false);
+  const { setIsLoading } = useContext(LoadingSpinnerContext);
   const navigate = useNavigate();
 
   if (post.author._id === userID) userIsAnAuthor = true;
@@ -111,7 +111,7 @@ const Post: React.FC<PostProps> = ({
   const updateComment = async (id: string, text: string) => {
     const address = process.env.REACT_APP_SERVER + "/comments/" + id;
     try {
-      setLoading(true);
+      setIsLoading(true);
       const response = await fetch(address, {
         method: "PATCH",
         headers: {
@@ -122,7 +122,7 @@ const Post: React.FC<PostProps> = ({
       });
 
       const data = await response.json();
-      setLoading(false);
+      setIsLoading(false);
       if (data.status === "success") {
         setPostComments(
           postComments.map((comment) => {
@@ -136,7 +136,7 @@ const Post: React.FC<PostProps> = ({
         openModal("Error", data.message, ModalType.ERROR);
       }
     } catch (err) {
-      setLoading(false);
+      setIsLoading(false);
       openModal("Error", "Problem with server", ModalType.ERROR);
     }
   };
@@ -144,7 +144,7 @@ const Post: React.FC<PostProps> = ({
   const deleteComment = async (id: string) => {
     const address = process.env.REACT_APP_SERVER + "/comments/" + id;
     try {
-      setLoading(true);
+      setIsLoading(true);
       const response = await fetch(address, {
         method: "DELETE",
         headers: {
@@ -154,12 +154,12 @@ const Post: React.FC<PostProps> = ({
 
       if (response.status === 204) {
         setPostComments(postComments.filter((comment) => comment._id !== id));
-        setLoading(false);
+        setIsLoading(false);
         return;
       }
 
       const data = await response.json();
-      setLoading(false);
+      setIsLoading(false);
       if (data.status === "fail" || data.status === "error") {
         openModal("Error", data.message, ModalType.ERROR);
       }
@@ -290,7 +290,6 @@ const Post: React.FC<PostProps> = ({
           </button>
         </div>
       )}
-      {loading && <LoadingSPpinner />}
     </div>
   );
 };

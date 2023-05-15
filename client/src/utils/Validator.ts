@@ -1,4 +1,4 @@
-export default class Validator {
+class Validator {
   static isEmpty = (value: string): boolean => value.trim() === "";
 
   static isEmail = (value: string): boolean => {
@@ -30,3 +30,5 @@ export default class Validator {
     return regex.test(value);
   };
 }
+
+export default Validator;

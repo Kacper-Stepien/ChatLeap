@@ -2,7 +2,6 @@ import React, { useContext } from "react";
 import { ThemeContext } from "../context/ThemeContext";
 import SearchBar from "./SearchBar";
 import ThemeSwitcher from "./ThemeSwitcher";
-import Logo from "./Logo";
 import { FaBars } from "react-icons/fa";
 
 import classes from "./Navbar.module.scss";

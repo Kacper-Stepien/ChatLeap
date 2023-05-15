@@ -1,62 +1,54 @@
-import { read } from "fs";
+const STORAGE_KEY = "ChatLeap";
 
 class LocalStorage {
-  readStorage = () => {
-    const storage = localStorage.getItem("ChatLeap");
+  private readStorage = () => {
+    const storage = localStorage.getItem(STORAGE_KEY);
     if (storage) {
       return JSON.parse(storage);
     }
     return null;
   };
+
+  private readValue = (key: string) => {
+    const storage = this.readStorage();
+    if (storage) {
+      return storage[key];
+    }
+    return null;
+  };
+
+  private writeValue = (key: string, value: string) => {
+    const storage = this.readStorage();
+    if (storage) {
+      storage[key] = value;
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(storage));
+    } else {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify({ [key]: value }));
+    }
+  };
+
   readMode = () => {
-    const storage = this.readStorage();
-    if (storage) {
-      return storage.mode;
-    }
-    return null;
+    return this.readValue("mode");
   };
+
   readAccent = () => {
-    const storage = this.readStorage();
-    if (storage) {
-      return storage.accent;
-    }
-    return null;
+    return this.readValue("accent");
   };
+
   readToken = () => {
-    const storage = this.readStorage();
-    if (storage) {
-      return storage.token;
-    }
-    return null;
+    return this.readValue("token");
   };
+
   writeMode = (mode: string) => {
-    const storage = this.readStorage();
-    if (storage) {
-      storage.mode = mode;
-      storage.theme = `${mode}${storage.accent}`;
-      localStorage.setItem("ChatLeap", JSON.stringify(storage));
-    } else {
-      localStorage.setItem("ChatLeap", JSON.stringify({ mode: mode }));
-    }
+    this.writeValue("mode", mode);
   };
+
   writeAccent = (accent: string) => {
-    const storage = this.readStorage();
-    if (storage) {
-      storage.accent = accent;
-      storage.theme = `${storage.mode}${accent}`;
-      localStorage.setItem("ChatLeap", JSON.stringify(storage));
-    } else {
-      localStorage.setItem("ChatLeap", JSON.stringify({ accent: accent }));
-    }
+    this.writeValue("accent", accent);
   };
+
   writeToken = (token: string) => {
-    const storage = this.readStorage();
-    if (storage) {
-      storage.token = token;
-      localStorage.setItem("ChatLeap", JSON.stringify(storage));
-    } else {
-      localStorage.setItem("ChatLeap", JSON.stringify({ token: token }));
-    }
+    this.writeValue("token", token);
   };
 }
 

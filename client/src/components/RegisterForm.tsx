@@ -11,6 +11,7 @@ type Props = {
   accent: string;
   openModal: (title: string, content: string, type: ModalType) => void;
   closeModal: () => void;
+  setIsLoading: (isLoading: boolean) => void;
 };
 
 const passwordConfirmIsValid = (password: string, confirmPassword: string) => {
@@ -118,6 +119,7 @@ const RegisterForm: React.FC<Props> = (props) => {
     }
 
     try {
+      props.setIsLoading(true);
       const response = await createUser(
         enteredName,
         enteredSurname,
@@ -126,7 +128,7 @@ const RegisterForm: React.FC<Props> = (props) => {
         enteredPassword,
         enteredConfirmPassword
       );
-
+      props.setIsLoading(false);
       if (response.status === "fail") {
         props.openModal("Error", response.message, ModalType.ERROR);
         return;
@@ -145,6 +147,7 @@ const RegisterForm: React.FC<Props> = (props) => {
         return;
       }
     } catch (error) {
+      props.setIsLoading(false);
       props.openModal(
         "Error",
         "Problem with server. Please try again later.",

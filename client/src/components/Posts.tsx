@@ -1,10 +1,10 @@
 import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { ThemeContext } from "../context/ThemeContext";
+import { LoadingSpinnerContext } from "../context/LoadinSpinnerContext";
 import AddPost from "./AddPost";
 import Post from "./Post";
 import PostModel from ".././models/Post";
-import LoadingSPpinner from "./LoadingSpinner";
 import useModal from ".././hooks/use-modal";
 import Modal from "./Modal";
 import { ModalType } from ".././hooks/use-modal";
@@ -16,7 +16,7 @@ const Posts: React.FC = () => {
   const styleClasses = [classes[theme], classes.posts];
   const { token } = useContext(AuthContext);
 
-  const [loading, setLoading] = useState<boolean>(false);
+  const { setIsLoading } = useContext(LoadingSpinnerContext);
 
   const [posts, setPosts] = useState<PostModel[]>([]);
 
@@ -52,7 +52,7 @@ const Posts: React.FC = () => {
   const addPost = async (text: string) => {
     const address = process.env.REACT_APP_SERVER + "/posts";
     try {
-      setLoading(true);
+      setIsLoading(true);
       const response = await fetch(address, {
         method: "POST",
         headers: {
@@ -63,14 +63,14 @@ const Posts: React.FC = () => {
       });
       const data = await response.json();
       if (data.status === "success") {
-        setLoading(false);
+        setIsLoading(false);
         setPosts([data.data.post, ...posts]);
       } else {
-        setLoading(false);
+        setIsLoading(false);
         openModal("Error", data.message, ModalType.ERROR);
       }
     } catch (err) {
-      setLoading(false);
+      setIsLoading(false);
       openModal("Error", "Problem with server", ModalType.ERROR);
     }
   };
@@ -78,7 +78,7 @@ const Posts: React.FC = () => {
   const deletePost = async (id: string) => {
     const address = process.env.REACT_APP_SERVER + "/posts/" + id;
     try {
-      setLoading(true);
+      setIsLoading(true);
       const response = await fetch(address, {
         method: "DELETE",
         headers: {
@@ -87,17 +87,17 @@ const Posts: React.FC = () => {
       });
 
       if (response.status === 204) {
-        setLoading(false);
+        setIsLoading(false);
         setPosts(posts.filter((post) => post._id !== id));
         console.log(posts);
         return;
       }
 
       const data = await response.json();
-      setLoading(false);
+      setIsLoading(false);
       openModal("Error", data.message, ModalType.ERROR);
     } catch (err) {
-      setLoading(false);
+      setIsLoading(false);
       openModal("Error", "Problem with server", ModalType.ERROR);
     }
   };
@@ -105,7 +105,7 @@ const Posts: React.FC = () => {
   const updatePost = async (id: string, text: string) => {
     const address = process.env.REACT_APP_SERVER + "/posts/" + id;
     try {
-      setLoading(true);
+      setIsLoading(true);
       const response = await fetch(address, {
         method: "PATCH",
         headers: {
@@ -115,7 +115,7 @@ const Posts: React.FC = () => {
         body: JSON.stringify({ text }),
       });
 
-      setLoading(false);
+      setIsLoading(false);
       const data = await response.json();
       if (data.status === "success") {
         const newPosts = posts.map((post) => {
@@ -126,11 +126,11 @@ const Posts: React.FC = () => {
         });
         setPosts(newPosts);
       } else {
-        setLoading(false);
+        setIsLoading(false);
         openModal("Error", data.message, ModalType.ERROR);
       }
     } catch (error) {
-      setLoading(false);
+      setIsLoading(false);
       openModal("Error", "Problem with server", ModalType.ERROR);
     }
   };
@@ -154,7 +154,6 @@ const Posts: React.FC = () => {
       {posts.length === 0 && (
         <h2 className={classes.noPosts}>There are no posts yet!</h2>
       )}
-      {loading && <LoadingSPpinner />}
       {isModalOpen && (
         <Modal
           title={modalTitle}

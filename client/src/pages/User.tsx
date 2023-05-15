@@ -5,7 +5,6 @@ import { ThemeContext } from "../context/ThemeContext";
 import UserModel from "../models/Author";
 import PostModel from "../models/Post";
 import useModal from "../hooks/use-modal";
-import { ModalType } from "../hooks/use-modal";
 
 import SimpleNavbar from "../components/SimpleNavbar";
 import UserInfo from "./../components/UserInfo";
@@ -22,14 +21,7 @@ const User: React.FC = () => {
   const theme = mode + accent;
   const styleClasses = [classes[theme], classes.container];
 
-  const {
-    modalTitle,
-    modalContent,
-    modalType,
-    isModalOpen,
-    openModal,
-    closeModal,
-  } = useModal();
+  const { openModal } = useModal();
 
   const getUser = async () => {
     const address = process.env.REACT_APP_SERVER + "/users/" + id;

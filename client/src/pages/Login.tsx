@@ -1,6 +1,8 @@
-import { useContext, useState } from "react";
-import LoginForm from "../components/LoginForm";
+import { useContext } from "react";
+
 import { ThemeContext } from "../context/ThemeContext";
+
+import LoginForm from "../components/LoginForm";
 import SimpleNavbar from "../components/SimpleNavbar";
 import Footer from "../components/Footer";
 import Modal from "../components/Modal";

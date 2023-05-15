@@ -1,4 +1,3 @@
-import { useNavigate } from "react-router-dom";
 import { useContext, useState } from "react";
 import { ThemeContext } from "../context/ThemeContext";
 

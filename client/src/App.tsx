@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+
 import { ProtectedRoute } from "./ProtectedRoute";
 import { ThemeContext } from "./context/ThemeContext";
 import { AuthContext } from "./context/AuthContext";
+import { LoadingSpinnerContext } from "./context/LoadinSpinnerContext";
+import LoadingSPpinner from "./components/LoadingSpinner";
 import ErrorPage from "./pages/Error";
-import "./App.scss";
 
 import RootLayout from "./pages/Root";
 import Register from "./pages/Register";
@@ -12,6 +14,8 @@ import Login from "./pages/Login";
 import Main from "./pages/Main";
 import User from "./pages/User";
 import LocalStorage from "./utils/LocalStorage";
+
+import "./App.scss";
 
 const router = createBrowserRouter([
   {
@@ -50,17 +54,16 @@ const App: React.FC = () => {
     userNick: "",
   });
   const [token, setToken] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const localStorage = new LocalStorage();
-    const mode = localStorage.readMode();
-    const accent = localStorage.readAccent();
-    // if (mode !== null) setMode(mode);
-    // if (accent !== null) setAccent(accent);
+    const mode: string = localStorage.readMode();
+    const accent: string = localStorage.readAccent();
     if (mode) setMode(mode);
     if (accent) setAccent(accent);
 
-    const token = localStorage.readToken();
+    const token: string = localStorage.readToken();
     if (token) {
       setLoggedIn(true);
       setToken(token);
@@ -82,7 +85,10 @@ const App: React.FC = () => {
       }}
     >
       <ThemeContext.Provider value={{ mode, accent, setMode, setAccent }}>
-        <RouterProvider router={router} />
+        <LoadingSpinnerContext.Provider value={{ isLoading, setIsLoading }}>
+          <RouterProvider router={router} />
+          {isLoading && <LoadingSPpinner />}
+        </LoadingSpinnerContext.Provider>
       </ThemeContext.Provider>
     </AuthContext.Provider>
   );

@@ -1,12 +1,13 @@
-import { useState } from "react";
-import { Link, Navigate, redirect } from "react-router-dom";
-import { useContext } from "react";
+import { useState, useContext } from "react";
+import { Link, Navigate } from "react-router-dom";
+
 import { AuthContext } from "../context/AuthContext";
+import { LoadingSpinnerContext } from "../context/LoadinSpinnerContext";
+
 import Validator from "../utils/Validator";
 import useInput from "../hooks/use-input";
 import logIn from "../utils/Login";
 import { ModalType } from "../hooks/use-modal";
-import LoadingSPpinner from "../components/LoadingSpinner";
 import classes from "./Form.module.scss";
 
 type Props = {
@@ -20,10 +21,10 @@ const LoginForm: React.FC<Props> = (props) => {
   const theme = props.mode + props.accent;
   const styleClasses = [classes[theme], classes.form];
 
-  const { setLoggedIn, setUser, setToken, userName } = useContext(AuthContext);
+  const { setLoggedIn, setUser, setToken } = useContext(AuthContext);
   const [redirectToHome, setRedirectToHome] = useState(false);
 
-  const [isLoading, setIsLoading] = useState(false);
+  const { setIsLoading } = useContext(LoadingSpinnerContext);
 
   const {
     value: enteredEmail,
@@ -120,7 +121,6 @@ const LoginForm: React.FC<Props> = (props) => {
         </Link>
       </div>
       {redirectToHome && <Navigate to="/" />}
-      {isLoading && <LoadingSPpinner />}
     </form>
   );
 };
