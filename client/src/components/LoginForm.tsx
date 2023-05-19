@@ -107,8 +107,9 @@ const LoginForm: React.FC<Props> = (props) => {
           placeholder="Email"
           onChange={emailChangeHandler}
           onBlur={emailBlurHandler}
+          className={enteredEmailHasError ? classes.invalidInput : ""}
         />
-        {enteredEmailHasError && <span>Please enter valid email</span>}
+        {enteredEmailHasError && <span>Please enter valid email.</span>}
       </div>
       <div className={classes.inputControl}>
         <input
@@ -117,8 +118,13 @@ const LoginForm: React.FC<Props> = (props) => {
           placeholder="Password"
           onChange={passwordChangeHandler}
           onBlur={passwordBlurHandler}
+          className={enteredPasswordHasError ? classes.invalidInput : ""}
         />
-        {enteredPasswordHasError && <span>Please enter valid password</span>}
+        {enteredPasswordHasError && (
+          <span>
+            Please enter valid password. It must contain at least 8 characters.
+          </span>
+        )}
       </div>
 
       <div className={classes.formActions}>

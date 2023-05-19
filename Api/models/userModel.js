@@ -6,39 +6,44 @@ const bcrypt = require("bcryptjs");
 const userSchema = new mongoose.Schema({
   name: {
     type: String,
+    required: [true, "Please enter a name"],
     match: [
       /^[A-Z][a-ząćęłńóśźż]+(\s[A-Z][a-ząćęłńóśźż]+)?$/,
-      "Please enter a valid name",
+      "Please enter a valid first name. The first name should start with an uppercase letter, followed by one or more lowercase letters (including Polish characters: ą, ć, ę, ł, ń, ó, ś, ź, ż). If the first name consists of more than one word, each word should start with an uppercase letter and be separated by a single space.",
     ],
-    required: [true, "Please enter a name"],
   },
   surname: {
     type: String,
+    required: [true, "Please enter a surname"],
     match: [
       /^[A-Z][a-ząćęłńóśźż]+(-[A-Z][a-ząćęłńóźż]+)?$/,
-      "Please enter a valid surname",
+      "Please enter a valid last name. The last name should start with an uppercase letter, followed by one or more lowercase letters (including Polish characters: ą, ć, ę, ł, ń, ó, ś, ź, ż). If the last name includes a hyphenated component, it should follow the same pattern of starting with an uppercase letter and followed by lowercase letters.",
     ],
-    required: [true, "Please enter a surname"],
   },
   email: {
     type: String,
     required: [true, "Please enter an email"],
+    validate: [validator.isEmail, "Please enter a valid email"],
     unique: true,
     lowercase: true,
-    validate: [validator.isEmail, "Please enter a valid email"],
   },
   nick: {
     type: String,
     required: [true, "Please enter a nick"],
+    match: [
+      /^[a-z0-9]{5,25}$/,
+      "Please enter a valid nick. The nick can contain only lowercase letters (a-z) and numbers (0-9). It should have a length between 5 and 25 characters.",
+    ],
     unique: true,
-    lowercase: true,
     minlength: 5,
-    maxlenght: 20,
-    validate: [validator.isAlphanumeric, "Please enter a valid nick"],
+    maxlenght: 25,
   },
   password: {
     type: String,
-    required: [true, "Please enter a password"],
+    required: [
+      true,
+      "Please enter a password. Password must contain at least 8 characters",
+    ],
     minlength: 8,
     select: false, // Don't show password in response
   },

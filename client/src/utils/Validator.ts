@@ -7,7 +7,7 @@ class Validator {
   };
 
   static isNick = (value: string): boolean => {
-    const regex = /[A-ZĄĆĘŁŃÓŚŻŹa-ząćęłńóśżź0-9]{5,20}/;
+    const regex = /^[a-z0-9]{5,25}$/;
     return regex.test(value);
   };
 

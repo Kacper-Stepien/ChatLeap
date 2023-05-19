@@ -23,9 +23,11 @@
   }
 
   span {
+    margin: 0 1rem;
     color: $color-red;
-    font-size: 1.3rem;
-    font-weight: 100;
+    font-size: 1.2rem;
+    font-weight: 400;
+    letter-spacing: 0.6px;
   }
 }
 
@@ -73,6 +75,12 @@
     input:focus {
       border: 2px solid $color-indigo-1;
     }
+    .invalidInput {
+      border: 2px solid $color-red;
+      &:focus {
+        border: 2px solid $color-red;
+      }
+    }
   }
   .formActions {
     button {
@@ -110,6 +118,13 @@
 
       &:focus {
         border: 2px solid $color-teal-1;
+      }
+
+      .invalidInput {
+        border: 2px solid $color-red;
+        &:focus {
+          border: 2px solid $color-red;
+        }
       }
     }
   }
@@ -153,6 +168,12 @@
         border: 2px solid $color-indigo-1;
       }
     }
+    .invalidInput {
+      border: 2px solid $color-red;
+      &:focus {
+        border: 2px solid $color-red;
+      }
+    }
   }
   .formActions {
     button {
@@ -191,6 +212,12 @@
         border: 2px solid $color-teal-1;
       }
     }
+    .invalidInput {
+      border: 2px solid $color-red;
+      &:focus {
+        border: 2px solid $color-red;
+      }
+    }
   }
   .formActions {
     button {
@@ -227,6 +254,12 @@
     }
     input:focus {
       border: 2px solid $color-orange-1;
+    }
+    .invalidInput {
+      border: 2px solid $color-red;
+      &:focus {
+        border: 2px solid $color-red;
+      }
     }
   }
   .formActions {
@@ -267,6 +300,12 @@
         border: 2px solid $color-orange-1;
       }
     }
+    .invalidInput {
+      border: 2px solid $color-red;
+      &:focus {
+        border: 2px solid $color-red;
+      }
+    }
   }
   .formActions {
     button {
@@ -303,6 +342,13 @@
     }
     input:focus {
       border: 2px solid $color-pink-1;
+    }
+
+    .invalidInput {
+      border: 2px solid $color-red;
+      &:focus {
+        border: 2px solid $color-red;
+      }
     }
   }
   .formActions {
@@ -343,6 +389,12 @@
         border: 2px solid $color-pink-1;
       }
     }
+    .invalidInput {
+      border: 2px solid $color-red;
+      &:focus {
+        border: 2px solid $color-red;
+      }
+    }
   }
   .formActions {
     button {
@@ -379,6 +431,13 @@
     }
     input:focus {
       border: 2px solid $color-green-1;
+    }
+
+    .invalidInput {
+      border: 2px solid $color-red;
+      &:focus {
+        border: 2px solid $color-red;
+      }
     }
   }
   .formActions {
@@ -417,6 +476,12 @@
 
       &:focus {
         border: 2px solid $color-green-1;
+      }
+    }
+    .invalidInput {
+      border: 2px solid $color-red;
+      &:focus {
+        border: 2px solid $color-red;
       }
     }
   }

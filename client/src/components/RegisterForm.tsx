@@ -170,8 +170,14 @@ const RegisterForm: React.FC<Props> = (props) => {
           placeholder="First Name"
           onChange={nameChangeHandler}
           onBlur={nameBlurHandler}
+          className={enteredNameHasError ? classes.invalidInput : ""}
         />
-        {enteredNameHasError && <span>Please enter valid name</span>}
+        {enteredNameHasError && (
+          <span>
+            Please enter a valid name. If it consists of two parts, please
+            separate them with a space.
+          </span>
+        )}
       </div>
       <div className={classes.inputControl}>
         <input
@@ -180,8 +186,14 @@ const RegisterForm: React.FC<Props> = (props) => {
           placeholder="Last Name"
           onChange={surnameChangeHandler}
           onBlur={surnameBlurHandler}
+          className={enteredSurnameHasError ? classes.invalidInput : ""}
         />
-        {enteredSurnameHasError && <span>Please enter valid Surame</span>}
+        {enteredSurnameHasError && (
+          <span>
+            Please enter a valid surname. If it consists of two parts, please
+            separate them with a dash.
+          </span>
+        )}
       </div>
       <div className={classes.inputControl}>
         <input
@@ -190,8 +202,9 @@ const RegisterForm: React.FC<Props> = (props) => {
           placeholder="Email"
           onChange={emailChangeHandler}
           onBlur={emailBlurHandler}
+          className={enteredEmailHasError ? classes.invalidInput : ""}
         />
-        {enteredEmailHasError && <span>Please enter valid email</span>}
+        {enteredEmailHasError && <span>Please enter valid email.</span>}
       </div>
       <div className={classes.inputControl}>
         <input
@@ -200,8 +213,15 @@ const RegisterForm: React.FC<Props> = (props) => {
           placeholder="Nick"
           onChange={nickChangeHandler}
           onBlur={nickBlurHandler}
+          className={enteredNickHasError ? classes.invalidInput : ""}
         />
-        {enteredNickHasError && <span>Please enter valid nick</span>}
+        {enteredNickHasError && (
+          <span>
+            Please enter valid nick. It can contain only lowercase letters (a-z)
+            and numbers (0-9). It should have a length between 5 and 25
+            characters.
+          </span>
+        )}
       </div>
       <div className={classes.inputControl}>
         <input
@@ -210,8 +230,13 @@ const RegisterForm: React.FC<Props> = (props) => {
           placeholder="Password"
           onChange={passwordChangeHandler}
           onBlur={passwordBlurHandler}
+          className={enteredPasswordHasError ? classes.invalidInput : ""}
         />
-        {enteredPasswordHasError && <span>Please enter valid Password</span>}
+        {enteredPasswordHasError && (
+          <span>
+            Please enter valid password. It must contain at least 8 characters.
+          </span>
+        )}
       </div>
       <div className={classes.inputControl}>
         <input
@@ -220,11 +245,19 @@ const RegisterForm: React.FC<Props> = (props) => {
           placeholder="Confirm Password"
           onChange={confirmPasswordChangeHandler}
           onBlur={confirmPasswordBlurHandler}
+          className={
+            !passwordConfirmIsValid(enteredPassword, enteredConfirmPassword) &&
+            enteredConfirmPasswordIsTouched && (
+              <span>Passwords must be the same</span>
+            )
+              ? classes.invalidInput
+              : ""
+          }
         />
 
         {!passwordConfirmIsValid(enteredPassword, enteredConfirmPassword) &&
           enteredConfirmPasswordIsTouched && (
-            <span>Passwords must be the same</span>
+            <span>Passwords must be the same.</span>
           )}
       </div>
 
