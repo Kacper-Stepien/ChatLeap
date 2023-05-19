@@ -20,7 +20,7 @@
   height: min-content;
   margin-bottom: 1.6rem;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
 }
 
@@ -436,3 +436,16 @@
 }
 
 // MEDIA QUERIES
+@media only screen and (max-width: 400px) {
+  .allPost {
+    border-radius: 0;
+  }
+
+  .postDate {
+    font-size: 1.2rem;
+  }
+
+  .comments {
+    padding: 2rem 1rem;
+  }
+}

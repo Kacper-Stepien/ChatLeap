@@ -187,3 +187,10 @@
     background: $color-green-1;
   }
 }
+
+// MEDIA QUERIES
+@media only screen and (max-width: 400px) {
+  .posts {
+    padding: 1rem 0;
+  }
+}
