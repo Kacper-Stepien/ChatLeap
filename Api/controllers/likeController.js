@@ -74,14 +74,14 @@ exports.toggleLike = catchAsync(async (req, res, next) => {
     return next(new AppError("Post not found", 400));
   }
 
-  const like = await Like.findOne({ post: postId, author: userId });
-  if (like) {
-    await Like.deleteOne({ post: postId, author: userId });
+  const likes = await Like.find({ post: postId, author: userId });
+  if (likes.length > 0) {
+    await Like.deleteMany({ post: postId, author: userId });
 
-    // Remove like from post
+    // Remove like from post - have to remove all, because when user requests very fast, it can create multiple likes
     await Post.findByIdAndUpdate(
       postId,
-      { $pull: { likes: like._id } },
+      { $pull: { likes: { $in: likes.map((like) => like._id) } } },
       { new: true }
     );
 
