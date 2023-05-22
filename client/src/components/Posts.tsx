@@ -10,6 +10,7 @@ import PostModel from ".././models/Post";
 import useModal from ".././hooks/use-modal";
 import Modal from "./Modal";
 import { ModalType } from ".././hooks/use-modal";
+import LoadingSPpinner from "./LoadingSpinner";
 
 import classes from "./Posts.module.scss";
 
@@ -18,6 +19,7 @@ const Posts: React.FC = () => {
   const { mode, accent } = useContext(ThemeContext);
   const theme = mode + accent;
   const { token } = useContext(AuthContext);
+  const [downloadingPosts, setDownloadingPosts] = useState(false);
 
   const styleClasses = [classes[theme], classes.posts];
 
@@ -34,6 +36,7 @@ const Posts: React.FC = () => {
 
   const getPosts = async () => {
     const address = process.env.REACT_APP_SERVER + "/posts";
+    setDownloadingPosts(true);
     try {
       const response = await fetch(address, {
         method: "GET",
@@ -42,6 +45,7 @@ const Posts: React.FC = () => {
         },
       });
       const data = await response.json();
+      setDownloadingPosts(false);
       if (data.status === "success") {
         setPosts(data.data.posts);
       } else {
@@ -143,17 +147,19 @@ const Posts: React.FC = () => {
 
   return (
     <div className={styleClasses.join(" ")}>
-      <AddPost addPost={addPost} />
-      {posts.map((post) => (
-        <Post
-          key={post._id}
-          post={post}
-          deletePost={deletePost}
-          updatePost={updatePost}
-          openModal={openModal}
-        />
-      ))}
-      {posts.length === 0 && (
+      {downloadingPosts && <LoadingSPpinner message="Downloading posts" />}
+      {!downloadingPosts && <AddPost addPost={addPost} />}
+      {!downloadingPosts &&
+        posts.map((post) => (
+          <Post
+            key={post._id}
+            post={post}
+            deletePost={deletePost}
+            updatePost={updatePost}
+            openModal={openModal}
+          />
+        ))}
+      {!downloadingPosts && posts.length === 0 && (
         <h2 className={classes.noPosts}>There are no posts yet!</h2>
       )}
       {isModalOpen && (

@@ -91,7 +91,7 @@ const App: React.FC = () => {
       <ThemeContext.Provider value={{ mode, accent, setMode, setAccent }}>
         <LoadingSpinnerContext.Provider value={{ isLoading, setIsLoading }}>
           <RouterProvider router={router} />
-          {isLoading && <LoadingSPpinner />}
+          {isLoading && <LoadingSPpinner fullScreen={true} />}
         </LoadingSpinnerContext.Provider>
       </ThemeContext.Provider>
     </AuthContext.Provider>

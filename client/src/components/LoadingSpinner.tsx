@@ -1,7 +1,30 @@
 import classes from "./LoadingSpinner.module.scss";
 
-const LoadingSPpinner: React.FC = () => {
+interface LoadingSpinnerProps {
+  fullScreen?: boolean;
+  message?: string;
+}
+
+const LoadingSPpinner: React.FC<LoadingSpinnerProps> = ({
+  fullScreen,
+  message,
+}) => {
   const styleClasses = [classes.ldsRing];
+
+  if (fullScreen) {
+    return (
+      <div className={classes.boxFullScreen}>
+        <div className={styleClasses.join(" ")}>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
+        {message && <p className={classes.spinnerMessage}>{message}</p>}
+      </div>
+    );
+  }
+
   return (
     <div className={classes.box}>
       <div className={styleClasses.join(" ")}>
@@ -10,6 +33,7 @@ const LoadingSPpinner: React.FC = () => {
         <div></div>
         <div></div>
       </div>
+      {message && <p className={classes.spinnerMessage}>{message}</p>}
     </div>
   );
 };
