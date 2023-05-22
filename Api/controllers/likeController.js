@@ -68,6 +68,8 @@ exports.toggleLike = catchAsync(async (req, res, next) => {
   const postId = req.params.id;
   const userId = req.user.id;
 
+  let userLikesPost = false;
+
   if (!(await postExists(postId))) {
     return next(new AppError("Post not found", 400));
   }
@@ -82,16 +84,20 @@ exports.toggleLike = catchAsync(async (req, res, next) => {
       { $pull: { likes: like._id } },
       { new: true }
     );
+
+    userLikesPost = false;
   } else {
     const newLike = await Like.create({ author: userId, post: postId });
     const post = await Post.findById(postId);
     post.likes.push(newLike);
     await post.save();
+    userLikesPost = true;
   }
 
   const post = await Post.findById(postId).populate("likes");
   res.status(200).json({
     status: "success",
     data: post,
+    userLikesPost,
   });
 });

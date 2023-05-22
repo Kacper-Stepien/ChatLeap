@@ -7,7 +7,6 @@ import { LoadingSpinnerContext } from "../context/LoadinSpinnerContext";
 
 import {
   FaRegComment,
-  FaComment,
   FaRegHeart,
   FaHeart,
   FaAngleUp,
@@ -22,6 +21,7 @@ import LikeModel from ".././models/Like";
 import CommentModel from ".././models/Comment";
 import { ModalType } from "../hooks/use-modal";
 import formatDate from "../utils/FormatDate";
+import LoadingSPpinner from "./LoadingSpinner";
 
 import classes from "./Post.module.scss";
 
@@ -47,17 +47,19 @@ const Post: React.FC<PostProps> = ({
 
   const [commentsOpen, setCommentsOpen] = useState<boolean>(false);
   const [updateOpen, setUpdateOpen] = useState<boolean>(false);
+  const [downloadingComments, setDownloadingComments] =
+    useState<boolean>(false);
 
   const [postLikes, setPostLikes] = useState<LikeModel[]>(post.likes);
   const [postComments, setPostComments] = useState<CommentModel[]>(
     post.comments
   );
+
   const [userLike, setUserLike] = useState<boolean>(
     postLikes.some((like) => like.author === userID)
   );
-  const [userComment, setUserComment] = useState<boolean>(
-    postComments.some((comment) => comment.author._id === userID)
-  );
+
+  let userInLikesArray = postLikes.some((like) => like.author === userID);
 
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
   let userIsAnAuthor: boolean = false;
@@ -67,20 +69,33 @@ const Post: React.FC<PostProps> = ({
   if (post.author._id === userID) userIsAnAuthor = true;
 
   const toggleLike = async () => {
-    const address =
-      process.env.REACT_APP_SERVER + "/posts/" + post._id + "/likes";
+    const newLikeValue = !userLike;
+    setUserLike(newLikeValue);
+
+    const address = `${process.env.REACT_APP_SERVER}/posts/${post._id}/likes`;
+
     try {
       const response = await fetch(address, {
         method: "POST",
         headers: {
-          Authorization: "Bearer " + token,
+          Authorization: `Bearer ${token}`,
         },
       });
 
       const data = await response.json();
+
       if (data.status === "success") {
-        setUserLike(!userLike);
         setPostLikes(data.data.likes);
+
+        if (data.userLikesPost) {
+          if (!newLikeValue) {
+            setTimeout(() => setUserLike(true), 2000);
+          }
+        } else {
+          if (newLikeValue) {
+            setTimeout(() => setUserLike(false), 2000);
+          }
+        }
       }
     } catch (err) {
       openModal("Error", "Problem with server", ModalType.ERROR);
@@ -92,7 +107,8 @@ const Post: React.FC<PostProps> = ({
       setCommentsOpen(false);
       return;
     }
-
+    setDownloadingComments(true);
+    setCommentsOpen(true);
     const address =
       process.env.REACT_APP_SERVER + "/posts/" + post._id + "/comments";
     try {
@@ -103,9 +119,10 @@ const Post: React.FC<PostProps> = ({
         },
       });
       const data = await response.json();
+      setDownloadingComments(false);
       if (data.status === "success") {
         setPostComments(data.data.comments);
-        setCommentsOpen(true);
+        // setCommentsOpen(true);
       } else {
         openModal("Error", data.message, ModalType.ERROR);
       }
@@ -264,11 +281,19 @@ const Post: React.FC<PostProps> = ({
                 {userLike ? <FaHeart /> : <FaRegHeart />}
               </button>
 
-              <p>{postLikes.length}</p>
+              <p>
+                {userInLikesArray && userLike
+                  ? postLikes.length
+                  : userInLikesArray && !userLike
+                  ? postLikes.length - 1
+                  : !userInLikesArray && userLike
+                  ? postLikes.length + 1
+                  : postLikes.length}
+              </p>
             </div>
             <div className={classes.postFooterAction}>
               <button aria-label="Show comments button" onClick={showComments}>
-                {userComment ? <FaComment /> : <FaRegComment />}
+                <FaRegComment />
               </button>
 
               <p>{postComments.length}</p>
@@ -292,16 +317,20 @@ const Post: React.FC<PostProps> = ({
             setComments={setPostComments}
             openModal={openModal}
           />
-          {postComments.map((comment) => (
-            <Comment
-              key={comment._id}
-              comment={comment}
-              userID={userID}
-              mode={mode}
-              updateComment={updateComment}
-              deleteComment={deleteComment}
-            />
-          ))}
+          {!downloadingComments &&
+            postComments.map((comment) => (
+              <Comment
+                key={comment._id}
+                comment={comment}
+                userID={userID}
+                mode={mode}
+                updateComment={updateComment}
+                deleteComment={deleteComment}
+              />
+            ))}
+          {downloadingComments && (
+            <LoadingSPpinner message="Downloading comments" small />
+          )}
           <button
             aria-label="Close comments button"
             className={classes.closeComments}

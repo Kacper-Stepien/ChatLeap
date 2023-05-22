@@ -3,13 +3,15 @@ import classes from "./LoadingSpinner.module.scss";
 interface LoadingSpinnerProps {
   fullScreen?: boolean;
   message?: string;
+  small?: boolean;
 }
 
 const LoadingSPpinner: React.FC<LoadingSpinnerProps> = ({
   fullScreen,
   message,
+  small,
 }) => {
-  const styleClasses = [classes.ldsRing];
+  const styleClasses = [small ? classes.ldsRingSmall : classes.ldsRing];
 
   if (fullScreen) {
     return (

@@ -18,7 +18,7 @@ import classes from "./User.module.scss";
 const User: React.FC = () => {
   const { id } = useParams();
   const { token } = useContext(AuthContext);
-  const { setIsLoading } = useContext(LoadingSpinnerContext);
+  const { isLoading, setIsLoading } = useContext(LoadingSpinnerContext);
   const { modalTitle, modalContent, modalType, openModal, closeModal } =
     useModal();
 
@@ -136,6 +136,9 @@ const User: React.FC = () => {
               openModal={openModal}
             />
           ))}
+        {!isLoading && posts.length === 0 && (
+          <p className={classes.noPosts}>No posts</p>
+        )}
       </div>
     </div>
   );

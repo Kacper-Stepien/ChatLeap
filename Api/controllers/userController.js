@@ -98,7 +98,8 @@ exports.getPostsByUser = catchAsync(async (req, res, next) => {
   const posts = await Post.find({ author: userId })
     .populate("author")
     .populate("comments")
-    .populate("likes");
+    .populate("likes")
+    .sort({ createdAt: -1 });
 
   res.status(200).json({
     status: "success",

@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useState, useEffect } from "react";
 import { Navigate } from "react-router-dom";
 
 import { AuthContext } from "./context/AuthContext";
@@ -11,17 +11,28 @@ type ProtectedRouteProps = {
 
 export const ProtectedRoute = ({ element }: ProtectedRouteProps) => {
   const { loggedIn, setLoggedIn, setToken } = useContext(AuthContext);
+  const [initialized, setInitialized] = useState(false);
+
+  useEffect(() => {
+    const localStorage = new LocalStorage();
+    const token = localStorage.readToken();
+    const user = localStorage.readUser();
+
+    if (token && user) {
+      setLoggedIn(true);
+      setToken(token);
+    }
+
+    setInitialized(true);
+  }, [setLoggedIn, setToken]);
+
+  if (!initialized) {
+    return null;
+  }
+
   if (loggedIn) {
     return element;
   }
 
-  const localStorage = new LocalStorage();
-  const token = localStorage.readToken();
-  const user = localStorage.readUser();
-  if (token && user) {
-    setLoggedIn(true);
-    setToken(token);
-    return element;
-  }
   return <Navigate to="/login" />;
 };
