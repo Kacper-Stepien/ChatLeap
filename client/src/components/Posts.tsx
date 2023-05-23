@@ -11,6 +11,7 @@ import useModal from ".././hooks/use-modal";
 import Modal from "./Modal";
 import { ModalType } from ".././hooks/use-modal";
 import LoadingSPpinner from "./LoadingSpinner";
+import { LogoutUser } from "../utils/LogoutUser";
 
 import classes from "./Posts.module.scss";
 
@@ -18,7 +19,7 @@ const Posts: React.FC = () => {
   const { setIsLoading } = useContext(LoadingSpinnerContext);
   const { mode, accent } = useContext(ThemeContext);
   const theme = mode + accent;
-  const { token } = useContext(AuthContext);
+  const { token, setLoggedIn } = useContext(AuthContext);
   const [downloadingPosts, setDownloadingPosts] = useState(false);
 
   const styleClasses = [classes[theme], classes.posts];
@@ -48,6 +49,8 @@ const Posts: React.FC = () => {
       setDownloadingPosts(false);
       if (data.status === "success") {
         setPosts(data.data.posts);
+      } else if (data.message === "jwt expired") {
+        LogoutUser({ setLoggedIn });
       } else {
         openModal("Error", data.message, ModalType.ERROR);
       }
@@ -72,6 +75,8 @@ const Posts: React.FC = () => {
       if (data.status === "success") {
         setIsLoading(false);
         setPosts([data.data.post, ...posts]);
+      } else if (data.message === "jwt expired") {
+        LogoutUser({ setLoggedIn });
       } else {
         setIsLoading(false);
         openModal("Error", data.message, ModalType.ERROR);
@@ -101,7 +106,11 @@ const Posts: React.FC = () => {
 
       const data = await response.json();
       setIsLoading(false);
-      openModal("Error", data.message, ModalType.ERROR);
+      if (data.message === "jwt expired") {
+        LogoutUser({ setLoggedIn });
+      } else {
+        openModal("Error", data.message, ModalType.ERROR);
+      }
     } catch (err) {
       setIsLoading(false);
       openModal("Error", "Problem with server", ModalType.ERROR);
@@ -131,6 +140,8 @@ const Posts: React.FC = () => {
           return post;
         });
         setPosts(newPosts);
+      } else if (data.message === "jwt expired") {
+        LogoutUser({ setLoggedIn });
       } else {
         setIsLoading(false);
         openModal("Error", data.message, ModalType.ERROR);

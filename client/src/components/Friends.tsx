@@ -6,11 +6,12 @@ import { AuthContext } from "../context/AuthContext";
 import UserModel from ".././models/Author";
 import Friend from "./Friend";
 import LoadingSPpinner from "./LoadingSpinner";
+import { LogoutUser } from "../utils/LogoutUser";
 
 import classes from "./Friends.module.scss";
 
 const Friends = () => {
-  const { userID, token } = useContext(AuthContext);
+  const { userID, token, setLoggedIn } = useContext(AuthContext);
   const { mode, accent } = useContext(ThemeContext);
   const theme = mode + accent;
   const styleClasses = [classes[theme], classes.container];
@@ -32,6 +33,8 @@ const Friends = () => {
       setFriendsDownloading(false);
       if (data.status === "success") {
         setFriends(data.data.users);
+      } else if (data.message === "jwt expired") {
+        LogoutUser({ setLoggedIn });
       } else {
         console.log(data.message);
       }

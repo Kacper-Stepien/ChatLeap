@@ -22,6 +22,7 @@ import CommentModel from ".././models/Comment";
 import { ModalType } from "../hooks/use-modal";
 import formatDate from "../utils/FormatDate";
 import LoadingSPpinner from "./LoadingSpinner";
+import { LogoutUser } from "../utils/LogoutUser";
 
 import classes from "./Post.module.scss";
 
@@ -43,7 +44,7 @@ const Post: React.FC<PostProps> = ({
   const theme = mode + accent;
   const styleClasses = [classes[theme], classes.allPost];
 
-  const { userID, token } = useContext(AuthContext);
+  const { userID, token, setLoggedIn } = useContext(AuthContext);
 
   const [commentsOpen, setCommentsOpen] = useState<boolean>(false);
   const [updateOpen, setUpdateOpen] = useState<boolean>(false);
@@ -96,6 +97,8 @@ const Post: React.FC<PostProps> = ({
             setTimeout(() => setUserLike(false), 2000);
           }
         }
+      } else if (data.message === "jwt expired") {
+        LogoutUser({ setLoggedIn });
       }
     } catch (err) {
       openModal("Error", "Problem with server", ModalType.ERROR);
@@ -122,7 +125,8 @@ const Post: React.FC<PostProps> = ({
       setDownloadingComments(false);
       if (data.status === "success") {
         setPostComments(data.data.comments);
-        // setCommentsOpen(true);
+      } else if (data.message === "jwt expired") {
+        LogoutUser({ setLoggedIn });
       } else {
         openModal("Error", data.message, ModalType.ERROR);
       }
@@ -155,6 +159,8 @@ const Post: React.FC<PostProps> = ({
             return comment;
           })
         );
+      } else if (data.message === "jwt expired") {
+        LogoutUser({ setLoggedIn });
       } else if (data.status === "fail" || data.status === "error") {
         openModal("Error", data.message, ModalType.ERROR);
       }
@@ -183,6 +189,9 @@ const Post: React.FC<PostProps> = ({
 
       const data = await response.json();
       setIsLoading(false);
+      if (data.message === "jwt expired") {
+        LogoutUser({ setLoggedIn });
+      }
       if (data.status === "fail" || data.status === "error") {
         openModal("Error", data.message, ModalType.ERROR);
       }

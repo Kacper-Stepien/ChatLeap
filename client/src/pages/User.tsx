@@ -12,12 +12,13 @@ import useModal, { ModalType } from "../hooks/use-modal";
 import SimpleNavbar from "../components/SimpleNavbar";
 import UserInfo from "./../components/UserInfo";
 import Post from "./../components/Post";
+import { LogoutUser } from "../utils/LogoutUser";
 
 import classes from "./User.module.scss";
 
 const User: React.FC = () => {
   const { id } = useParams();
-  const { token } = useContext(AuthContext);
+  const { token, setLoggedIn } = useContext(AuthContext);
   const { isLoading, setIsLoading } = useContext(LoadingSpinnerContext);
   const { modalTitle, modalContent, modalType, openModal, closeModal } =
     useModal();
@@ -43,6 +44,8 @@ const User: React.FC = () => {
       setIsLoading(false);
       if (data.status === "success") {
         setUser(data.data.user);
+      } else if (data.message === "jwt expired") {
+        LogoutUser({ setLoggedIn });
       } else {
       }
     } catch (err) {}
@@ -62,6 +65,8 @@ const User: React.FC = () => {
       setIsLoading(false);
       if (data.status === "success") {
         setPosts(data.data.posts);
+      } else if (data.message === "jwt expired") {
+        LogoutUser({ setLoggedIn });
       } else if (data.status === "fail") {
       } else {
       }
@@ -86,6 +91,9 @@ const User: React.FC = () => {
       }
 
       const data = await response.json();
+      if (data.message === "jwt expired") {
+        LogoutUser({ setLoggedIn });
+      }
     } catch (err) {}
   };
 
@@ -111,6 +119,8 @@ const User: React.FC = () => {
           return post;
         });
         setPosts(newPosts);
+      } else if (data.message === "jwt expired") {
+        LogoutUser({ setLoggedIn });
       } else {
       }
     } catch (error) {}

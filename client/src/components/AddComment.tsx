@@ -2,8 +2,10 @@ import React, { useRef, useContext, useState } from "react";
 
 import CommentModel from ".././models/Comment";
 import { LoadingSpinnerContext } from "../context/LoadinSpinnerContext";
+import { AuthContext } from "../context/AuthContext";
 
 import { ModalType } from "../hooks/use-modal";
+import { LogoutUser } from "../utils/LogoutUser";
 
 import classes from "./AddComment.module.scss";
 
@@ -25,6 +27,7 @@ const AddComment: React.FC<AddCommentProps> = ({
   setComments,
   openModal,
 }) => {
+  const { setLoggedIn } = useContext(AuthContext);
   const styleClasses = [classes[mode], classes.comment];
   const inputRef = useRef<HTMLInputElement>(null);
   const { setIsLoading } = useContext(LoadingSpinnerContext);
@@ -51,6 +54,8 @@ const AddComment: React.FC<AddCommentProps> = ({
       if (data.status === "success") {
         setComments([...comments, data.data.comment]);
         inputRef.current!.value = "";
+      } else if (data.message === "jwt expired") {
+        LogoutUser({ setLoggedIn });
       } else {
         openModal("Error", data.message, ModalType.ERROR);
       }
