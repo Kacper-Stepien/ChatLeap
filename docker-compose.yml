@@ -1,0 +1,45 @@
+version: "3"
+services:
+  mongodb:
+    container_name: chatleap-mongo
+    restart: always
+    image: mongo:4
+    volumes:
+      - dbdata6:/data/db
+    networks:
+      - backend-network
+
+  api:
+    container_name: chatleap-api
+    restart: always
+    build:
+      context: ./Api
+      args:
+        - PORT=8000
+        - DATABASE=mongodb://mongodb:27017/chatleap-api
+        - JWT_SECRET=${JWT_SECRET}
+        - JWT_EXPIRES_IN=${JWT_EXPIRES_IN}
+    ports:
+      - ${API_PORT}:8000
+    networks:
+      - backend-network
+    depends_on:
+      - mongodb
+
+  client:
+    container_name: chatleap-client
+    restart: always
+    build:
+      context: ./client
+      args:
+        - REACT_APP_SERVER=http://localhost:${API_PORT}/chatleap
+    ports:
+      - ${CLIENT_PORT}:80
+    depends_on:
+      - api
+
+volumes:
+  dbdata6:
+
+networks:
+  backend-network:
