@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState, useRef } from "react";
 
 import { AuthContext } from "../context/AuthContext";
 import { ThemeContext } from "../context/ThemeContext";
@@ -17,10 +17,13 @@ import classes from "./Posts.module.scss";
 
 const Posts: React.FC = () => {
   const { setIsLoading } = useContext(LoadingSpinnerContext);
+  const [page, setPage] = useState(1);
+  const [allPostsDownloaded, setAllPostsDownloaded] = useState(false);
   const { mode, accent } = useContext(ThemeContext);
   const theme = mode + accent;
   const { token, setLoggedIn } = useContext(AuthContext);
   const [downloadingPosts, setDownloadingPosts] = useState(false);
+  const [downloadingMorePosts, setDownloadingMorePosts] = useState(false);
 
   const styleClasses = [classes[theme], classes.posts];
 
@@ -35,8 +38,12 @@ const Posts: React.FC = () => {
     closeModal,
   } = useModal();
 
+  const PostsContainerRef = useRef<HTMLDivElement>(null);
+
   const getPosts = async () => {
-    const address = process.env.REACT_APP_SERVER + "/posts";
+    const address =
+      process.env.REACT_APP_SERVER +
+      `/posts?page=${page}&per_page=${process.env.REACT_APP_POSTS_PER_PAGE}`;
     setDownloadingPosts(true);
     try {
       const response = await fetch(address, {
@@ -49,6 +56,64 @@ const Posts: React.FC = () => {
       setDownloadingPosts(false);
       if (data.status === "success") {
         setPosts(data.data.posts);
+        setPage(2);
+        if (data.data.all) {
+          setAllPostsDownloaded(true);
+        }
+      } else if (data.message === "jwt expired") {
+        LogoutUser({ setLoggedIn });
+      } else {
+        openModal("Error", data.message, ModalType.ERROR);
+      }
+    } catch (err) {
+      openModal("Error", "Problem with server", ModalType.ERROR);
+    }
+  };
+
+  const handleScroll = (event: Event) => {
+    if (event.target instanceof Element) {
+      const threshold = 0.7;
+      const bottom =
+        event.target.scrollTop >=
+        (event.target.scrollHeight - event.target.clientHeight) * threshold;
+
+      if (
+        bottom &&
+        !allPostsDownloaded &&
+        !downloadingMorePosts &&
+        !downloadingPosts
+      ) {
+        setPage((prevPage) => prevPage + 1);
+        setDownloadingMorePosts(true);
+        getMorePosts();
+      }
+    }
+  };
+
+  const getMorePosts = async () => {
+    const address =
+      process.env.REACT_APP_SERVER +
+      `/posts?page=${page}&per_page=${process.env.REACT_APP_POSTS_PER_PAGE}`;
+    try {
+      const response = await fetch(address, {
+        method: "GET",
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      });
+      const data = await response.json();
+      if (data.status === "success") {
+        if (allPostsDownloaded) {
+          setDownloadingMorePosts(false);
+          return;
+        }
+        if (data.data.all) {
+          setAllPostsDownloaded(true);
+        }
+        setPosts((prevPosts) => [...prevPosts, ...data.data.posts]);
+        setTimeout(() => {
+          setDownloadingMorePosts(false);
+        }, 2000);
       } else if (data.message === "jwt expired") {
         LogoutUser({ setLoggedIn });
       } else {
@@ -153,11 +218,23 @@ const Posts: React.FC = () => {
   };
 
   useEffect(() => {
+    const container = PostsContainerRef.current;
+    if (container) {
+      PostsContainerRef.current.addEventListener("scroll", handleScroll);
+    }
+    return () => {
+      if (container) {
+        container.removeEventListener("scroll", handleScroll);
+      }
+    };
+  }, [page, getMorePosts, setPage]);
+
+  useEffect(() => {
     getPosts();
   }, []);
 
   return (
-    <div className={styleClasses.join(" ")}>
+    <div className={styleClasses.join(" ")} ref={PostsContainerRef}>
       {downloadingPosts && <LoadingSPpinner message="Downloading posts" />}
       {!downloadingPosts && <AddPost addPost={addPost} />}
       {!downloadingPosts &&
@@ -170,6 +247,9 @@ const Posts: React.FC = () => {
             openModal={openModal}
           />
         ))}
+      {downloadingMorePosts && (
+        <LoadingSPpinner message="Downloading more posts" />
+      )}
       {!downloadingPosts && posts.length === 0 && (
         <h2 className={classes.noPosts}>There are no posts yet!</h2>
       )}

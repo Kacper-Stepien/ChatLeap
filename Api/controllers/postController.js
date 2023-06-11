@@ -114,6 +114,13 @@ exports.getAllPosts = catchAsync(async (req, res, next) => {
     Post.find().populate("author"),
     req.query
   ).paginate();
+
+  const totalPosts = await Post.countDocuments();
+  const page = req.query.page * 1 || 1;
+  const per_page = req.query.per_page * 1 || 10;
+
+  const all = per_page * page >= totalPosts ? true : false;
+
   const posts = await features.query
     .populate("likes")
     .populate("comments")
@@ -122,6 +129,7 @@ exports.getAllPosts = catchAsync(async (req, res, next) => {
     status: "success",
     data: {
       posts,
+      all,
     },
   });
 });
