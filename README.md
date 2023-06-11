@@ -1,11 +1,14 @@
 # ChatLeap
 ChatLeap is a social networking application similar to Twitter. It consists of a REST API  and a client-side web application.
 
+## Link to App
+https://chatleap.onrender.com
+
 ## Table of contents
 - [Technologies used in the project](#technologies-used-in-the-project)
 - [Features](#features)
 - [App screenshots](#app-screenshots)
-- [Getting started](#getting-started)
+- [Running the Application Using Docker](#running-the-application-using-docker)
 - [Contact](#contact)
 
 ## Technologies used in the project:
@@ -13,6 +16,8 @@ ChatLeap is a social networking application similar to Twitter. It consists of a
 [![](https://skills.thijs.gg/icons?i=react,ts,sass,xd,&theme=dark)](https://skills.thijs.gg)
 - <b>Backend:</b> <br>
 [![](https://skills.thijs.gg/icons?i=js,nodejs,express,mongo,&theme=dark)](https://skills.thijs.gg)
+- <b>Deployment:</b> <br>
+[![](https://skills.thijs.gg/icons?i=docker,&theme=dark)](https://skills.thijs.gg)
 
 ## Features:
 - <b>Account creation:</b> Users can create an account, and the account information is stored securely in the database. Passwords are encrypted to ensure data security.
@@ -72,43 +77,40 @@ ChatLeap is a social networking application similar to Twitter. It consists of a
 ![login_page](/Screens/MobileMain.png)
 ![login_page](/Screens/MobileMenu.png)
 
-
-## Getting started
+## Running the Application Using Docker
 To get started with ChatLeap, follow these steps:
-1.	Install Node.js
-2.	Clone the repository: 
+1.	Make sure you have Docker installed on your computer. You can download Docker from https://www.docker.com/products/docker-desktop and follow the instructions for your operating system.
+
+2.	Open terminal
+
+3.	Navigate to the folder you want to clone repository
+
+4.	Clone the repository: 
 	
         git clone https://github.com/Kacper-Stepien/ChatLeap.git
         
-3. Set up the backend:
-- Open terminal
-- Navigate to the folder you clone repository
-- Navigate to the backend driectory:
+3. Navigate to the project's root folder:
 
-      cd api
- 
-- Install dependencies:
-  
-      npm install
- 
-- Start the backend server:
+      	cd ChatLeap
+	
+4. Open the .env file located in the same directory as the docker-compose.yml file. You can modify the values of the API_PORT, CLIENT_PORT, JWT_SECRET, and JWT_EXPIRES_IN variables according to your preferences. Save the file after making the changes.
 
-      npm start
+		API_PORT=8000
+		CLIENT_PORT=3000
+
+		JWT_SECRET=kFld34pdse/fdfoeqpaFXaa4.$oldmgurITw-d34
+		JWT_EXPIRES_IN=1d
       
-4. Set up frontend:
-- Open another terminal tab
-- Navigate to the folder you clone repository
-- Navigate to the frontend driectory:
+5. Run the application using Docker Compose. In a terminal, while in the project's root directory, execute the following command:
 
-      cd client
+      	docker-compose up -d
+	
+	This will build and run three containers: mongodb (database), api (backend), and client (frontend). The -d option signifies running the containers in detached mode, allowing them to run in the background.
 
-- Start frontend development server:
+6. After successfully starting the containers, the application will be accessible at http://localhost:<CLIENT_PORT>, where <CLIENT_PORT> is the value of the CLIENT_PORT variable from the .env file (by default is 3000). Open a web browser and navigate to that address to see the application.
 
-      npm start
-5. Access the application by opening your browser and visitinig:
-
-       htttp://localhost:<port>
-
+       http://localhost:<CLIENT_PORT>
+       
 
 ## Contact
 If you have any questions or feedback regarding ChatLeap, please contact me at kacper2007x48@gmail.com
