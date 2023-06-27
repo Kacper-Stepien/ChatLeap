@@ -7,7 +7,6 @@ import { AuthContext } from "./context/AuthContext";
 import { LoadingSpinnerContext } from "./context/LoadinSpinnerContext";
 
 import LoadingSPpinner from "./components/LoadingSpinner";
-import ErrorPage from "./pages/Error";
 import LocalStorage from "./utils/LocalStorage";
 
 import RootLayout from "./pages/Root";
@@ -15,8 +14,7 @@ import Register from "./pages/Register";
 import Login from "./pages/Login";
 import Main from "./pages/Main";
 import User from "./pages/User";
-
-import "./App.scss";
+import ErrorPage from "./pages/Error";
 
 const router = createBrowserRouter([
   {
@@ -57,13 +55,12 @@ const App: React.FC = () => {
   const [token, setToken] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
-  useEffect(() => {
+  const initializeApp = () => {
     const localStorage = new LocalStorage();
     const mode: string = localStorage.readMode();
     const accent: string = localStorage.readAccent();
     if (mode) setMode(mode);
     if (accent) setAccent(accent);
-
     const token: string = localStorage.readToken();
     const user = localStorage.readUser();
 
@@ -72,6 +69,10 @@ const App: React.FC = () => {
       setToken(token);
       setUser(user);
     }
+  };
+
+  useEffect(() => {
+    initializeApp();
   }, []);
 
   return (
