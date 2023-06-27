@@ -13,7 +13,7 @@ export const ProtectedRoute = ({ element }: ProtectedRouteProps) => {
   const { loggedIn, setLoggedIn, setToken } = useContext(AuthContext);
   const [initialized, setInitialized] = useState(false);
 
-  useEffect(() => {
+  const checkIfUserIsAuthorized = () => {
     const localStorage = new LocalStorage();
     const token = localStorage.readToken();
     const user = localStorage.readUser();
@@ -24,6 +24,10 @@ export const ProtectedRoute = ({ element }: ProtectedRouteProps) => {
     }
 
     setInitialized(true);
+  };
+
+  useEffect(() => {
+    checkIfUserIsAuthorized();
   }, [setLoggedIn, setToken]);
 
   if (!initialized) {
