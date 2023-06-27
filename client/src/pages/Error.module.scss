@@ -15,6 +15,11 @@
 
   p {
     font-size: 4rem;
+    margin-bottom: 1rem;
+    text-align: center;
+    &:last-child {
+      font-size: 3rem;
+    }
   }
 }
 
@@ -24,7 +29,8 @@
     color: $color-white;
   }
 
-  h1 {
+  h1,
+  span {
     color: $color-indigo-1;
   }
 }
@@ -35,7 +41,8 @@
     color: $color-grey-dark-3;
   }
 
-  h1 {
+  h1,
+  span {
     color: $color-indigo-1;
   }
 }
@@ -46,7 +53,8 @@
     color: $color-white;
   }
 
-  h1 {
+  h1,
+  span {
     color: $color-teal-1;
   }
 }
@@ -57,7 +65,8 @@
     color: $color-grey-dark-3;
   }
 
-  h1 {
+  h1,
+  span {
     color: $color-teal-1;
   }
 }
@@ -68,7 +77,8 @@
     color: $color-white;
   }
 
-  h1 {
+  h1,
+  span {
     color: $color-orange-1;
   }
 }
@@ -79,7 +89,8 @@
     color: $color-grey-dark-3;
   }
 
-  h1 {
+  h1,
+  span {
     color: $color-orange-1;
   }
 }
@@ -90,7 +101,8 @@
     color: $color-white;
   }
 
-  h1 {
+  h1,
+  span {
     color: $color-pink-1;
   }
 }
@@ -101,7 +113,8 @@
     color: $color-grey-dark-3;
   }
 
-  h1 {
+  h1,
+  span {
     color: $color-pink-1;
   }
 }
@@ -112,7 +125,8 @@
     color: $color-white;
   }
 
-  h1 {
+  h1,
+  span {
     color: $color-green-1;
   }
 }
@@ -123,7 +137,8 @@
     color: $color-grey-dark-3;
   }
 
-  h1 {
+  h1,
+  span {
     color: $color-green-1;
   }
 }
