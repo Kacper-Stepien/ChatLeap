@@ -8,13 +8,16 @@
   gap: 1.6rem;
   text-align: center;
 
-  button {
+  .link {
     width: 100%;
     padding: 0.6rem 1rem;
     display: grid;
     grid-template-columns: auto 1fr;
     border-radius: $border-radius;
+    font-size: 1.4rem;
     font-weight: bold;
+    text-decoration: none;
+    color: inherit;
 
     &:hover {
       transform: scale(1.05);
@@ -28,7 +31,7 @@
 }
 
 .darkIndigo {
-  button {
+  .link {
     &.active {
       background-color: $color-indigo-1;
     }
@@ -36,7 +39,7 @@
 }
 
 .lightIndigo {
-  button {
+  .link {
     color: $color-white;
 
     &.active {
@@ -47,7 +50,7 @@
 }
 
 .darkTeal {
-  button {
+  .link {
     color: $color-white;
     &.active {
       background-color: $color-teal-1;
@@ -56,7 +59,7 @@
 }
 
 .lightTeal {
-  button {
+  .link {
     color: $color-white;
 
     &.active {
@@ -67,7 +70,7 @@
 }
 
 .darkOrange {
-  button {
+  .link {
     &.active {
       background-color: $color-orange-1;
     }
@@ -75,7 +78,7 @@
 }
 
 .lightOrange {
-  button {
+  .link {
     color: $color-white;
 
     &.active {
@@ -86,7 +89,7 @@
 }
 
 .darkPink {
-  button {
+  .link {
     &.active {
       background-color: $color-pink-1;
     }
@@ -94,7 +97,7 @@
 }
 
 .lightPink {
-  button {
+  .link {
     color: $color-white;
 
     &.active {
@@ -105,7 +108,7 @@
 }
 
 .darkGreen {
-  button {
+  .link {
     &.active {
       background-color: $color-green-1;
     }
@@ -113,7 +116,7 @@
 }
 
 .lightGreen {
-  button {
+  .link {
     color: $color-white;
 
     &.active {

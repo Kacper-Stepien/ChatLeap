@@ -11,12 +11,10 @@ import Footer from "./Footer";
 import classes from "./Sidebar.module.scss";
 
 type Props = {
-  openTab: string;
-  changeOpenTab: (isOpen: string) => void;
   setShowAside: (show: boolean) => void;
 };
 
-const Sidebar: React.FC<Props> = ({ openTab, changeOpenTab, setShowAside }) => {
+const Sidebar: React.FC<Props> = ({ setShowAside }) => {
   const { mode, accent } = useContext(ThemeContext);
   const theme = mode + accent;
   const styleClasses: string[] = [classes.sidebar, classes[theme]];
@@ -33,12 +31,7 @@ const Sidebar: React.FC<Props> = ({ openTab, changeOpenTab, setShowAside }) => {
       </button>
       <Logo mode={"dark"} />
       <User />
-      <Menu
-        mode={mode}
-        accent={accent}
-        openTab={openTab}
-        changeOpenTab={changeOpenTab}
-      />
+      <Menu mode={mode} accent={accent} />
       <Footer mode={"dark"} />
     </div>
   );

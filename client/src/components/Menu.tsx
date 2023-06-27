@@ -2,53 +2,47 @@ import { FaUserFriends, FaBookmark, FaHome } from "react-icons/fa";
 import { AiFillSetting } from "react-icons/ai";
 
 import classes from "./Menu.module.scss";
+import { NavLink } from "react-router-dom";
 
 type Props = {
   mode: string;
   accent: string;
-  openTab: string;
-  changeOpenTab: (isOpen: string) => void;
 };
 
-const Menu: React.FC<Props> = ({ mode, accent, openTab, changeOpenTab }) => {
+const Menu: React.FC<Props> = ({ mode, accent }) => {
   const theme: string = mode + accent;
   const styleClasses: string[] = [classes.menu, classes[theme]];
   return (
     <nav className={styleClasses.join(" ")}>
-      <button
-        aria-label="Main page button"
-        className={openTab === "main" ? classes.active : ""}
-        onClick={() => {
-          changeOpenTab("main");
-        }}
+      <NavLink
+        to="/"
+        className={({ isActive }) =>
+          isActive ? `${classes.link} ${classes.active}` : classes.link
+        }
       >
         <FaHome className={classes.icon} />
         Main
-      </button>
-      <button
-        aria-label="Friends page button"
-        className={openTab === "friends" ? classes.active : ""}
-        onClick={() => {
-          changeOpenTab("friends");
-        }}
+      </NavLink>
+
+      <NavLink
+        to="/friends"
+        className={({ isActive }) =>
+          isActive ? `${classes.link} ${classes.active}` : classes.link
+        }
       >
         <FaUserFriends className={classes.icon} />
         Friends
-      </button>
-      {/* <button>
-        <FaBookmark className={classes.icon} />
-        Bookmarks
-      </button> */}
-      <button
-        aria-label="Settings page button"
-        className={openTab === "settings" ? classes.active : ""}
-        onClick={() => {
-          changeOpenTab("settings");
-        }}
+      </NavLink>
+
+      <NavLink
+        to="/settings"
+        className={({ isActive }) =>
+          isActive ? `${classes.link} ${classes.active}` : classes.link
+        }
       >
         <AiFillSetting className={classes.icon} />
         Settings
-      </button>
+      </NavLink>
     </nav>
   );
 };

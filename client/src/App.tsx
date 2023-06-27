@@ -15,6 +15,9 @@ import Login from "./pages/Login";
 import Main from "./pages/Main";
 import User from "./pages/User";
 import ErrorPage from "./pages/Error";
+import Posts from "./components/Posts";
+import Settings from "./components/Settings";
+import Friends from "./components/Friends";
 
 const router = createBrowserRouter([
   {
@@ -24,6 +27,20 @@ const router = createBrowserRouter([
       {
         path: "",
         element: <ProtectedRoute element={<Main />} />,
+        children: [
+          {
+            path: "",
+            element: <Posts />,
+          },
+          {
+            path: "/friends",
+            element: <Friends />,
+          },
+          {
+            path: "/settings",
+            element: <Settings />,
+          },
+        ],
       },
       {
         path: "register",
