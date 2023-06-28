@@ -23,6 +23,7 @@ router.patch(
   "/photo",
   authController.protect,
   userController.uploadUserPhoto,
+  userController.resizeUserPhoto,
   userController.uploadPhoto
 );
 

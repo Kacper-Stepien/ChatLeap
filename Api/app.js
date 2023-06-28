@@ -30,6 +30,9 @@ app.use((req, res, next) => {
   next();
 });
 
+// Serve static files
+app.use(express.static(`${__dirname}/public`));
+
 // Routes
 app.use("/chatleap/users", userRouter);
 app.use("/chatleap/posts", postRouter);
