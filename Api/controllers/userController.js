@@ -1,3 +1,33 @@
+const multer = require("multer");
+const fs = require("fs");
+
+const multerStorage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "public/images/users");
+  },
+  filename: (req, file, cb) => {
+    // user-123abc123abc123abc-123456789.jpg
+    const ext = file.mimetype.split("/")[1];
+    cb(null, `user-${req.user.id}-${Date.now()}.${ext}`);
+  },
+});
+
+const multerFilter = (req, file, cb) => {
+  // Only accept images
+  if (file.mimetype.startsWith("image")) {
+    cb(null, true);
+  } else {
+    cb(new AppError("Not an image! Please upload only images.", 400), false);
+  }
+};
+
+const upload = multer({
+  storage: multerStorage,
+  fileFilter: multerFilter,
+});
+
+exports.uploadUserPhoto = upload.single("photo");
+
 const User = require("./../models/userModel");
 const catchAsync = require("./../utils/catchAsync");
 const AppError = require("./../utils/appError");
@@ -105,6 +135,34 @@ exports.getPostsByUser = catchAsync(async (req, res, next) => {
     status: "success",
     data: {
       posts,
+    },
+  });
+});
+
+exports.uploadPhoto = catchAsync(async (req, res, next) => {
+  const user = await User.findById(req.user.id);
+  if (!user) {
+    return next(new AppError("User not found", 404));
+  }
+
+  const oldPhoto = user.photo;
+
+  if (req.file) {
+    user.photo = req.file.filename;
+    await user.save({ validateBeforeSave: false });
+    if (oldPhoto) {
+      fs.unlink(`public/images/users/${oldPhoto}`, (err) => {
+        if (err) {
+          return next(new AppError("Error deleting old photo", 500));
+        }
+      });
+    }
+  }
+
+  res.status(200).json({
+    status: "success",
+    data: {
+      user,
     },
   });
 });
