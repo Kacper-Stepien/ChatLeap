@@ -13,21 +13,21 @@ function Main() {
   const { mode, accent } = useContext(ThemeContext);
   const theme = mode + accent;
   const styleClasses = [classes[theme], classes.page];
-  const [isAsideVisible, setAsideVisible] = useState(false);
+  const [isMobileAsideVisible, setMobileAsideVisible] = useState(false);
 
   return (
     <div className={styleClasses.join(" ")}>
       <aside className={classes.aside}>
-        <Sidebar setShowAside={setAsideVisible} />
+        <Sidebar setShowAside={setMobileAsideVisible} />
       </aside>
-      {isAsideVisible && (
+      {isMobileAsideVisible && (
         <AbsoluteWrapper
           theme={theme}
-          children={<Sidebar setShowAside={setAsideVisible} />}
+          children={<Sidebar setShowAside={setMobileAsideVisible} />}
         />
       )}
       <div className={classes.main}>
-        <Navbar setShowAside={setAsideVisible} />
+        <Navbar setShowAside={setMobileAsideVisible} />
         <Outlet />
       </div>
     </div>

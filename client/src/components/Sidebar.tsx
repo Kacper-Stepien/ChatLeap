@@ -18,6 +18,7 @@ const Sidebar: React.FC<Props> = ({ setShowAside }) => {
   const { mode, accent } = useContext(ThemeContext);
   const theme = mode + accent;
   const styleClasses: string[] = [classes.sidebar, classes[theme]];
+
   return (
     <div className={styleClasses.join(" ")}>
       <button

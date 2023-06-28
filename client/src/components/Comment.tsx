@@ -24,17 +24,20 @@ const Comment: React.FC<Props> = ({
 }) => {
   const styleClasses = [classes[mode], classes.comment];
 
-  const [updateOpen, setUpdateOpen] = useState<boolean>(false);
+  const [updateCommentOpen, setUpdateCommentOpen] = useState<boolean>(false);
   const [disableUpdateBtn, setDisableUpdateBtn] = useState(false);
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
 
+  const minCommentLength = Number(process.env.REACT_APP_COMMENT_MIN_LENGTH);
+  const maxCommentLength = Number(process.env.REACT_APP_COMMENT_MAX_LENGTH);
+
   const toggleUpdate = () => {
     textAreaRef.current?.focus();
-    setUpdateOpen(!updateOpen);
+    setUpdateCommentOpen(!updateCommentOpen);
   };
 
   const handleTextAreaChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    if (e.target.value.length >= 3) {
+    if (e.target.value.length >= minCommentLength) {
       setDisableUpdateBtn(false);
     } else {
       setDisableUpdateBtn(true);
@@ -50,13 +53,13 @@ const Comment: React.FC<Props> = ({
         <p className={classes.authorName}>
           {comment.author.name + " " + comment.author.surname}
         </p>
-        {updateOpen && (
+        {updateCommentOpen && (
           <div className={classes.commentUpdate}>
             <textarea
               className={classes.textArea}
               ref={textAreaRef}
-              minLength={3}
-              maxLength={150}
+              minLength={minCommentLength || 1}
+              maxLength={maxCommentLength || 200}
               defaultValue={comment.text}
               onChange={handleTextAreaChange}
             />
@@ -75,7 +78,7 @@ const Comment: React.FC<Props> = ({
             </button>
           </div>
         )}
-        {!updateOpen && <p className={classes.text}>{comment.text}</p>}
+        {!updateCommentOpen && <p className={classes.text}>{comment.text}</p>}
       </div>
       <div className={classes.actions}>
         <p className={classes.date}>{formatDate(comment.createdAt)}</p>

@@ -10,6 +10,7 @@ type AddPostProps = {
 };
 
 const AddPost: React.FC<AddPostProps> = ({ addPost }) => {
+  const { userName } = useContext(AuthContext);
   const { mode, accent } = useContext(ThemeContext);
   const theme = mode + accent;
   const styleClasses = [classes[theme], classes.addPost];
@@ -17,22 +18,26 @@ const AddPost: React.FC<AddPostProps> = ({ addPost }) => {
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
   const [showButton, setShowButton] = useState<boolean>(false);
 
+  const minPostLength = Number(process.env.REACT_APP_POST_MIN_LENGTH);
+  const maxPostLength = Number(process.env.REACT_APP_POST_MAX_LENGTH);
+
   const clearTextArea = () => {
-    textAreaRef.current!.value = "";
+    if (textAreaRef.current) {
+      textAreaRef.current.value = "";
+    }
   };
 
   const handleClick = () => {
     if (
       textAreaRef.current?.value &&
-      textAreaRef.current?.value?.length >= 3 &&
-      textAreaRef.current?.value?.length <= 250
+      textAreaRef.current?.value?.length >= minPostLength &&
+      textAreaRef.current?.value?.length <= maxPostLength
     ) {
       addPost(textAreaRef.current.value);
       clearTextArea();
     }
   };
 
-  const { userName } = useContext(AuthContext);
   return (
     <div className={styleClasses.join(" ")}>
       <div className={classes.userPhoto}>
@@ -41,11 +46,11 @@ const AddPost: React.FC<AddPostProps> = ({ addPost }) => {
       <textarea
         ref={textAreaRef}
         className={classes.textarea}
-        minLength={3}
-        maxLength={250}
+        minLength={minPostLength || 1}
+        maxLength={maxPostLength || 280}
         placeholder={"What's on your mind " + userName + "?"}
         onChange={(e) => {
-          if (e.target.value.length >= 3) {
+          if (e.target.value.length >= minPostLength) {
             setShowButton(true);
           } else {
             setShowButton(false);

@@ -19,12 +19,13 @@ const FormInput: React.FC<FormInputProps> = ({
   placeholder,
   errorMessage,
   isInvalid,
+  hasError,
   ...props
 }) => {
   return (
     <div className={classes.inputControl}>
       <input id={id} type={type} placeholder={placeholder} {...props} />
-      {props.hasError && <p>{errorMessage}</p>}
+      {hasError && <p>{errorMessage}</p>}
     </div>
   );
 };

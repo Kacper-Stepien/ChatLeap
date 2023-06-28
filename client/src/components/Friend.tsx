@@ -13,6 +13,7 @@ const Friend: React.FC<Props> = ({ friend, theme }) => {
   const styleClasses: string[] = [classes[theme], classes.friend];
 
   const navigate = useNavigate();
+
   const handleClick = () => {
     navigate(`/user/${friend._id}`);
   };

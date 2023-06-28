@@ -1,6 +1,7 @@
 import React, { useRef, useContext, useState } from "react";
 
 import CommentModel from ".././models/Comment";
+
 import { LoadingSpinnerContext } from "../context/LoadinSpinnerContext";
 import { AuthContext } from "../context/AuthContext";
 
@@ -28,9 +29,9 @@ const AddComment: React.FC<AddCommentProps> = ({
   openModal,
 }) => {
   const { setLoggedIn } = useContext(AuthContext);
+  const { setIsLoading } = useContext(LoadingSpinnerContext);
   const styleClasses = [classes[mode], classes.comment];
   const inputRef = useRef<HTMLInputElement>(null);
-  const { setIsLoading } = useContext(LoadingSpinnerContext);
   const [showButton, setShowButton] = useState<boolean>(false);
 
   const addComment = async () => {

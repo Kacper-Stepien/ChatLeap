@@ -7,8 +7,8 @@ const commentSchema = new mongoose.Schema({
   text: {
     type: String,
     required: [true, "Please enter comment text"],
-    minlength: [3, "The comment must be at least 3 characters long"],
-    maxlength: [150, "The comment can be up to 150 characters long"],
+    minlength: [1, "The comment must be at least 1 characters long"],
+    maxlength: [200, "The comment can be up to 200 characters long"],
   },
   createdAt: {
     type: Date,

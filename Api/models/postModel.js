@@ -8,8 +8,8 @@ const postSchema = new mongoose.Schema({
   text: {
     type: String,
     required: [true, "Please enter the text of the post"],
-    minlength: [3, "The post must be at least 3 characters long"],
-    maxlength: [250, "The post can be up to 250 characters long"],
+    minlength: [1, "The post must be at least 1 characters long"],
+    maxlength: [280, "The post can be up to 280 characters long"],
   },
   createdAt: {
     type: Date,

@@ -12,6 +12,7 @@ import useModal, { ModalType } from "../hooks/use-modal";
 import SimpleNavbar from "../components/SimpleNavbar";
 import UserInfo from "./../components/UserInfo";
 import Post from "./../components/Post";
+
 import { LogoutUser } from "../utils/LogoutUser";
 
 import classes from "./User.module.scss";

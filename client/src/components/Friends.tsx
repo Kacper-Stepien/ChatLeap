@@ -15,8 +15,8 @@ const Friends = () => {
   const { mode, accent } = useContext(ThemeContext);
   const theme = mode + accent;
   const styleClasses = [classes[theme], classes.container];
-  const [friendsDownloading, setFriendsDownloading] = useState(true);
 
+  const [friendsDownloading, setFriendsDownloading] = useState(true);
   const [friends, setFriends] = useState<UserModel[]>([]);
 
   const getFriends = async () => {

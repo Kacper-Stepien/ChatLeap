@@ -4,7 +4,7 @@
   max-height: calc(100vh - 6rem);
   overflow-y: scroll;
   width: 100%;
-  padding: 2rem;
+  padding: 2rem 4rem;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -19,10 +19,11 @@
 
 .friends {
   width: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
-  align-items: center;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
+  gap: 4rem;
+  justify-items: center;
+
   padding: 0 2rem;
 }
 
@@ -190,5 +191,11 @@
 
   &::-webkit-scrollbar-thumb {
     background: $color-green-1;
+  }
+}
+
+@media only screen and (min-width: 1400px) {
+  .friends {
+    padding: 0 16rem;
   }
 }
