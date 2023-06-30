@@ -3,6 +3,9 @@ ChatLeap is a social networking application similar to Twitter. It consists of a
 
 ## Link to App
 https://chatleap.onrender.com
+#### If you don't want to create an account, you can use the following guest login details:
+email: anonimowy@gmail.com <br>
+password: 12345678
 
 ## Table of contents
 - [Technologies used in the project](#technologies-used-in-the-project)
