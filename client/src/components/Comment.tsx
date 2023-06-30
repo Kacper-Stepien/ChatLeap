@@ -47,7 +47,14 @@ const Comment: React.FC<Props> = ({
   return (
     <div className={styleClasses.join(" ")}>
       <div className={classes.userPhoto}>
-        <img src="/user.jpg" alt="User" />
+        <img
+          src={
+            comment.author.photo
+              ? process.env.REACT_APP_PHOTOS + `/users/${comment.author.photo}`
+              : "/user.jpg"
+          }
+          alt="User"
+        />
       </div>
       <div className={classes.content}>
         <p className={classes.authorName}>

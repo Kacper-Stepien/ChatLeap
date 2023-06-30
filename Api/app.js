@@ -16,6 +16,7 @@ const app = express();
 // Middlewares
 app.use(express.json()); // Parse incoming requests with JSON payloads
 app.use(helmet()); // Protect app from well-known web vulnerabilities by setting HTTP headers appropriately
+app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }));
 app.use(mongoSanitize()); // Prevent NoSQL query injection
 app.use(xss()); // Sanitize user input coming from POST body, GET queries, and url params
 

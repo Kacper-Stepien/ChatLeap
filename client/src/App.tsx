@@ -68,6 +68,7 @@ const App: React.FC = () => {
     userName: "",
     userSurname: "",
     userNick: "",
+    photo: "",
   });
   const [token, setToken] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -101,6 +102,7 @@ const App: React.FC = () => {
         userName: user.userName,
         userSurname: user.userSurname,
         userNick: user.userNick,
+        photo: user.photo,
         token,
         setUser,
         setToken,

@@ -12,6 +12,7 @@ import useModal, { ModalType } from "../hooks/use-modal";
 import SimpleNavbar from "../components/SimpleNavbar";
 import UserInfo from "./../components/UserInfo";
 import Post from "./../components/Post";
+import AddUserPhoto from "../components/AddUserPhoto";
 
 import { LogoutUser } from "../utils/LogoutUser";
 
@@ -19,7 +20,7 @@ import classes from "./User.module.scss";
 
 const User: React.FC = () => {
   const { id } = useParams();
-  const { token, setLoggedIn } = useContext(AuthContext);
+  const { token, setLoggedIn, userID, photo } = useContext(AuthContext);
   const { isLoading, setIsLoading } = useContext(LoadingSpinnerContext);
   const { modalTitle, modalContent, modalType, openModal, closeModal } =
     useModal();
@@ -130,13 +131,23 @@ const User: React.FC = () => {
   useEffect(() => {
     getUser();
     getUserPosts();
-  }, [token]);
+  }, [token, photo]);
 
   return (
     <div className={classes.page}>
       <SimpleNavbar mode={mode} />
       <div className={styleClasses.join(" ")}>
         <UserInfo user={user} posts={posts} theme={theme} />
+        {id === userID && (
+          <AddUserPhoto
+            token={token}
+            mode={mode}
+            accent={accent}
+            setUser={setUser}
+            setIsLoading={setIsLoading}
+            openModal={openModal}
+          />
+        )}
         {posts &&
           posts.map((post) => (
             <Post

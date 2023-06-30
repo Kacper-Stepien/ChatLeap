@@ -61,7 +61,6 @@ const LoginForm: React.FC<Props> = (props) => {
       if (result.status === "fail") {
         setIsLoading(false);
         props.openModal("Error", result.message, ModalType.ERROR);
-        console.log(result.status);
       } else if (result.status === "success") {
         const localStorage = new LocalStorage();
         setIsLoading(false);
@@ -71,6 +70,7 @@ const LoginForm: React.FC<Props> = (props) => {
           userName: result.data.name,
           userSurname: result.data.surname,
           userNick: result.data.nick,
+          photo: result.data.photo || "",
         });
         setToken(result.token);
         localStorage.writeToken(result.token);
@@ -79,6 +79,7 @@ const LoginForm: React.FC<Props> = (props) => {
           userName: result.data.name,
           userSurname: result.data.surname,
           userNick: result.data.nick,
+          photo: result.data.photo || "",
         });
         // props.openModal("Success", result.message, ModalType.SUCCESS);
         setTimeout(() => {

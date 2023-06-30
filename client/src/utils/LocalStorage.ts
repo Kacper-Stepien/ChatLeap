@@ -60,6 +60,7 @@ class LocalStorage {
     userName: string;
     userSurname: string;
     userNick: string;
+    photo: string;
   }) => {
     this.writeValue("user", user);
   };

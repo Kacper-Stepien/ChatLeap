@@ -7,8 +7,9 @@ import LocalStorage from "../utils/LocalStorage";
 import classes from "./User.module.scss";
 
 const User: React.FC = () => {
-  const { userID, userName, userSurname, userNick, setLoggedIn } =
+  const { userID, userName, userSurname, userNick, photo, setLoggedIn } =
     useContext(AuthContext);
+
   const styleClasses: string[] = [classes.user];
   const navigate = useNavigate();
 
@@ -25,7 +26,13 @@ const User: React.FC = () => {
 
   return (
     <div className={styleClasses.join(" ")}>
-      <img src="/user.jpg" alt="User" onClick={openUserPage} />
+      <img
+        src={
+          photo ? process.env.REACT_APP_PHOTOS + `/users/${photo}` : "/user.jpg"
+        }
+        alt="User"
+        onClick={openUserPage}
+      />
       <p className={classes.userName} onClick={openUserPage}>
         {userName + " " + userSurname}
       </p>

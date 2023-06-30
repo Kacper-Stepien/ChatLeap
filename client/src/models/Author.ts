@@ -4,6 +4,7 @@ type Author = {
   surname: string;
   email: string;
   nick: string;
+  photo?: string;
 };
 
 export default Author;

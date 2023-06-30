@@ -1,0 +1,191 @@
+@import "../sass/variables.scss";
+
+.container {
+  max-width: 60rem;
+  width: 100%;
+  padding: 1rem 3rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: $border-radius;
+  color: inherit;
+
+  form {
+    max-width: 60rem;
+    width: 100%;
+    padding: 2rem;
+    border-radius: $border-radius;
+    max-width: 60rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+}
+
+.spacer {
+  width: 100%;
+  height: 0.4rem;
+
+  border-radius: $border-radius;
+}
+.showButton {
+  align-self: stretch;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  font-size: 1.4rem;
+
+  border-radius: $border-radius;
+  padding: 0.6rem 1.2rem;
+  color: inherit;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s;
+  &:hover {
+    transform: none;
+  }
+}
+
+.input {
+  width: 100%;
+  height: 5rem;
+  cursor: pointer;
+
+  padding: 1rem 2rem;
+  border-radius: $border-radius;
+
+  &::-webkit-file-upload-button {
+    margin-right: 2rem;
+    padding: 0.6rem 1.2rem;
+    border-radius: $border-radius;
+    border: none;
+    cursor: pointer;
+  }
+}
+
+.submitButton {
+  padding: 0.6rem 4rem;
+  border-radius: $border-radius;
+  color: $color-white;
+  font-weight: bold;
+
+  &:hover {
+    transform: scale(1.1);
+  }
+
+  &:disabled {
+    filter: brightness(0.6);
+
+    cursor: not-allowed;
+
+    &:hover {
+      transform: none;
+    }
+  }
+}
+
+.preview {
+  max-width: 60rem;
+  width: 100%;
+  max-height: none;
+  height: auto;
+
+  border-radius: 0;
+  cursor: none;
+
+  &:hover {
+    transform: none;
+  }
+}
+
+.darkIndigo,
+.darkTeal,
+.darkOrange,
+.darkGreen,
+.darkPink {
+  color: $color-white;
+
+  form {
+    background-color: $color-grey-dark-3;
+  }
+
+  .spacer {
+    background-color: $color-grey-dark-2;
+  }
+
+  .showButton {
+    background-color: $color-grey-dark-3;
+    &:hover {
+      filter: brightness(1.4);
+    }
+  }
+
+  .input {
+    background-color: $color-grey-dark-3;
+  }
+}
+
+.lightIndigo,
+.lightTeal,
+.lightOrange,
+.lightGreen,
+.lightPink {
+  color: $color-grey-dark-3;
+
+  form {
+    background-color: $color-white;
+  }
+
+  .spacer {
+    background-color: $color-grey-light-1;
+  }
+
+  .showButton {
+    background-color: $color-white;
+    &:hover {
+      filter: brightness(1.4);
+    }
+  }
+
+  .input {
+    background-color: $color-white;
+  }
+}
+
+.darkIndigo,
+.lightIndigo {
+  .submitButton {
+    background-color: $color-indigo-2;
+  }
+}
+
+.darkTeal,
+.lightTeal {
+  .submitButton {
+    background-color: $color-teal-2;
+  }
+}
+
+.darkOrange,
+.lightOrange {
+  .submitButton {
+    background-color: $color-orange-2;
+  }
+}
+
+.darkGreen,
+.lightGreen {
+  .submitButton {
+    background-color: $color-green-2;
+  }
+}
+
+.darkPink,
+.lightPink {
+  .submitButton {
+    background-color: $color-pink-2;
+  }
+}

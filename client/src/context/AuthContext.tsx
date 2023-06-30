@@ -7,17 +7,20 @@ export const AuthContext = createContext({
   userSurname: "",
   userNick: "",
   token: "",
+  photo: "",
   setLoggedIn: (loggedIn: boolean) => {},
   setUser: ({
     userID,
     userName,
     userSurname,
     userNick,
+    photo,
   }: {
     userID: string;
     userName: string;
     userSurname: string;
     userNick: string;
+    photo: string;
   }) => {},
   setToken: (token: string) => {},
 });

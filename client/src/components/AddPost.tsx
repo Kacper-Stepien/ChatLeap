@@ -10,7 +10,7 @@ type AddPostProps = {
 };
 
 const AddPost: React.FC<AddPostProps> = ({ addPost }) => {
-  const { userName } = useContext(AuthContext);
+  const { userName, photo } = useContext(AuthContext);
   const { mode, accent } = useContext(ThemeContext);
   const theme = mode + accent;
   const styleClasses = [classes[theme], classes.addPost];
@@ -41,7 +41,14 @@ const AddPost: React.FC<AddPostProps> = ({ addPost }) => {
   return (
     <div className={styleClasses.join(" ")}>
       <div className={classes.userPhoto}>
-        <img src="/user.jpg" alt="user" />
+        <img
+          src={
+            photo
+              ? process.env.REACT_APP_PHOTOS + `/users/${photo}`
+              : "/user.jpg"
+          }
+          alt="user"
+        />
       </div>
       <textarea
         ref={textAreaRef}

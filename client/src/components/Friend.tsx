@@ -21,7 +21,14 @@ const Friend: React.FC<Props> = ({ friend, theme }) => {
   return (
     <div className={styleClasses.join(" ")} onClick={handleClick}>
       <div className={classes.userPhoto}>
-        <img src="/user.jpg" alt="User" />
+        <img
+          src={
+            friend.photo
+              ? process.env.REACT_APP_PHOTOS + `/users/${friend.photo}`
+              : "/user.jpg"
+          }
+          alt="User"
+        />
       </div>
       <div className={classes.userInfo}>
         <p className={classes.userFullName}>

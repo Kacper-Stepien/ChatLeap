@@ -216,7 +216,12 @@ const Post: React.FC<PostProps> = ({
           <div className={classes.postUser}>
             <img
               className={classes.postUserImage}
-              src="/user.jpg"
+              // src="/user.jpg"
+              src={
+                post.author.photo
+                  ? process.env.REACT_APP_PHOTOS + `/users/${post.author.photo}`
+                  : "/user.jpg"
+              }
               alt="User"
               onClick={openUserPage}
             />
