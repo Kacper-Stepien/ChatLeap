@@ -7,11 +7,19 @@ import { NavLink } from "react-router-dom";
 type Props = {
   mode: string;
   accent: string;
+  setShowAside?: (show: boolean) => void;
 };
 
-const Menu: React.FC<Props> = ({ mode, accent }) => {
+const Menu: React.FC<Props> = ({ mode, accent, setShowAside }) => {
   const theme: string = mode + accent;
   const styleClasses: string[] = [classes.menu, classes[theme]];
+
+  const closeAside = () => {
+    if (setShowAside) {
+      setShowAside(false);
+    }
+  };
+
   return (
     <nav className={styleClasses.join(" ")}>
       <NavLink
@@ -19,6 +27,7 @@ const Menu: React.FC<Props> = ({ mode, accent }) => {
         className={({ isActive }) =>
           isActive ? `${classes.link} ${classes.active}` : classes.link
         }
+        onClick={closeAside}
       >
         <FaHome className={classes.icon} />
         Main
@@ -29,6 +38,7 @@ const Menu: React.FC<Props> = ({ mode, accent }) => {
         className={({ isActive }) =>
           isActive ? `${classes.link} ${classes.active}` : classes.link
         }
+        onClick={closeAside}
       >
         <FaUserFriends className={classes.icon} />
         Friends
@@ -39,6 +49,7 @@ const Menu: React.FC<Props> = ({ mode, accent }) => {
         className={({ isActive }) =>
           isActive ? `${classes.link} ${classes.active}` : classes.link
         }
+        onClick={closeAside}
       >
         <AiFillSetting className={classes.icon} />
         Settings

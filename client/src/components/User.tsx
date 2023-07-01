@@ -1,7 +1,8 @@
 import { useContext } from "react";
-import { AuthContext } from "../context/AuthContext";
-import { FaSignOutAlt } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
+import { FaSignOutAlt } from "react-icons/fa";
+
+import { AuthContext } from "../context/AuthContext";
 import LocalStorage from "../utils/LocalStorage";
 
 import classes from "./User.module.scss";
@@ -30,7 +31,7 @@ const User: React.FC = () => {
         src={
           photo ? process.env.REACT_APP_PHOTOS + `/users/${photo}` : "/user.jpg"
         }
-        alt="User"
+        alt="Logged in user"
         onClick={openUserPage}
       />
       <p className={classes.userName} onClick={openUserPage}>
@@ -39,7 +40,11 @@ const User: React.FC = () => {
       <p className={classes.userNick} onClick={openUserPage}>
         {userNick}
       </p>
-      <button aria-label="Logout button" onClick={logoutHandler}>
+      <button
+        className={classes.logoutBtn}
+        aria-label="Logout button"
+        onClick={logoutHandler}
+      >
         <FaSignOutAlt />
       </button>
     </div>

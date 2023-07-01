@@ -32,7 +32,7 @@ const Sidebar: React.FC<Props> = ({ setShowAside }) => {
       </button>
       <Logo mode={"dark"} />
       <User />
-      <Menu mode={mode} accent={accent} />
+      <Menu mode={mode} accent={accent} setShowAside={setShowAside} />
       <Footer mode={"dark"} />
     </div>
   );

@@ -1,4 +1,5 @@
 import { useContext } from "react";
+
 import { ThemeContext } from "../context/ThemeContext";
 import LocalStorage from "../utils/LocalStorage";
 
@@ -6,6 +7,7 @@ import classes from "./Settings.module.scss";
 
 const Settings: React.FC = () => {
   const { mode, accent, setMode, setAccent } = useContext(ThemeContext);
+
   const styleClasses: string[] = [classes[mode], classes.page];
 
   const darkBtnClasses: string[] = [classes.modeDarkBtn];

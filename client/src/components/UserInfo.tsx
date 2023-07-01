@@ -1,15 +1,13 @@
 import UserModel from "./../models/Author";
-import PostModel from "./../models/Post";
 
 import classes from "./UserInfo.module.scss";
 
 type Props = {
   user: UserModel | undefined;
-  posts: PostModel[];
   theme: string;
 };
 
-const UserInfo: React.FC<Props> = ({ user, posts, theme }) => {
+const UserInfo: React.FC<Props> = ({ user, theme }) => {
   const styleClasses = [classes[theme], classes.container];
   let userFullName = "";
   if (user) userFullName = user.name + " " + user.surname;

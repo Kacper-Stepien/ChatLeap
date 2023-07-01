@@ -137,7 +137,7 @@ const User: React.FC = () => {
     <div className={classes.page}>
       <SimpleNavbar mode={mode} />
       <div className={styleClasses.join(" ")}>
-        <UserInfo user={user} posts={posts} theme={theme} />
+        <UserInfo user={user} theme={theme} />
         {id === userID && (
           <AddUserPhoto
             token={token}

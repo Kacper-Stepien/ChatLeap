@@ -2,7 +2,6 @@ import { useContext } from "react";
 import { FaSun, FaMoon } from "react-icons/fa";
 
 import { ThemeContext } from "../context/ThemeContext";
-
 import LocalStorage from "../utils/LocalStorage";
 
 import classes from "./ThemeSwitcher.module.scss";

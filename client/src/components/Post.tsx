@@ -216,7 +216,6 @@ const Post: React.FC<PostProps> = ({
           <div className={classes.postUser}>
             <img
               className={classes.postUserImage}
-              // src="/user.jpg"
               src={
                 post.author.photo
                   ? process.env.REACT_APP_PHOTOS + `/users/${post.author.photo}`
@@ -313,11 +312,11 @@ const Post: React.FC<PostProps> = ({
               <p>{postComments.length}</p>
             </div>
           </div>
-          {/* <div className={classes.postFooterHashtags}>
-          {hastags.map((hashtag) => (
-            <p>{hashtag}</p>
-          ))}
-        </div> */}
+          <div className={classes.postFooterHashtags}>
+            {/* {hashtags.map((hashtag) => (
+              <p>{hashtag}</p>
+            ))} */}
+          </div>
         </div>
       </div>
       {commentsOpen && (

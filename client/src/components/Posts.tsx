@@ -16,14 +16,17 @@ import { LogoutUser } from "../utils/LogoutUser";
 import classes from "./Posts.module.scss";
 
 const Posts: React.FC = () => {
+  const { token, setLoggedIn } = useContext(AuthContext);
   const { setIsLoading } = useContext(LoadingSpinnerContext);
+
   const [page, setPage] = useState(1);
   const [allPostsDownloaded, setAllPostsDownloaded] = useState(false);
-  const { mode, accent } = useContext(ThemeContext);
-  const theme = mode + accent;
-  const { token, setLoggedIn } = useContext(AuthContext);
+
   const [downloadingPosts, setDownloadingPosts] = useState(false);
   const [downloadingMorePosts, setDownloadingMorePosts] = useState(false);
+
+  const { mode, accent } = useContext(ThemeContext);
+  const theme = mode + accent;
 
   const styleClasses = [classes[theme], classes.posts];
 
