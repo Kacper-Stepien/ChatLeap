@@ -10,8 +10,9 @@ password: 12345678
 ## Table of contents
 - [Technologies used in the project](#technologies-used-in-the-project)
 - [Features](#features)
+- [Note about profile picture upload](#note-about-profile-picture-upload)
 - [App screenshots](#app-screenshots)
-- [Running the Application Using Docker](#running-the-application-using-docker)
+- [Running the application using Docker](#running-the-application-using-docker)
 - [Contact](#contact)
 
 ## Technologies used in the project:
@@ -27,19 +28,23 @@ password: 12345678
 
 - <b>Login:</b> Users can log in to their accounts using their credentials.
 
-- <b>Post Creation:</b> Users can create posts with a length ranging from 3 to 250 characters.
+- <b>Add a profile picture:</b> User can add profile picture. The photo on the server side is cropped to make it square and its quality is slightly reduced. The photo is saved on the server side in the public/images/users folder, and the name of the photo is saved in the database. When the user already has a photo and adds another, the previous one is deleted.
+
+- <b>Post Creation:</b> Users can create posts with a length ranging from 1 to 280 characters.
 
 - <b>Post Editing:</b> Logged-in users can edit the content of their own posts.
 
 - <b>Post Deletion:</b> Logged-in users have the ability to delete their own posts.
 
-- <b>Commenting:</b> Users can add comments to any post. Comments must have a length ranging from 3 to 150 characters.
+- <b>Commenting:</b> Users can add comments to any post. Comments must have a length ranging from 1 to 200 characters.
 
 - <b>Comment Editing:</b> Logged-in users can edit their own comments.
 
 - <b>Comment Deletion:</b> Logged-in users can delete their own comments.
 
 - <b>Liking Posts:</b> Users can like or unlike posts. Clicking the "like" button adds or removes a like from the post. Users can only like a post once.
+
+- <b>Dynamically Loading Posts:</b> The main page of ChatLeap displays posts in batches. Initially, a certain number of posts are loaded, and as the user scrolls down, additional posts are fetched and displayed dynamically. This approach improves the performance of the application by reducing the initial loading time and optimizing network requests. Users can seamlessly browse through an endless stream of posts without experiencing any lag or delays.
 
 - <b>User Listing:</b> There is a page that displays a list of all users who have an account in the application (except the currently logged-in user).
 
@@ -54,6 +59,10 @@ password: 12345678
 - <b>Persistent Login:</b> After logging in, the user's token and profile data are stored in the browser's LocalStorage, allowing the user to stay logged in even after refreshing the page.
 
 - <b>Responsiveness:</b> The application is fully responsive and renders correctly on devices with a minimum width of 300px.
+
+## Note about profile picture upload
+Please note that the feature to upload profile pictures may not work as expected when accessing the application using the provided hosting link. The hosting service used for this demonstration does not allow file storage on the server side, which means that uploaded images will not be saved.
+When running the project locally on your computer or using Docker, the profile picture upload feature will work correctly.
 
 ## App screenshots
 ### Register form
@@ -71,8 +80,11 @@ password: 12345678
 ![login_page](/Screens/UpdateComment.png)
 ### Friends
 ![login_page](/Screens/Friends.png)
-### User Page
+### User page
 ![login_page](/Screens/UserPage.png)
+### Logged In user page 
+![login_page](/Screens/LoggedInUserPage.png)
+![login_page](/Screens/LoggedInUserPage2.png)
 ### Setings
 ![login_page](/Screens/Settings.png)
 ![login_page](/Screens/Settings2.png)
@@ -80,7 +92,7 @@ password: 12345678
 ![login_page](/Screens/MobileMain.png)
 ![login_page](/Screens/MobileMenu.png)
 
-## Running the Application Using Docker
+## Running the application using Docker
 To get started with ChatLeap, follow these steps:
 1.	Make sure you have Docker installed on your computer. You can download Docker from https://www.docker.com/products/docker-desktop and follow the instructions for your operating system.
 
