@@ -86,6 +86,25 @@ exports.getUserByNick = catchAsync(async (req, res, next) => {
   });
 });
 
+exports.getUsersByNameOrNick = catchAsync(async (req, res, next) => {
+  const search = req.params.search;
+  const users = await User.find({
+    $or: [
+      { name: { $regex: search, $options: "i" } },
+      { surname: { $regex: search, $options: "i" } },
+      { nick: { $regex: search, $options: "i" } },
+    ],
+  });
+
+  res.status(200).json({
+    status: "success",
+    data: {
+      users,
+      length: users.length,
+    },
+  });
+});
+
 exports.updateMe = catchAsync(async (req, res, next) => {
   if (req.body.password || req.body.passwordConfirm) {
     return next(
