@@ -13,7 +13,11 @@ router.get("/", authController.protect, userController.getAllUsers);
 
 router.get("/:id", authController.protect, userController.getUser);
 
-router.get("/search/:search", userController.getUsersByNameOrNick);
+router.get(
+  "/search/:search",
+  authController.protect,
+  userController.getUsersByNameOrNick
+);
 
 router.get("/:id/posts", authController.protect, userController.getPostsByUser);
 

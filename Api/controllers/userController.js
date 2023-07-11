@@ -88,13 +88,24 @@ exports.getUserByNick = catchAsync(async (req, res, next) => {
 
 exports.getUsersByNameOrNick = catchAsync(async (req, res, next) => {
   const search = req.params.search;
-  const users = await User.find({
-    $or: [
-      { name: { $regex: search, $options: "i" } },
-      { surname: { $regex: search, $options: "i" } },
-      { nick: { $regex: search, $options: "i" } },
-    ],
-  });
+
+  const users = await User.aggregate([
+    {
+      $addFields: {
+        fullName: { $concat: ["$name", " ", "$surname"] },
+      },
+    },
+    {
+      $match: {
+        $or: [
+          { name: { $regex: search, $options: "i" } },
+          { surname: { $regex: search, $options: "i" } },
+          { fullName: { $regex: search, $options: "i" } },
+          { nick: { $regex: search, $options: "i" } },
+        ],
+      },
+    },
+  ]);
 
   res.status(200).json({
     status: "success",
