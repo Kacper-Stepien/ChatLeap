@@ -2,7 +2,7 @@ import { useContext, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { ThemeContext } from "../context/ThemeContext";
-import { AuthContext } from "../context/AuthContext";
+import { useAuth } from "../context/AuthContext";
 import { LoadingSpinnerContext } from "../context/LoadinSpinnerContext";
 
 import {
@@ -22,7 +22,6 @@ import CommentModel from ".././models/Comment";
 import { ModalType } from "../hooks/use-modal";
 import formatDate from "../utils/FormatDate";
 import LoadingSPpinner from "./LoadingSpinner";
-import { LogoutUser } from "../utils/LogoutUser";
 
 import classes from "./Post.module.scss";
 
@@ -44,7 +43,7 @@ const Post: React.FC<PostProps> = ({
   const theme = mode + accent;
   const styleClasses = [classes[theme], classes.allPost];
 
-  const { userID, token, setLoggedIn } = useContext(AuthContext);
+  const { user, token, setLoggedOutUser } = useAuth();
 
   const [commentsOpen, setCommentsOpen] = useState<boolean>(false);
   const [updateOpen, setUpdateOpen] = useState<boolean>(false);
@@ -57,17 +56,17 @@ const Post: React.FC<PostProps> = ({
   );
 
   const [userLike, setUserLike] = useState<boolean>(
-    postLikes.some((like) => like.author === userID)
+    postLikes.some((like) => like.author === user!.userID)
   );
 
-  let userInLikesArray = postLikes.some((like) => like.author === userID);
+  let userInLikesArray = postLikes.some((like) => like.author === user!.userID);
 
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
   let userIsAnAuthor: boolean = false;
 
   const navigate = useNavigate();
 
-  if (post.author._id === userID) userIsAnAuthor = true;
+  if (post.author._id === user!.userID) userIsAnAuthor = true;
 
   const toggleLike = async () => {
     const newLikeValue = !userLike;
@@ -98,7 +97,7 @@ const Post: React.FC<PostProps> = ({
           }
         }
       } else if (data.message === "jwt expired") {
-        LogoutUser({ setLoggedIn });
+        setLoggedOutUser();
       }
     } catch (err) {
       openModal("Error", "Problem with server", ModalType.ERROR);
@@ -126,7 +125,7 @@ const Post: React.FC<PostProps> = ({
       if (data.status === "success") {
         setPostComments(data.data.comments);
       } else if (data.message === "jwt expired") {
-        LogoutUser({ setLoggedIn });
+        setLoggedOutUser();
       } else {
         openModal("Error", data.message, ModalType.ERROR);
       }
@@ -160,7 +159,7 @@ const Post: React.FC<PostProps> = ({
           })
         );
       } else if (data.message === "jwt expired") {
-        LogoutUser({ setLoggedIn });
+        setLoggedOutUser();
       } else if (data.status === "fail" || data.status === "error") {
         openModal("Error", data.message, ModalType.ERROR);
       }
@@ -190,7 +189,7 @@ const Post: React.FC<PostProps> = ({
       const data = await response.json();
       setIsLoading(false);
       if (data.message === "jwt expired") {
-        LogoutUser({ setLoggedIn });
+        setLoggedOutUser();
       }
       if (data.status === "fail" || data.status === "error") {
         openModal("Error", data.message, ModalType.ERROR);
@@ -324,8 +323,8 @@ const Post: React.FC<PostProps> = ({
           <AddComment
             mode={mode}
             postID={post._id}
-            userID={userID}
-            token={token}
+            userID={user!.userID}
+            token={token as string}
             comments={postComments}
             setComments={setPostComments}
             openModal={openModal}
@@ -335,7 +334,7 @@ const Post: React.FC<PostProps> = ({
               <Comment
                 key={comment._id}
                 comment={comment}
-                userID={userID}
+                userID={user!.userID}
                 mode={mode}
                 updateComment={updateComment}
                 deleteComment={deleteComment}

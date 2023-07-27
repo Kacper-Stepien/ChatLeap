@@ -1,23 +1,33 @@
 import { useContext, useState, useEffect } from "react";
 
 import { ThemeContext } from "../context/ThemeContext";
-import { AuthContext } from "../context/AuthContext";
+import { useAuth } from "../context/AuthContext";
 
 import UserModel from ".././models/Author";
 import Friend from "./Friend";
 import LoadingSPpinner from "./LoadingSpinner";
-import { LogoutUser } from "../utils/LogoutUser";
 
 import classes from "./Friends.module.scss";
 
 const Friends = () => {
-  const { userID, token, setLoggedIn } = useContext(AuthContext);
+  const { user, token, setLoggedOutUser } = useAuth();
   const { mode, accent } = useContext(ThemeContext);
   const theme = mode + accent;
   const styleClasses = [classes[theme], classes.container];
 
   const [friendsDownloading, setFriendsDownloading] = useState(true);
   const [friends, setFriends] = useState<UserModel[]>([]);
+
+  useEffect(() => {
+    getFriends();
+  }, []);
+
+  if (!user || !token) {
+    setLoggedOutUser();
+    return null;
+  }
+
+  const { userID } = user;
 
   const getFriends = async () => {
     const address = process.env.REACT_APP_SERVER + "/users";
@@ -34,7 +44,7 @@ const Friends = () => {
       if (data.status === "success") {
         setFriends(data.data.users);
       } else if (data.message === "jwt expired") {
-        LogoutUser({ setLoggedIn });
+        setLoggedOutUser();
       } else {
         console.log(data.message);
       }
@@ -42,10 +52,6 @@ const Friends = () => {
       console.log(err);
     }
   };
-
-  useEffect(() => {
-    getFriends();
-  }, []);
 
   return (
     <div className={styleClasses.join(" ")}>

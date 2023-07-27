@@ -1,6 +1,7 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
-import { AuthContext } from "../context/AuthContext";
+
+import { useAuth } from "../context/AuthContext";
 import User from "../models/Author";
 import LocalStorage from "../utils/LocalStorage";
 import { ModalType } from "../hooks/use-modal";
@@ -23,13 +24,13 @@ const AddUserPhoto: React.FC<Props> = ({
   setIsLoading,
   openModal,
 }) => {
-  const { setUser: setLoggedInUser } = useContext(AuthContext);
+  const { setLoggedInUser } = useAuth();
   const [showForm, setShowForm] = useState(false);
   const [selectedFile, setSelectedFile] = useState<File | undefined>(undefined);
   const [isFileSelected, setIsFileSelected] = useState(false);
   const theme = mode + accent;
   const styleClasses = [classes[theme], classes.container];
-  const localStorage = new LocalStorage();
+
   const buttonText = {
     show: "Change Your profile photo",
     hide: "Hide profile photo form",
@@ -75,20 +76,16 @@ const AddUserPhoto: React.FC<Props> = ({
       if (data.status === "success") {
         setShowForm(false);
         setUser(data.data.user);
-        setLoggedInUser({
-          userID: data.data.user._id,
-          userName: data.data.user.name,
-          userSurname: data.data.user.surname,
-          userNick: data.data.user.nick,
-          photo: data.data.user.photo || "",
-        });
-        localStorage.writeUser({
-          userID: data.data.user._id,
-          userName: data.data.user.name,
-          userSurname: data.data.user.surname,
-          userNick: data.data.user.nick,
-          photo: data.data.user.photo || "",
-        });
+        setLoggedInUser(
+          {
+            userID: data.data.user._id,
+            userName: data.data.user.name,
+            userSurname: data.data.user.surname,
+            userNick: data.data.user.nick,
+            photo: data.data.user.photo || "",
+          },
+          token
+        );
       }
     } catch (err) {
       setIsLoading(false);

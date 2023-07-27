@@ -1,7 +1,7 @@
 import { useState, useContext } from "react";
 import { Link, Navigate } from "react-router-dom";
 
-import { AuthContext } from "../context/AuthContext";
+import { useAuth } from "../context/AuthContext";
 import { LoadingSpinnerContext } from "../context/LoadinSpinnerContext";
 
 import Validator from "../utils/Validator";
@@ -23,7 +23,7 @@ const LoginForm: React.FC<Props> = (props) => {
   const theme = props.mode + props.accent;
   const styleClasses = [classes[theme], classes.form];
 
-  const { setLoggedIn, setUser, setToken } = useContext(AuthContext);
+  const { setLoggedInUser } = useAuth();
   const [redirectToHome, setRedirectToHome] = useState(false);
 
   const { setIsLoading } = useContext(LoadingSpinnerContext);
@@ -64,24 +64,17 @@ const LoginForm: React.FC<Props> = (props) => {
       } else if (result.status === "success") {
         const localStorage = new LocalStorage();
         setIsLoading(false);
-        setLoggedIn(true);
-        setUser({
-          userID: result.data._id,
-          userName: result.data.name,
-          userSurname: result.data.surname,
-          userNick: result.data.nick,
-          photo: result.data.photo || "",
-        });
-        setToken(result.token);
-        localStorage.writeToken(result.token);
-        localStorage.writeUser({
-          userID: result.data._id,
-          userName: result.data.name,
-          userSurname: result.data.surname,
-          userNick: result.data.nick,
-          photo: result.data.photo || "",
-        });
-        // props.openModal("Success", result.message, ModalType.SUCCESS);
+        setLoggedInUser(
+          {
+            userID: result.data._id,
+            userName: result.data.name,
+            userSurname: result.data.surname,
+            userNick: result.data.nick,
+            photo: result.data.photo || "",
+          },
+          result.token
+        );
+        props.openModal("Success", result.message, ModalType.SUCCESS);
         setTimeout(() => {
           setRedirectToHome(true);
         }, 200);

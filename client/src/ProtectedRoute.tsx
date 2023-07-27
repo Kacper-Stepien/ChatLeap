@@ -1,7 +1,7 @@
-import { useContext, useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Navigate } from "react-router-dom";
 
-import { AuthContext } from "./context/AuthContext";
+import { useAuth } from "./context/AuthContext";
 
 import LocalStorage from "./utils/LocalStorage";
 
@@ -10,7 +10,7 @@ type ProtectedRouteProps = {
 };
 
 export const ProtectedRoute = ({ element }: ProtectedRouteProps) => {
-  const { loggedIn, setLoggedIn, setToken } = useContext(AuthContext);
+  const { loggedIn, setLoggedInUser } = useAuth();
   const [initialized, setInitialized] = useState(false);
 
   const checkIfUserIsAuthorized = () => {
@@ -19,8 +19,7 @@ export const ProtectedRoute = ({ element }: ProtectedRouteProps) => {
     const user = localStorage.readUser();
 
     if (token && user) {
-      setLoggedIn(true);
-      setToken(token);
+      setLoggedInUser(user, token);
     }
 
     setInitialized(true);
@@ -28,7 +27,7 @@ export const ProtectedRoute = ({ element }: ProtectedRouteProps) => {
 
   useEffect(() => {
     checkIfUserIsAuthorized();
-  }, [setLoggedIn, setToken]);
+  }, []);
 
   if (!initialized) {
     return null;

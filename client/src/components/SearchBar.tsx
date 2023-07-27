@@ -1,15 +1,15 @@
-import { useRef, useState, useContext } from "react";
+import { useRef, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { FaSearch } from "react-icons/fa";
 
-import { AuthContext } from "../context/AuthContext";
+import { useAuth } from "../context/AuthContext";
 import UserModel from "../models/Author";
 import LoadingSPpinner from "./LoadingSpinner";
 
 import classes from "./SearchBar.module.scss";
 
 const SearchBar: React.FC<{ mode: string }> = ({ mode }) => {
-  const { token } = useContext(AuthContext);
+  const { token } = useAuth();
   const styleClasses: string[] = [classes.searchBar, classes[mode]];
 
   const searchInputRef = useRef<HTMLInputElement>(null);

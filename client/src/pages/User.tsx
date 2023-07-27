@@ -1,7 +1,7 @@
 import { useState, useContext, useEffect } from "react";
 import { useParams } from "react-router-dom";
 
-import { AuthContext } from "../context/AuthContext";
+import { useAuth } from "../context/AuthContext";
 import { ThemeContext } from "../context/ThemeContext";
 import { LoadingSpinnerContext } from "../context/LoadinSpinnerContext";
 
@@ -14,18 +14,16 @@ import UserInfo from "./../components/UserInfo";
 import Post from "./../components/Post";
 import AddUserPhoto from "../components/AddUserPhoto";
 
-import { LogoutUser } from "../utils/LogoutUser";
-
 import classes from "./User.module.scss";
 
 const User: React.FC = () => {
   const { id } = useParams();
-  const { token, setLoggedIn, userID, photo } = useContext(AuthContext);
+  const { user, setLoggedOutUser, token } = useAuth();
   const { isLoading, setIsLoading } = useContext(LoadingSpinnerContext);
   const { modalTitle, modalContent, modalType, openModal, closeModal } =
     useModal();
 
-  const [user, setUser] = useState<UserModel>();
+  const [userData, setUserData] = useState<UserModel>();
   const [posts, setPosts] = useState<PostModel[]>([]);
 
   const { mode, accent } = useContext(ThemeContext);
@@ -45,9 +43,9 @@ const User: React.FC = () => {
       const data = await response.json();
       setIsLoading(false);
       if (data.status === "success") {
-        setUser(data.data.user);
+        setUserData(data.data.user);
       } else if (data.message === "jwt expired") {
-        LogoutUser({ setLoggedIn });
+        setLoggedOutUser();
       } else {
       }
     } catch (err) {}
@@ -68,7 +66,7 @@ const User: React.FC = () => {
       if (data.status === "success") {
         setPosts(data.data.posts);
       } else if (data.message === "jwt expired") {
-        LogoutUser({ setLoggedIn });
+        setLoggedOutUser();
       } else if (data.status === "fail") {
       } else {
       }
@@ -94,7 +92,7 @@ const User: React.FC = () => {
 
       const data = await response.json();
       if (data.message === "jwt expired") {
-        LogoutUser({ setLoggedIn });
+        setLoggedOutUser();
       }
     } catch (err) {}
   };
@@ -122,7 +120,7 @@ const User: React.FC = () => {
         });
         setPosts(newPosts);
       } else if (data.message === "jwt expired") {
-        LogoutUser({ setLoggedIn });
+        setLoggedOutUser();
       } else {
       }
     } catch (error) {}
@@ -131,19 +129,19 @@ const User: React.FC = () => {
   useEffect(() => {
     getUser();
     getUserPosts();
-  }, [token, photo]);
+  }, [token, user!.photo]);
 
   return (
     <div className={classes.page}>
       <SimpleNavbar mode={mode} />
       <div className={styleClasses.join(" ")}>
-        <UserInfo user={user} theme={theme} />
-        {id === userID && (
+        <UserInfo user={userData} theme={theme} />
+        {id === user!.userID && (
           <AddUserPhoto
-            token={token}
+            token={token as string}
             mode={mode}
             accent={accent}
-            setUser={setUser}
+            setUser={setUserData}
             setIsLoading={setIsLoading}
             openModal={openModal}
           />

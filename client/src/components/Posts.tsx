@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState, useRef } from "react";
 
-import { AuthContext } from "../context/AuthContext";
+import { useAuth } from "../context/AuthContext";
+
 import { ThemeContext } from "../context/ThemeContext";
 import { LoadingSpinnerContext } from "../context/LoadinSpinnerContext";
 
@@ -11,12 +12,11 @@ import useModal from ".././hooks/use-modal";
 import Modal from "./Modal";
 import { ModalType } from ".././hooks/use-modal";
 import LoadingSPpinner from "./LoadingSpinner";
-import { LogoutUser } from "../utils/LogoutUser";
 
 import classes from "./Posts.module.scss";
 
 const Posts: React.FC = () => {
-  const { token, setLoggedIn } = useContext(AuthContext);
+  const { token, setLoggedOutUser } = useAuth();
   const { setIsLoading } = useContext(LoadingSpinnerContext);
 
   const [page, setPage] = useState(1);
@@ -64,7 +64,7 @@ const Posts: React.FC = () => {
           setAllPostsDownloaded(true);
         }
       } else if (data.message === "jwt expired") {
-        LogoutUser({ setLoggedIn });
+        setLoggedOutUser();
       } else {
         openModal("Error", data.message, ModalType.ERROR);
       }
@@ -118,7 +118,7 @@ const Posts: React.FC = () => {
           setDownloadingMorePosts(false);
         }, 2000);
       } else if (data.message === "jwt expired") {
-        LogoutUser({ setLoggedIn });
+        setLoggedOutUser();
       } else {
         openModal("Error", data.message, ModalType.ERROR);
       }
@@ -144,7 +144,7 @@ const Posts: React.FC = () => {
         setIsLoading(false);
         setPosts([data.data.post, ...posts]);
       } else if (data.message === "jwt expired") {
-        LogoutUser({ setLoggedIn });
+        setLoggedOutUser();
       } else {
         setIsLoading(false);
         openModal("Error", data.message, ModalType.ERROR);
@@ -175,7 +175,7 @@ const Posts: React.FC = () => {
       const data = await response.json();
       setIsLoading(false);
       if (data.message === "jwt expired") {
-        LogoutUser({ setLoggedIn });
+        setLoggedOutUser();
       } else {
         openModal("Error", data.message, ModalType.ERROR);
       }
@@ -209,7 +209,7 @@ const Posts: React.FC = () => {
         });
         setPosts(newPosts);
       } else if (data.message === "jwt expired") {
-        LogoutUser({ setLoggedIn });
+        setLoggedOutUser();
       } else {
         setIsLoading(false);
         openModal("Error", data.message, ModalType.ERROR);

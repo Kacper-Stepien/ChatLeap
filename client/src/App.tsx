@@ -3,7 +3,8 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import { ProtectedRoute } from "./ProtectedRoute";
 import { ThemeContext } from "./context/ThemeContext";
-import { AuthContext } from "./context/AuthContext";
+// import { AuthContext } from "./context/AuthContext";
+
 import { LoadingSpinnerContext } from "./context/LoadinSpinnerContext";
 
 import LoadingSPpinner from "./components/LoadingSpinner";
@@ -62,15 +63,6 @@ const router = createBrowserRouter([
 const App: React.FC = () => {
   const [mode, setMode] = useState("dark");
   const [accent, setAccent] = useState("Indigo");
-  const [loggedIn, setLoggedIn] = useState(false);
-  const [user, setUser] = useState({
-    userID: "",
-    userName: "",
-    userSurname: "",
-    userNick: "",
-    photo: "",
-  });
-  const [token, setToken] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
   const initializeApp = () => {
@@ -79,14 +71,6 @@ const App: React.FC = () => {
     const accent: string = localStorage.readAccent();
     if (mode) setMode(mode);
     if (accent) setAccent(accent);
-    const token: string = localStorage.readToken();
-    const user = localStorage.readUser();
-
-    if (token && user) {
-      setLoggedIn(true);
-      setToken(token);
-      setUser(user);
-    }
   };
 
   useEffect(() => {
@@ -94,27 +78,12 @@ const App: React.FC = () => {
   }, []);
 
   return (
-    <AuthContext.Provider
-      value={{
-        loggedIn,
-        setLoggedIn,
-        userID: user.userID,
-        userName: user.userName,
-        userSurname: user.userSurname,
-        userNick: user.userNick,
-        photo: user.photo,
-        token,
-        setUser,
-        setToken,
-      }}
-    >
-      <ThemeContext.Provider value={{ mode, accent, setMode, setAccent }}>
-        <LoadingSpinnerContext.Provider value={{ isLoading, setIsLoading }}>
-          <RouterProvider router={router} />
-          {isLoading && <LoadingSPpinner fullScreen={true} />}
-        </LoadingSpinnerContext.Provider>
-      </ThemeContext.Provider>
-    </AuthContext.Provider>
+    <ThemeContext.Provider value={{ mode, accent, setMode, setAccent }}>
+      <LoadingSpinnerContext.Provider value={{ isLoading, setIsLoading }}>
+        <RouterProvider router={router} />
+        {isLoading && <LoadingSPpinner fullScreen={true} />}
+      </LoadingSpinnerContext.Provider>
+    </ThemeContext.Provider>
   );
 };
 

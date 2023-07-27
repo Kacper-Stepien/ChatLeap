@@ -2,24 +2,19 @@ import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { FaSignOutAlt } from "react-icons/fa";
 
-import { AuthContext } from "../context/AuthContext";
+import { useAuth } from "../context/AuthContext";
 import LocalStorage from "../utils/LocalStorage";
 
 import classes from "./User.module.scss";
 
 const User: React.FC = () => {
-  const { userID, userName, userSurname, userNick, photo, setLoggedIn } =
-    useContext(AuthContext);
+  const { user, setLoggedOutUser } = useAuth();
 
   const styleClasses: string[] = [classes.user];
   const navigate = useNavigate();
 
-  const logoutHandler = () => {
-    const localStorage = new LocalStorage();
-    setLoggedIn(false);
-    localStorage.clearToken();
-    localStorage.clearUser();
-  };
+  if (!user) return null;
+  const { userID, userName, userSurname, userNick, photo } = user;
 
   const openUserPage = () => {
     navigate("/user/" + userID);
@@ -43,7 +38,7 @@ const User: React.FC = () => {
       <button
         className={classes.logoutBtn}
         aria-label="Logout button"
-        onClick={logoutHandler}
+        onClick={setLoggedOutUser}
       >
         <FaSignOutAlt />
       </button>

@@ -1,7 +1,7 @@
 import { useContext, useRef, useState } from "react";
 
 import { ThemeContext } from "../context/ThemeContext";
-import { AuthContext } from "../context/AuthContext";
+import { useAuth } from "../context/AuthContext";
 
 import classes from "./AddPost.module.scss";
 
@@ -10,7 +10,7 @@ type AddPostProps = {
 };
 
 const AddPost: React.FC<AddPostProps> = ({ addPost }) => {
-  const { userName, photo } = useContext(AuthContext);
+  const { user } = useAuth();
   const { mode, accent } = useContext(ThemeContext);
   const theme = mode + accent;
   const styleClasses = [classes[theme], classes.addPost];
@@ -20,6 +20,10 @@ const AddPost: React.FC<AddPostProps> = ({ addPost }) => {
 
   const minPostLength = Number(process.env.REACT_APP_POST_MIN_LENGTH);
   const maxPostLength = Number(process.env.REACT_APP_POST_MAX_LENGTH);
+
+  if (!user) return null;
+
+  const { userName, photo } = user;
 
   const clearTextArea = () => {
     if (textAreaRef.current) {
