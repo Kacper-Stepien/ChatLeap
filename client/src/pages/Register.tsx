@@ -1,7 +1,5 @@
-import { useContext } from "react";
-
 import { useTheme } from "../context/ThemeContext";
-import { LoadingSpinnerContext } from "../context/LoadinSpinnerContext";
+import { useLoadingSpinner } from "../context/LoadinSpinnerContext";
 
 import SimpleNavbar from "../components/SimpleNavbar";
 import RegisterForm from "../components/RegisterForm";
@@ -16,7 +14,7 @@ const Register: React.FC = () => {
   const { mode, accent, theme } = useTheme();
   const styleClasses = [classes[theme], classes.page];
 
-  const { setIsLoading } = useContext(LoadingSpinnerContext);
+  const { setIsLoading } = useLoadingSpinner();
   const {
     modalTitle,
     modalContent,

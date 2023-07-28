@@ -1,9 +1,9 @@
-import { useContext, useState, useRef } from "react";
+import { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { useTheme } from "../context/ThemeContext";
 import { useAuth } from "../context/AuthContext";
-import { LoadingSpinnerContext } from "../context/LoadinSpinnerContext";
+import { useLoadingSpinner } from "../context/LoadinSpinnerContext";
 
 import {
   FaRegComment,
@@ -38,7 +38,7 @@ const Post: React.FC<PostProps> = ({
   updatePost,
   openModal,
 }) => {
-  const { setIsLoading } = useContext(LoadingSpinnerContext);
+  const { setIsLoading } = useLoadingSpinner();
   const { mode, theme } = useTheme();
   const styleClasses = [classes[theme], classes.allPost];
 

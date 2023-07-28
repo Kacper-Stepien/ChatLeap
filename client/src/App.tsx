@@ -1,9 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import { ProtectedRoute } from "./ProtectedRoute";
-
-import { LoadingSpinnerContext } from "./context/LoadinSpinnerContext";
+import { useLoadingSpinner } from "./context/LoadinSpinnerContext";
 
 import LoadingSPpinner from "./components/LoadingSpinner";
 
@@ -58,13 +57,13 @@ const router = createBrowserRouter([
 ]);
 
 const App: React.FC = () => {
-  const [isLoading, setIsLoading] = useState(false);
+  const { isLoading } = useLoadingSpinner();
 
   return (
-    <LoadingSpinnerContext.Provider value={{ isLoading, setIsLoading }}>
+    <>
       <RouterProvider router={router} />
       {isLoading && <LoadingSPpinner fullScreen={true} />}
-    </LoadingSpinnerContext.Provider>
+    </>
   );
 };
 

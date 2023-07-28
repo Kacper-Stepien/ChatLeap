@@ -1,9 +1,9 @@
-import React, { useContext, useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef } from "react";
 
 import { useAuth } from "../context/AuthContext";
 
 import { useTheme } from "../context/ThemeContext";
-import { LoadingSpinnerContext } from "../context/LoadinSpinnerContext";
+import { useLoadingSpinner } from "../context/LoadinSpinnerContext";
 
 import AddPost from "./AddPost";
 import Post from "./Post";
@@ -17,7 +17,7 @@ import classes from "./Posts.module.scss";
 
 const Posts: React.FC = () => {
   const { token, setLoggedOutUser } = useAuth();
-  const { setIsLoading } = useContext(LoadingSpinnerContext);
+  const { setIsLoading } = useLoadingSpinner();
 
   const [page, setPage] = useState(1);
   const [allPostsDownloaded, setAllPostsDownloaded] = useState(false);

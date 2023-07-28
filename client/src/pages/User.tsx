@@ -1,9 +1,9 @@
-import { useState, useContext, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 
 import { useAuth } from "../context/AuthContext";
 import { useTheme } from "../context/ThemeContext";
-import { LoadingSpinnerContext } from "../context/LoadinSpinnerContext";
+import { useLoadingSpinner } from "../context/LoadinSpinnerContext";
 
 import UserModel from "../models/Author";
 import PostModel from "../models/Post";
@@ -19,7 +19,7 @@ import classes from "./User.module.scss";
 const User: React.FC = () => {
   const { id } = useParams();
   const { user, setLoggedOutUser, token } = useAuth();
-  const { isLoading, setIsLoading } = useContext(LoadingSpinnerContext);
+  const { isLoading, setIsLoading } = useLoadingSpinner();
   const { modalTitle, modalContent, modalType, openModal, closeModal } =
     useModal();
 

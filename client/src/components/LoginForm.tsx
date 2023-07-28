@@ -1,8 +1,8 @@
-import { useState, useContext } from "react";
+import { useState } from "react";
 import { Link, Navigate } from "react-router-dom";
 
 import { useAuth } from "../context/AuthContext";
-import { LoadingSpinnerContext } from "../context/LoadinSpinnerContext";
+import { useLoadingSpinner } from "../context/LoadinSpinnerContext";
 
 import Validator from "../utils/Validator";
 import useInput from "../hooks/use-input";
@@ -26,7 +26,7 @@ const LoginForm: React.FC<Props> = (props) => {
   const { setLoggedInUser } = useAuth();
   const [redirectToHome, setRedirectToHome] = useState(false);
 
-  const { setIsLoading } = useContext(LoadingSpinnerContext);
+  const { setIsLoading } = useLoadingSpinner();
 
   const {
     value: enteredEmail,
@@ -62,7 +62,6 @@ const LoginForm: React.FC<Props> = (props) => {
         setIsLoading(false);
         props.openModal("Error", result.message, ModalType.ERROR);
       } else if (result.status === "success") {
-        const localStorage = new LocalStorage();
         setIsLoading(false);
         setLoggedInUser(
           {

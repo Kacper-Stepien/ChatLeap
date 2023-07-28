@@ -1,8 +1,8 @@
-import React, { useRef, useContext, useState } from "react";
+import React, { useRef, useState } from "react";
 
 import CommentModel from ".././models/Comment";
 
-import { LoadingSpinnerContext } from "../context/LoadinSpinnerContext";
+import { useLoadingSpinner } from "../context/LoadinSpinnerContext";
 import { useAuth } from "../context/AuthContext";
 
 import { ModalType } from "../hooks/use-modal";
@@ -28,7 +28,7 @@ const AddComment: React.FC<AddCommentProps> = ({
   openModal,
 }) => {
   const { setLoggedOutUser } = useAuth();
-  const { setIsLoading } = useContext(LoadingSpinnerContext);
+  const { setIsLoading } = useLoadingSpinner();
   const styleClasses = [classes[mode], classes.comment];
   const inputRef = useRef<HTMLInputElement>(null);
   const [showButton, setShowButton] = useState<boolean>(false);
