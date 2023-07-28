@@ -1,17 +1,18 @@
-import { FaUserFriends, FaBookmark, FaHome } from "react-icons/fa";
-import { AiFillSetting } from "react-icons/ai";
+import { FaBookmark, FaHome, FaUserFriends } from "react-icons/fa";
 
-import classes from "./Menu.module.scss";
+import { AiFillSetting } from "react-icons/ai";
+import { FC } from "react";
 import { NavLink } from "react-router-dom";
+import classes from "./Menu.module.scss";
+import { useTheme } from "../context/ThemeContext";
 
 type Props = {
-  mode: string;
-  accent: string;
   setShowAside?: (show: boolean) => void;
 };
 
-const Menu: React.FC<Props> = ({ mode, accent, setShowAside }) => {
-  const theme: string = mode + accent;
+const Menu: FC<Props> = ({ setShowAside }) => {
+  const { theme } = useTheme();
+
   const styleClasses: string[] = [classes.menu, classes[theme]];
 
   const closeAside = () => {

@@ -1,10 +1,20 @@
-import { useNavigate } from "react-router-dom";
-
+import { FC } from "react";
 import classes from "./Logo.module.scss";
+import { useNavigate } from "react-router-dom";
+import { useTheme } from "../context/ThemeContext";
 
-const Logo: React.FC<{ mode: string }> = ({ mode }) => {
-  const styleClasses: string[] = [classes.logo, classes[mode]];
+type LogoProps = {
+  mode?: string;
+};
+
+const Logo: FC<LogoProps> = ({ mode: passedMode }) => {
+  const { mode } = useTheme();
+  if (!passedMode) {
+    passedMode = mode;
+  }
   const navigate = useNavigate();
+
+  const styleClasses = [classes.logo, classes[passedMode]];
 
   const handleClick = () => {
     navigate("/");

@@ -1,3 +1,4 @@
+import { FC } from "react";
 import classes from "./../pages/Register.module.scss";
 
 type FormInputProps = {
@@ -13,7 +14,7 @@ type FormInputProps = {
   onBlur: (event: React.FocusEvent<HTMLInputElement>) => void;
 };
 
-const FormInput: React.FC<FormInputProps> = ({
+const FormInput: FC<FormInputProps> = ({
   id,
   type,
   placeholder,

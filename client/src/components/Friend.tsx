@@ -1,15 +1,15 @@
-import { useNavigate } from "react-router-dom";
-
-import userModel from "../models/Author";
-
+import { FC } from "react";
 import classes from "./Friend.module.scss";
+import { useNavigate } from "react-router-dom";
+import { useTheme } from "../context/ThemeContext";
+import userModel from "../models/Author";
 
 type Props = {
   friend: userModel;
-  theme: string;
 };
 
-const Friend: React.FC<Props> = ({ friend, theme }) => {
+const Friend: FC<Props> = ({ friend }) => {
+  const { theme } = useTheme();
   const styleClasses: string[] = [classes[theme], classes.friend];
 
   const navigate = useNavigate();

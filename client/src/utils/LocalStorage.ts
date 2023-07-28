@@ -56,7 +56,7 @@ class LocalStorage {
   };
 
   writeUser = (user: {
-    userID: string;
+    id: string;
     userName: string;
     userSurname: string;
     userNick: string;

@@ -1,11 +1,10 @@
-import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-
-import { useTheme } from "../context/ThemeContext";
+import { FC, useEffect, useState } from "react";
 
 import styles from "./Error.module.scss";
+import { useNavigate } from "react-router-dom";
+import { useTheme } from "../context/ThemeContext";
 
-const ErrorPage: React.FC = () => {
+const ErrorPage: FC = () => {
   const { theme } = useTheme();
   const styleClasses = [styles[theme], styles.error];
 

@@ -1,11 +1,7 @@
-import { useContext } from "react";
-import { useNavigate } from "react-router-dom";
 import { FaSignOutAlt } from "react-icons/fa";
-
-import { useAuth } from "../context/AuthContext";
-import LocalStorage from "../utils/LocalStorage";
-
 import classes from "./User.module.scss";
+import { useAuth } from "../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 const User: React.FC = () => {
   const { user, setLoggedOutUser } = useAuth();
@@ -14,10 +10,10 @@ const User: React.FC = () => {
   const navigate = useNavigate();
 
   if (!user) return null;
-  const { userID, userName, userSurname, userNick, photo } = user;
+  const { id, userName, userSurname, userNick, photo } = user;
 
   const openUserPage = () => {
-    navigate("/user/" + userID);
+    navigate("/user/" + id);
   };
 
   return (

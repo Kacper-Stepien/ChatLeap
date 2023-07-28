@@ -1,26 +1,23 @@
-import { useState } from "react";
 import { Link, Navigate } from "react-router-dom";
 
-import { useAuth } from "../context/AuthContext";
-import { useLoadingSpinner } from "../context/LoadinSpinnerContext";
-
-import Validator from "../utils/Validator";
-import useInput from "../hooks/use-input";
-import logIn from "../utils/Login";
+import { FC } from "react";
 import { ModalType } from "../hooks/use-modal";
-import LocalStorage from "../utils/LocalStorage";
-
+import Validator from "../utils/Validator";
 import classes from "./Form.module.scss";
+import logIn from "../utils/Login";
+import { useAuth } from "../context/AuthContext";
+import useInput from "../hooks/use-input";
+import { useLoadingSpinner } from "../context/LoadinSpinnerContext";
+import { useState } from "react";
+import { useTheme } from "../context/ThemeContext";
 
 type Props = {
-  mode: string;
-  accent: string;
   openModal: (title: string, content: string, type: ModalType) => void;
   closeModal: () => void;
 };
 
-const LoginForm: React.FC<Props> = (props) => {
-  const theme = props.mode + props.accent;
+const LoginForm: FC<Props> = (props) => {
+  const { theme } = useTheme();
   const styleClasses = [classes[theme], classes.form];
 
   const { setLoggedInUser } = useAuth();
@@ -59,13 +56,11 @@ const LoginForm: React.FC<Props> = (props) => {
       setIsLoading(true);
       const result = await logIn(enteredEmail, enteredPassword);
       if (result.status === "fail") {
-        setIsLoading(false);
         props.openModal("Error", result.message, ModalType.ERROR);
       } else if (result.status === "success") {
-        setIsLoading(false);
         setLoggedInUser(
           {
-            userID: result.data._id,
+            id: result.data._id,
             userName: result.data.name,
             userSurname: result.data.surname,
             userNick: result.data.nick,
@@ -73,21 +68,20 @@ const LoginForm: React.FC<Props> = (props) => {
           },
           result.token
         );
-        props.openModal("Success", result.message, ModalType.SUCCESS);
         setTimeout(() => {
           setRedirectToHome(true);
         }, 200);
       } else if (result.status === "error") {
-        setIsLoading(false);
         props.openModal("Error", result.message, ModalType.ERROR);
       }
     } catch (error) {
-      setIsLoading(false);
       props.openModal(
         "Error",
         "Problem with server. Please try again later.",
         ModalType.ERROR
       );
+    } finally {
+      setIsLoading(false);
     }
   };
 

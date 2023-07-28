@@ -1,15 +1,13 @@
-import { useState, useEffect } from "react";
+import { FC, useEffect, useState } from "react";
 
-import { useTheme } from "../context/ThemeContext";
-import { useAuth } from "../context/AuthContext";
-
-import UserModel from ".././models/Author";
 import Friend from "./Friend";
 import LoadingSPpinner from "./LoadingSpinner";
-
+import UserModel from ".././models/Author";
 import classes from "./Friends.module.scss";
+import { useAuth } from "../context/AuthContext";
+import { useTheme } from "../context/ThemeContext";
 
-const Friends = () => {
+const Friends: FC = () => {
   const { user, token, setLoggedOutUser } = useAuth();
   const { theme } = useTheme();
   const styleClasses = [classes[theme], classes.container];
@@ -26,7 +24,7 @@ const Friends = () => {
     return null;
   }
 
-  const { userID } = user;
+  const { id } = user;
 
   const getFriends = async () => {
     const address = process.env.REACT_APP_SERVER + "/users";
@@ -58,9 +56,7 @@ const Friends = () => {
         <div className={classes.friends}>
           {friends.map(
             (friend) =>
-              friend._id !== userID && (
-                <Friend key={friend._id} friend={friend} theme={theme} />
-              )
+              friend._id !== id && <Friend key={friend._id} friend={friend} />
           )}
         </div>
       )}

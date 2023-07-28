@@ -1,8 +1,7 @@
+import { FC } from "react";
 import ReactDom from "react-dom";
-
-import { useTheme } from "../context/ThemeContext";
-
 import classes from "./Modal.module.scss";
+import { useTheme } from "../context/ThemeContext";
 
 enum ModalType {
   SUCCESS,
@@ -17,7 +16,7 @@ type Props = {
   close: (open: boolean) => void;
 };
 
-const Modal: React.FC<Props> = ({ title, content, type, close }) => {
+const Modal: FC<Props> = ({ title, content, type, close }) => {
   const { mode } = useTheme();
   const styleClasses = [classes[mode], classes.modal];
 

@@ -1,7 +1,18 @@
+import { FC } from "react";
 import classes from "./Footer.module.scss";
+import { useTheme } from "../context/ThemeContext";
 
-const Footer: React.FC<{ mode: string }> = ({ mode }) => {
-  const styleClasses: string[] = [classes.footer, classes[mode]];
+type FooterProps = {
+  mode?: string;
+};
+
+const Footer: FC<FooterProps> = ({ mode: passedMode }) => {
+  const { mode } = useTheme();
+  if (!passedMode) {
+    passedMode = mode;
+  }
+  const styleClasses = [classes.footer, classes[passedMode]];
+
   return (
     <footer className={styleClasses.join(" ")}>
       <span>

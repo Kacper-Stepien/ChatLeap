@@ -1,11 +1,4 @@
-// import { createContext } from "react";
-
-// export const LoadingSpinnerContext = createContext({
-//   isLoading: false,
-//   setIsLoading: (isLoading: boolean) => {},
-// });
-
-import { createContext, useContext, FC, useState, ReactNode } from "react";
+import { FC, ReactNode, createContext, useContext, useState } from "react";
 
 interface LoadingSpinnerContextProps {
   isLoading: boolean;

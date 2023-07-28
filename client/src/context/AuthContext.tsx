@@ -1,16 +1,16 @@
 import {
+  FC,
+  ReactNode,
   createContext,
   useContext,
-  FC,
   useEffect,
   useState,
-  ReactNode,
 } from "react";
 
 import LocalStorage from "../utils/LocalStorage";
 
 interface User {
-  userID: string;
+  id: string;
   userName: string;
   userSurname: string;
   userNick: string;

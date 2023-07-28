@@ -1,27 +1,25 @@
-import React, { useRef, useState } from "react";
+import { FC, useRef, useState } from "react";
 
 import CommentModel from ".././models/Comment";
-
-import { useLoadingSpinner } from "../context/LoadinSpinnerContext";
-import { useAuth } from "../context/AuthContext";
-
 import { ModalType } from "../hooks/use-modal";
-
 import classes from "./AddComment.module.scss";
+import { useAuth } from "../context/AuthContext";
+import { useLoadingSpinner } from "../context/LoadinSpinnerContext";
+import { useTheme } from "../context/ThemeContext";
 
 type AddCommentProps = {
-  mode: string;
   postID: string;
   userID: string;
+  photo: string;
   token: string;
   comments: CommentModel[];
   setComments: (comments: CommentModel[]) => void;
   openModal: (title: string, content: string, type: ModalType) => void;
 };
 
-const AddComment: React.FC<AddCommentProps> = ({
-  mode,
+const AddComment: FC<AddCommentProps> = ({
   postID,
+  photo,
   token,
   comments,
   setComments,
@@ -29,6 +27,7 @@ const AddComment: React.FC<AddCommentProps> = ({
 }) => {
   const { setLoggedOutUser } = useAuth();
   const { setIsLoading } = useLoadingSpinner();
+  const { mode } = useTheme();
   const styleClasses = [classes[mode], classes.comment];
   const inputRef = useRef<HTMLInputElement>(null);
   const [showButton, setShowButton] = useState<boolean>(false);
@@ -50,25 +49,32 @@ const AddComment: React.FC<AddCommentProps> = ({
       });
 
       const data = await response.json();
-      setIsLoading(false);
       if (data.status === "success") {
         setComments([...comments, data.data.comment]);
         inputRef.current!.value = "";
       } else if (data.message === "jwt expired") {
         setLoggedOutUser();
       } else {
-        openModal("Error", data.message, ModalType.ERROR);
+        throw new Error(data.message);
       }
     } catch (err) {
-      setIsLoading(false);
       openModal("Error", "Problem with server", ModalType.ERROR);
+    } finally {
+      setIsLoading(false);
     }
   };
 
   return (
     <div className={styleClasses.join(" ")}>
       <div className={classes.userPhoto}>
-        <img src="/user.jpg" alt="User" />
+        <img
+          src={
+            photo
+              ? process.env.REACT_APP_PHOTOS + `/users/${photo}`
+              : "/user.jpg"
+          }
+          alt="user"
+        />
       </div>
       <input
         type="text"

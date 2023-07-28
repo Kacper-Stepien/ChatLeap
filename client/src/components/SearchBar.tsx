@@ -1,15 +1,16 @@
-import { useRef, useState } from "react";
-import { NavLink } from "react-router-dom";
+import { FC, useRef, useState } from "react";
+
 import { FaSearch } from "react-icons/fa";
-
-import { useAuth } from "../context/AuthContext";
-import UserModel from "../models/Author";
 import LoadingSPpinner from "./LoadingSpinner";
-
+import { NavLink } from "react-router-dom";
+import UserModel from "../models/Author";
 import classes from "./SearchBar.module.scss";
+import { useAuth } from "../context/AuthContext";
+import { useTheme } from "../context/ThemeContext";
 
-const SearchBar: React.FC<{ mode: string }> = ({ mode }) => {
+const SearchBar: FC = () => {
   const { token } = useAuth();
+  const { mode } = useTheme();
   const styleClasses: string[] = [classes.searchBar, classes[mode]];
 
   const searchInputRef = useRef<HTMLInputElement>(null);

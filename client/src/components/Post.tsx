@@ -1,29 +1,26 @@
-import { useState, useRef } from "react";
-import { useNavigate } from "react-router-dom";
-
-import { useTheme } from "../context/ThemeContext";
-import { useAuth } from "../context/AuthContext";
-import { useLoadingSpinner } from "../context/LoadinSpinnerContext";
-
+import { FC, useRef, useState } from "react";
 import {
+  FaAngleUp,
+  FaEdit,
+  FaHeart,
   FaRegComment,
   FaRegHeart,
-  FaHeart,
-  FaAngleUp,
   FaTrashAlt,
-  FaEdit,
 } from "react-icons/fa";
 
-import Comment from "./Comment";
 import AddComment from "./AddComment";
-import PostModel from ".././models/Post";
-import LikeModel from ".././models/Like";
+import Comment from "./Comment";
 import CommentModel from ".././models/Comment";
-import { ModalType } from "../hooks/use-modal";
-import formatDate from "../utils/FormatDate";
+import LikeModel from ".././models/Like";
 import LoadingSPpinner from "./LoadingSpinner";
-
+import { ModalType } from "../hooks/use-modal";
+import PostModel from ".././models/Post";
 import classes from "./Post.module.scss";
+import formatDate from "../utils/FormatDate";
+import { useAuth } from "../context/AuthContext";
+import { useLoadingSpinner } from "../context/LoadinSpinnerContext";
+import { useNavigate } from "react-router-dom";
+import { useTheme } from "../context/ThemeContext";
 
 type PostProps = {
   post: PostModel;
@@ -32,14 +29,9 @@ type PostProps = {
   openModal: (title: string, content: string, type: ModalType) => void;
 };
 
-const Post: React.FC<PostProps> = ({
-  post,
-  deletePost,
-  updatePost,
-  openModal,
-}) => {
+const Post: FC<PostProps> = ({ post, deletePost, updatePost, openModal }) => {
   const { setIsLoading } = useLoadingSpinner();
-  const { mode, theme } = useTheme();
+  const { theme } = useTheme();
   const styleClasses = [classes[theme], classes.allPost];
 
   const { user, token, setLoggedOutUser } = useAuth();
@@ -55,17 +47,17 @@ const Post: React.FC<PostProps> = ({
   );
 
   const [userLike, setUserLike] = useState<boolean>(
-    postLikes.some((like) => like.author === user!.userID)
+    postLikes.some((like) => like.author === user!.id)
   );
 
-  let userInLikesArray = postLikes.some((like) => like.author === user!.userID);
+  let userInLikesArray = postLikes.some((like) => like.author === user!.id);
 
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
   let userIsAnAuthor: boolean = false;
 
   const navigate = useNavigate();
 
-  if (post.author._id === user!.userID) userIsAnAuthor = true;
+  if (post.author._id === user!.id) userIsAnAuthor = true;
 
   const toggleLike = async () => {
     const newLikeValue = !userLike;
@@ -320,9 +312,9 @@ const Post: React.FC<PostProps> = ({
       {commentsOpen && (
         <div className={classes.comments}>
           <AddComment
-            mode={mode}
             postID={post._id}
-            userID={user!.userID}
+            userID={user!.id}
+            photo={user!.photo}
             token={token as string}
             comments={postComments}
             setComments={setPostComments}
@@ -333,8 +325,7 @@ const Post: React.FC<PostProps> = ({
               <Comment
                 key={comment._id}
                 comment={comment}
-                userID={user!.userID}
-                mode={mode}
+                userID={user!.id}
                 updateComment={updateComment}
                 deleteComment={deleteComment}
               />

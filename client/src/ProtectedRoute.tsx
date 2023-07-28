@@ -1,15 +1,16 @@
-import { useState, useEffect } from "react";
-import { Navigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 
-import { useAuth } from "./context/AuthContext";
-
+import { FC } from "react";
 import LocalStorage from "./utils/LocalStorage";
+import { Navigate } from "react-router-dom";
+import { log } from "console";
+import { useAuth } from "./context/AuthContext";
 
 type ProtectedRouteProps = {
   element: JSX.Element;
 };
 
-export const ProtectedRoute = ({ element }: ProtectedRouteProps) => {
+const ProtectedRoute: FC<ProtectedRouteProps> = ({ element }) => {
   const { loggedIn, setLoggedInUser } = useAuth();
   const [initialized, setInitialized] = useState(false);
 
@@ -39,3 +40,5 @@ export const ProtectedRoute = ({ element }: ProtectedRouteProps) => {
 
   return <Navigate to="/login" />;
 };
+
+export default ProtectedRoute;

@@ -1,25 +1,22 @@
-import React, { useState } from "react";
+import { FC, useState } from "react";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 
-import { useAuth } from "../context/AuthContext";
-import User from "../models/Author";
-import LocalStorage from "../utils/LocalStorage";
 import { ModalType } from "../hooks/use-modal";
+import User from "../models/Author";
 import classes from "./AddUserPhoto.module.scss";
+import { useAuth } from "../context/AuthContext";
+import { useTheme } from "../context/ThemeContext";
 
 type Props = {
-  mode: string;
-  accent: string;
   token: string;
   setUser: (user: User) => void;
   setIsLoading: (isLoading: boolean) => void;
   openModal: (title: string, content: string, type: ModalType) => void;
 };
 
-const AddUserPhoto: React.FC<Props> = ({
+const AddUserPhoto: FC<Props> = ({
   token,
-  mode,
-  accent,
+
   setUser,
   setIsLoading,
   openModal,
@@ -28,7 +25,8 @@ const AddUserPhoto: React.FC<Props> = ({
   const [showForm, setShowForm] = useState(false);
   const [selectedFile, setSelectedFile] = useState<File | undefined>(undefined);
   const [isFileSelected, setIsFileSelected] = useState(false);
-  const theme = mode + accent;
+  const { theme } = useTheme();
+
   const styleClasses = [classes[theme], classes.container];
 
   const buttonText = {
@@ -78,7 +76,7 @@ const AddUserPhoto: React.FC<Props> = ({
         setUser(data.data.user);
         setLoggedInUser(
           {
-            userID: data.data.user._id,
+            id: data.data.user._id,
             userName: data.data.user.name,
             userSurname: data.data.user.surname,
             userNick: data.data.user.nick,

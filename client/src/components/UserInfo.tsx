@@ -1,13 +1,13 @@
 import UserModel from "./../models/Author";
-
 import classes from "./UserInfo.module.scss";
+import { useTheme } from "../context/ThemeContext";
 
 type Props = {
   user: UserModel | undefined;
-  theme: string;
 };
 
-const UserInfo: React.FC<Props> = ({ user, theme }) => {
+const UserInfo: React.FC<Props> = ({ user }) => {
+  const { theme } = useTheme();
   const styleClasses = [classes[theme], classes.container];
   let userFullName = "";
   if (user) userFullName = user.name + " " + user.surname;

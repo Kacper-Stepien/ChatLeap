@@ -1,21 +1,18 @@
-import React, { useEffect, useState, useRef } from "react";
-
-import { useAuth } from "../context/AuthContext";
-
-import { useTheme } from "../context/ThemeContext";
-import { useLoadingSpinner } from "../context/LoadinSpinnerContext";
+import { FC, useEffect, useRef, useState } from "react";
 
 import AddPost from "./AddPost";
-import Post from "./Post";
-import PostModel from ".././models/Post";
-import useModal from ".././hooks/use-modal";
+import LoadingSPpinner from "./LoadingSpinner";
 import Modal from "./Modal";
 import { ModalType } from ".././hooks/use-modal";
-import LoadingSPpinner from "./LoadingSpinner";
-
+import Post from "./Post";
+import PostModel from ".././models/Post";
 import classes from "./Posts.module.scss";
+import { useAuth } from "../context/AuthContext";
+import { useLoadingSpinner } from "../context/LoadinSpinnerContext";
+import useModal from ".././hooks/use-modal";
+import { useTheme } from "../context/ThemeContext";
 
-const Posts: React.FC = () => {
+const Posts: FC = () => {
   const { token, setLoggedOutUser } = useAuth();
   const { setIsLoading } = useLoadingSpinner();
 

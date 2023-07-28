@@ -1,11 +1,14 @@
+import { FC, ReactNode } from "react";
+
 import classes from "./AbsoluteWrapper.module.scss";
+import { useTheme } from "../context/ThemeContext";
 
 type Props = {
-  theme: string;
-  children: React.ReactNode;
+  children: ReactNode;
 };
 
-const AbsoluteWrapper: React.FC<Props> = ({ theme, children }) => {
+const AbsoluteWrapper: FC<Props> = ({ children }) => {
+  const { theme } = useTheme();
   const styleClasses = [classes[theme], classes.absoluteWrapper];
   return (
     <div className={styleClasses.join(" ")}>

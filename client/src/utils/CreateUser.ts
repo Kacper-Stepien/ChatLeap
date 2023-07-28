@@ -16,6 +16,8 @@ const createUser = async (
     passwordConfirm,
   };
 
+  console.log(data);
+
   const response = await fetch(address, {
     method: "POST",
     headers: {

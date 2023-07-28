@@ -1,17 +1,15 @@
-import { useTheme } from "../context/ThemeContext";
-import { useLoadingSpinner } from "../context/LoadinSpinnerContext";
-
-import SimpleNavbar from "../components/SimpleNavbar";
-import RegisterForm from "../components/RegisterForm";
+import { FC } from "react";
 import Footer from "../components/Footer";
-
 import Modal from "../components/Modal";
-import useModal from ".././hooks/use-modal";
-
+import RegisterForm from "../components/RegisterForm";
+import SimpleNavbar from "../components/SimpleNavbar";
 import classes from "./Form.module.scss";
+import { useLoadingSpinner } from "../context/LoadinSpinnerContext";
+import useModal from ".././hooks/use-modal";
+import { useTheme } from "../context/ThemeContext";
 
-const Register: React.FC = () => {
-  const { mode, accent, theme } = useTheme();
+const Register: FC = () => {
+  const { theme } = useTheme();
   const styleClasses = [classes[theme], classes.page];
 
   const { setIsLoading } = useLoadingSpinner();
@@ -20,24 +18,18 @@ const Register: React.FC = () => {
     modalContent,
     modalType,
     isModalOpen,
-    openModal,
     closeModal,
+    openModal,
   } = useModal();
 
   return (
     <div className={styleClasses.join(" ")}>
-      <SimpleNavbar mode={mode} />
+      <SimpleNavbar />
       <div className={classes.formArea}>
         <h1>Register</h1>
-        <RegisterForm
-          mode={mode}
-          accent={accent}
-          openModal={openModal}
-          closeModal={closeModal}
-          setIsLoading={setIsLoading}
-        />
+        <RegisterForm setIsLoading={setIsLoading} openModal={openModal} />
       </div>
-      <Footer mode={mode} />
+      <Footer />
       {isModalOpen && (
         <Modal
           title={modalTitle}

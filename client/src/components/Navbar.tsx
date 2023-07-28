@@ -1,18 +1,15 @@
-import React from "react";
-
-import { useTheme } from "../context/ThemeContext";
-
+import { FC } from "react";
+import { FaBars } from "react-icons/fa";
 import SearchBar from "./SearchBar";
 import ThemeSwitcher from "./ThemeSwitcher";
-import { FaBars } from "react-icons/fa";
-
 import classes from "./Navbar.module.scss";
+import { useTheme } from "../context/ThemeContext";
 
 type Props = {
   setShowAside: (show: boolean) => void;
 };
 
-const Navbar: React.FC<Props> = ({ setShowAside }) => {
+const Navbar: FC<Props> = ({ setShowAside }) => {
   const { mode, theme } = useTheme();
   const styleClasses = [classes[theme], classes.navbar];
 
@@ -27,7 +24,7 @@ const Navbar: React.FC<Props> = ({ setShowAside }) => {
       >
         <FaBars />
       </button>
-      <SearchBar mode={mode} />
+      <SearchBar />
       <ThemeSwitcher />
     </div>
   );

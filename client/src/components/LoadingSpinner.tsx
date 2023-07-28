@@ -1,4 +1,6 @@
+import { FC } from "react";
 import classes from "./LoadingSpinner.module.scss";
+import { useTheme } from "../context/ThemeContext";
 
 interface LoadingSpinnerProps {
   fullScreen?: boolean;
@@ -6,12 +8,19 @@ interface LoadingSpinnerProps {
   small?: boolean;
 }
 
-const LoadingSPpinner: React.FC<LoadingSpinnerProps> = ({
+const LoadingSPpinner: FC<LoadingSpinnerProps> = ({
   fullScreen,
   message,
   small,
 }) => {
-  const styleClasses = [small ? classes.ldsRingSmall : classes.ldsRing];
+  const { mode } = useTheme();
+  const styleClasses = [
+    small ? classes.ldsRingSmall : classes.ldsRing,
+    classes[mode],
+  ];
+
+  console.log(mode);
+  console.log(styleClasses);
 
   if (fullScreen) {
     return (

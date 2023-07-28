@@ -1,20 +1,18 @@
-import React from "react";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
 
-import { ProtectedRoute } from "./ProtectedRoute";
-import { useLoadingSpinner } from "./context/LoadinSpinnerContext";
-
-import LoadingSPpinner from "./components/LoadingSpinner";
-
-import RootLayout from "./pages/Root";
-import Register from "./pages/Register";
+import ErrorPage from "./pages/Error";
+import { FC } from "react";
+import Friends from "./components/Friends";
+import LoadingSpinner from "./components/LoadingSpinner";
 import Login from "./pages/Login";
 import Main from "./pages/Main";
-import User from "./pages/User";
-import ErrorPage from "./pages/Error";
 import Posts from "./components/Posts";
+import ProtectedRoute from "./ProtectedRoute";
+import Register from "./pages/Register";
+import RootLayout from "./pages/Root";
 import Settings from "./components/Settings";
-import Friends from "./components/Friends";
+import User from "./pages/User";
+import { useLoadingSpinner } from "./context/LoadinSpinnerContext";
 
 const router = createBrowserRouter([
   {
@@ -56,13 +54,13 @@ const router = createBrowserRouter([
   },
 ]);
 
-const App: React.FC = () => {
+const App: FC = () => {
   const { isLoading } = useLoadingSpinner();
 
   return (
     <>
       <RouterProvider router={router} />
-      {isLoading && <LoadingSPpinner fullScreen={true} />}
+      {isLoading && <LoadingSpinner fullScreen={true} />}
     </>
   );
 };

@@ -1,27 +1,24 @@
-import { useRef, useState } from "react";
+import { FC, useRef, useState } from "react";
 import { Link, Navigate } from "react-router-dom";
 
-import Validator from "../utils/Validator";
-import useInput from "../hooks/use-input";
 import { ModalType } from "../hooks/use-modal";
-import createUser from "../utils/CreateUser";
-
+import Validator from "../utils/Validator";
 import classes from "./Form.module.scss";
+import createUser from "../utils/CreateUser";
+import useInput from "../hooks/use-input";
+import { useTheme } from "../context/ThemeContext";
 
 type Props = {
-  mode: string;
-  accent: string;
-  openModal: (title: string, content: string, type: ModalType) => void;
-  closeModal: () => void;
   setIsLoading: (isLoading: boolean) => void;
+  openModal: (title: string, content: string, type: ModalType) => void;
 };
 
 const passwordConfirmIsValid = (password: string, confirmPassword: string) => {
   return password === confirmPassword;
 };
 
-const RegisterForm: React.FC<Props> = (props) => {
-  const theme = props.mode + props.accent;
+const RegisterForm: FC<Props> = (props) => {
+  const { theme } = useTheme();
   const styleClasses = [classes[theme], classes.form];
   const form = useRef<HTMLFormElement>(null);
   const [redirectToLogin, setRedirectToLogin] = useState(false);
@@ -130,6 +127,7 @@ const RegisterForm: React.FC<Props> = (props) => {
         enteredPassword,
         enteredConfirmPassword
       );
+
       props.setIsLoading(false);
       if (response.status === "fail") {
         props.openModal("Error", response.message, ModalType.ERROR);

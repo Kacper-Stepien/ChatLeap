@@ -1,27 +1,25 @@
-import React, { useState, useRef } from "react";
-
-import CommentModel from ".././models/Comment";
-
-import formatDate from "../utils/FormatDate";
+import { FC, useRef, useState } from "react";
 import { FaEdit, FaTrashAlt } from "react-icons/fa";
 
+import CommentModel from ".././models/Comment";
 import classes from "./Comment.module.scss";
+import formatDate from "../utils/FormatDate";
+import { useTheme } from "../context/ThemeContext";
 
 type Props = {
   comment: CommentModel;
   userID: string;
-  mode: string;
   updateComment: (id: string, text: string) => void;
   deleteComment: (id: string) => void;
 };
 
-const Comment: React.FC<Props> = ({
+const Comment: FC<Props> = ({
   comment,
   userID,
-  mode,
   updateComment,
   deleteComment,
 }) => {
+  const { mode } = useTheme();
   const styleClasses = [classes[mode], classes.comment];
 
   const [updateCommentOpen, setUpdateCommentOpen] = useState<boolean>(false);

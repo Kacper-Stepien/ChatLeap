@@ -1,14 +1,15 @@
 import Logo from "./Logo";
 import ThemeSwitcher from "./ThemeSwitcher";
-
 import classes from "./SimpleNavbar.module.scss";
+import { useTheme } from "../context/ThemeContext";
 
-const SimpleNavbar: React.FC<{ mode: string }> = ({ mode }) => {
+const SimpleNavbar: React.FC = () => {
+  const { mode } = useTheme();
   const styleClasses: string[] = [classes.navbar, classes[mode]];
 
   return (
     <nav className={styleClasses.join(" ")}>
-      <Logo mode={mode} />
+      <Logo />
       <ThemeSwitcher />
     </nav>
   );

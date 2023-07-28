@@ -1,8 +1,7 @@
-import { FaSun, FaMoon } from "react-icons/fa";
-
-import { useTheme } from "../context/ThemeContext";
+import { FaMoon, FaSun } from "react-icons/fa";
 
 import classes from "./ThemeSwitcher.module.scss";
+import { useTheme } from "../context/ThemeContext";
 
 const ThemeSwitcher: React.FC = () => {
   const { mode, setThemeMode } = useTheme();

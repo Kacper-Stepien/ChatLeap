@@ -1,15 +1,15 @@
 import { useRef, useState } from "react";
 
-import { useTheme } from "../context/ThemeContext";
-import { useAuth } from "../context/AuthContext";
-
+import { FC } from "react";
 import classes from "./AddPost.module.scss";
+import { useAuth } from "../context/AuthContext";
+import { useTheme } from "../context/ThemeContext";
 
 type AddPostProps = {
   addPost: (text: string) => void;
 };
 
-const AddPost: React.FC<AddPostProps> = ({ addPost }) => {
+const AddPost: FC<AddPostProps> = ({ addPost }) => {
   const { user } = useAuth();
   const { theme } = useTheme();
   const styleClasses = [classes[theme], classes.addPost];

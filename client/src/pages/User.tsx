@@ -1,27 +1,24 @@
-import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
-
-import { useAuth } from "../context/AuthContext";
-import { useTheme } from "../context/ThemeContext";
-import { useLoadingSpinner } from "../context/LoadinSpinnerContext";
-
-import UserModel from "../models/Author";
-import PostModel from "../models/Post";
+import { useEffect, useState } from "react";
 import useModal, { ModalType } from "../hooks/use-modal";
 
+import AddUserPhoto from "../components/AddUserPhoto";
+import { FC } from "react";
+import Post from "./../components/Post";
+import PostModel from "../models/Post";
 import SimpleNavbar from "../components/SimpleNavbar";
 import UserInfo from "./../components/UserInfo";
-import Post from "./../components/Post";
-import AddUserPhoto from "../components/AddUserPhoto";
-
+import UserModel from "../models/Author";
 import classes from "./User.module.scss";
+import { useAuth } from "../context/AuthContext";
+import { useLoadingSpinner } from "../context/LoadinSpinnerContext";
+import { useParams } from "react-router-dom";
+import { useTheme } from "../context/ThemeContext";
 
-const User: React.FC = () => {
+const User: FC = () => {
   const { id } = useParams();
   const { user, setLoggedOutUser, token } = useAuth();
   const { isLoading, setIsLoading } = useLoadingSpinner();
-  const { modalTitle, modalContent, modalType, openModal, closeModal } =
-    useModal();
+  const { openModal } = useModal();
 
   const [userData, setUserData] = useState<UserModel>();
   const [posts, setPosts] = useState<PostModel[]>([]);
@@ -47,8 +44,15 @@ const User: React.FC = () => {
       } else if (data.message === "jwt expired") {
         setLoggedOutUser();
       } else {
+        throw new Error();
       }
-    } catch (err) {}
+    } catch (err) {
+      openModal(
+        "Error",
+        "There was a problem with fetching user data.",
+        ModalType.ERROR
+      );
+    }
   };
 
   const getUserPosts = async () => {
@@ -69,9 +73,15 @@ const User: React.FC = () => {
         setLoggedOutUser();
       } else if (data.status === "fail") {
       } else {
+        throw new Error();
       }
     } catch (err) {
       setIsLoading(false);
+      openModal(
+        "Error",
+        "There was a problem with fetching user posts.",
+        ModalType.ERROR
+      );
     }
   };
 
@@ -94,7 +104,13 @@ const User: React.FC = () => {
       if (data.message === "jwt expired") {
         setLoggedOutUser();
       }
-    } catch (err) {}
+    } catch (err) {
+      openModal(
+        "Error",
+        "There was a problem with deleting the post.",
+        ModalType.ERROR
+      );
+    }
   };
 
   const updatePost = async (id: string, text: string) => {
@@ -123,24 +139,28 @@ const User: React.FC = () => {
         setLoggedOutUser();
       } else {
       }
-    } catch (error) {}
+    } catch (error) {
+      openModal(
+        "Error",
+        "There was a problem with updating the post.",
+        ModalType.ERROR
+      );
+    }
   };
 
   useEffect(() => {
     getUser();
     getUserPosts();
-  }, [token, user!.photo]);
+  }, [token, user]);
 
   return (
     <div className={classes.page}>
-      <SimpleNavbar mode={mode} />
+      <SimpleNavbar />
       <div className={styleClasses.join(" ")}>
-        <UserInfo user={userData} theme={theme} />
-        {id === user!.userID && (
+        <UserInfo user={userData} />
+        {id === user!.id && (
           <AddUserPhoto
             token={token as string}
-            mode={mode}
-            accent={accent}
             setUser={setUserData}
             setIsLoading={setIsLoading}
             openModal={openModal}

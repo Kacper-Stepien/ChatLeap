@@ -1,15 +1,13 @@
-import { useState } from "react";
+import AbsoluteWrapper from "../components/AbsoluteWrapper";
+import { FC } from "react";
+import Navbar from "../components/Navbar";
 import { Outlet } from "react-router-dom";
-
+import Sidebar from ".././components/Sidebar";
+import classes from "./Main.module.scss";
+import { useState } from "react";
 import { useTheme } from "../context/ThemeContext";
 
-import AbsoluteWrapper from "../components/AbsoluteWrapper";
-import Sidebar from ".././components/Sidebar";
-import Navbar from "../components/Navbar";
-
-import classes from "./Main.module.scss";
-
-function Main() {
+const Main: FC = () => {
   const { theme } = useTheme();
   const styleClasses = [classes[theme], classes.page];
   const [isMobileAsideVisible, setMobileAsideVisible] = useState(false);
@@ -21,7 +19,6 @@ function Main() {
       </aside>
       {isMobileAsideVisible && (
         <AbsoluteWrapper
-          theme={theme}
           children={<Sidebar setShowAside={setMobileAsideVisible} />}
         />
       )}
@@ -31,6 +28,6 @@ function Main() {
       </div>
     </div>
   );
-}
+};
 
 export default Main;
