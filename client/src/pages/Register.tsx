@@ -1,6 +1,6 @@
 import { useContext } from "react";
 
-import { ThemeContext } from "../context/ThemeContext";
+import { useTheme } from "../context/ThemeContext";
 import { LoadingSpinnerContext } from "../context/LoadinSpinnerContext";
 
 import SimpleNavbar from "../components/SimpleNavbar";
@@ -13,8 +13,7 @@ import useModal from ".././hooks/use-modal";
 import classes from "./Form.module.scss";
 
 const Register: React.FC = () => {
-  const { mode, accent } = useContext(ThemeContext);
-  const theme = mode + accent;
+  const { mode, accent, theme } = useTheme();
   const styleClasses = [classes[theme], classes.page];
 
   const { setIsLoading } = useContext(LoadingSpinnerContext);

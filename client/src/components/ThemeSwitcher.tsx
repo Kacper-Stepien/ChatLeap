@@ -1,23 +1,18 @@
-import { useContext } from "react";
 import { FaSun, FaMoon } from "react-icons/fa";
 
-import { ThemeContext } from "../context/ThemeContext";
-import LocalStorage from "../utils/LocalStorage";
+import { useTheme } from "../context/ThemeContext";
 
 import classes from "./ThemeSwitcher.module.scss";
 
 const ThemeSwitcher: React.FC = () => {
-  const { mode, setMode } = useContext(ThemeContext);
+  const { mode, setThemeMode } = useTheme();
   const styleClasses = [classes[mode], classes.themeButton];
-  const localStorage = new LocalStorage();
 
   const toggleModeHandler = () => {
     if (mode === "light") {
-      setMode("dark");
-      localStorage.writeMode("dark");
+      setThemeMode("dark");
     } else {
-      setMode("light");
-      localStorage.writeMode("light");
+      setThemeMode("light");
     }
   };
 

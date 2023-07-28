@@ -1,6 +1,4 @@
-import { useContext } from "react";
-
-import { ThemeContext } from "../context/ThemeContext";
+import { useTheme } from "../context/ThemeContext";
 
 import useModal from ".././hooks/use-modal";
 
@@ -12,8 +10,7 @@ import Modal from "../components/Modal";
 import classes from "./Form.module.scss";
 
 const Login: React.FC = () => {
-  const { mode, accent } = useContext(ThemeContext);
-  const theme = mode + accent;
+  const { mode, accent, theme } = useTheme();
   const styleClasses = [classes[theme], classes.page];
 
   const {

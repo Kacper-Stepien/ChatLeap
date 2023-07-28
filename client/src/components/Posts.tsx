@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState, useRef } from "react";
 
 import { useAuth } from "../context/AuthContext";
 
-import { ThemeContext } from "../context/ThemeContext";
+import { useTheme } from "../context/ThemeContext";
 import { LoadingSpinnerContext } from "../context/LoadinSpinnerContext";
 
 import AddPost from "./AddPost";
@@ -25,8 +25,7 @@ const Posts: React.FC = () => {
   const [downloadingPosts, setDownloadingPosts] = useState(false);
   const [downloadingMorePosts, setDownloadingMorePosts] = useState(false);
 
-  const { mode, accent } = useContext(ThemeContext);
-  const theme = mode + accent;
+  const { theme } = useTheme();
 
   const styleClasses = [classes[theme], classes.posts];
 

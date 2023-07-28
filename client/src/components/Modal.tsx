@@ -1,7 +1,6 @@
-import { useContext } from "react";
 import ReactDom from "react-dom";
 
-import { ThemeContext } from "../context/ThemeContext";
+import { useTheme } from "../context/ThemeContext";
 
 import classes from "./Modal.module.scss";
 
@@ -19,7 +18,7 @@ type Props = {
 };
 
 const Modal: React.FC<Props> = ({ title, content, type, close }) => {
-  const { mode } = useContext(ThemeContext);
+  const { mode } = useTheme();
   const styleClasses = [classes[mode], classes.modal];
 
   if (type === ModalType.SUCCESS) {

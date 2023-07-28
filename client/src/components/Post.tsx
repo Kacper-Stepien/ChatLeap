@@ -1,7 +1,7 @@
 import { useContext, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { ThemeContext } from "../context/ThemeContext";
+import { useTheme } from "../context/ThemeContext";
 import { useAuth } from "../context/AuthContext";
 import { LoadingSpinnerContext } from "../context/LoadinSpinnerContext";
 
@@ -39,8 +39,7 @@ const Post: React.FC<PostProps> = ({
   openModal,
 }) => {
   const { setIsLoading } = useContext(LoadingSpinnerContext);
-  const { mode, accent } = useContext(ThemeContext);
-  const theme = mode + accent;
+  const { mode, theme } = useTheme();
   const styleClasses = [classes[theme], classes.allPost];
 
   const { user, token, setLoggedOutUser } = useAuth();

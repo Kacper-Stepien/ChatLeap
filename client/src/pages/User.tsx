@@ -2,7 +2,7 @@ import { useState, useContext, useEffect } from "react";
 import { useParams } from "react-router-dom";
 
 import { useAuth } from "../context/AuthContext";
-import { ThemeContext } from "../context/ThemeContext";
+import { useTheme } from "../context/ThemeContext";
 import { LoadingSpinnerContext } from "../context/LoadinSpinnerContext";
 
 import UserModel from "../models/Author";
@@ -26,7 +26,7 @@ const User: React.FC = () => {
   const [userData, setUserData] = useState<UserModel>();
   const [posts, setPosts] = useState<PostModel[]>([]);
 
-  const { mode, accent } = useContext(ThemeContext);
+  const { mode, accent } = useTheme();
   const theme = mode + accent;
   const styleClasses = [classes[theme], classes.container];
 

@@ -1,6 +1,6 @@
-import { useContext, useRef, useState } from "react";
+import { useRef, useState } from "react";
 
-import { ThemeContext } from "../context/ThemeContext";
+import { useTheme } from "../context/ThemeContext";
 import { useAuth } from "../context/AuthContext";
 
 import classes from "./AddPost.module.scss";
@@ -11,8 +11,7 @@ type AddPostProps = {
 
 const AddPost: React.FC<AddPostProps> = ({ addPost }) => {
   const { user } = useAuth();
-  const { mode, accent } = useContext(ThemeContext);
-  const theme = mode + accent;
+  const { theme } = useTheme();
   const styleClasses = [classes[theme], classes.addPost];
 
   const textAreaRef = useRef<HTMLTextAreaElement>(null);

@@ -1,12 +1,9 @@
-import { useContext } from "react";
-
-import { ThemeContext } from "../context/ThemeContext";
-import LocalStorage from "../utils/LocalStorage";
+import { useTheme } from "../context/ThemeContext";
 
 import classes from "./Settings.module.scss";
 
 const Settings: React.FC = () => {
-  const { mode, accent, setMode, setAccent } = useContext(ThemeContext);
+  const { mode, accent, setThemeMode, setThemeAccent } = useTheme();
 
   const styleClasses: string[] = [classes[mode], classes.page];
 
@@ -17,7 +14,6 @@ const Settings: React.FC = () => {
   const orangeBtnClasses: string[] = [classes.accentOrangeBtn];
   const pinkBtnClasses: string[] = [classes.accentPinkBtn];
   const greenBtnClasses: string[] = [classes.accentGreenBtn];
-  const localStorage = new LocalStorage();
 
   if (mode === "dark") {
     darkBtnClasses.push(classes.active);
@@ -57,16 +53,14 @@ const Settings: React.FC = () => {
               aria-label="Dark mode button"
               className={darkBtnClasses.join(" ")}
               onClick={() => {
-                setMode("dark");
-                localStorage.writeMode("dark");
+                setThemeMode("dark");
               }}
             ></button>
             <button
               aria-label="Light mode button"
               className={lightBtnClasses.join(" ")}
               onClick={() => {
-                setMode("light");
-                localStorage.writeMode("light");
+                setThemeMode("light");
               }}
             ></button>
           </div>
@@ -78,40 +72,35 @@ const Settings: React.FC = () => {
               aria-label="Indigo accent button"
               className={indigoBtnClasses.join(" ")}
               onClick={() => {
-                setAccent("Indigo");
-                localStorage.writeAccent("Indigo");
+                setThemeAccent("Indigo");
               }}
             ></button>
             <button
               aria-label="Teal accent button"
               className={tealBtnClasses.join(" ")}
               onClick={() => {
-                setAccent("Teal");
-                localStorage.writeAccent("Teal");
+                setThemeAccent("Teal");
               }}
             ></button>
             <button
               aria-label="Orange accent button"
               className={orangeBtnClasses.join(" ")}
               onClick={() => {
-                setAccent("Orange");
-                localStorage.writeAccent("Orange");
+                setThemeAccent("Orange");
               }}
             ></button>
             <button
               aria-label="Pink accent button"
               className={pinkBtnClasses.join(" ")}
               onClick={() => {
-                setAccent("Pink");
-                localStorage.writeAccent("Pink");
+                setThemeAccent("Pink");
               }}
             ></button>
             <button
               aria-label="Green accent button"
               className={greenBtnClasses.join(" ")}
               onClick={() => {
-                setAccent("Green");
-                localStorage.writeAccent("Green");
+                setThemeAccent("Green");
               }}
             ></button>
           </div>

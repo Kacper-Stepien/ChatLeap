@@ -1,6 +1,6 @@
-import React, { useContext } from "react";
+import React from "react";
 
-import { ThemeContext } from "../context/ThemeContext";
+import { useTheme } from "../context/ThemeContext";
 
 import SearchBar from "./SearchBar";
 import ThemeSwitcher from "./ThemeSwitcher";
@@ -13,8 +13,7 @@ type Props = {
 };
 
 const Navbar: React.FC<Props> = ({ setShowAside }) => {
-  const { mode, accent } = useContext(ThemeContext);
-  const theme = mode + accent;
+  const { mode, theme } = useTheme();
   const styleClasses = [classes[theme], classes.navbar];
 
   return (

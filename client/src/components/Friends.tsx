@@ -1,6 +1,6 @@
-import { useContext, useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 
-import { ThemeContext } from "../context/ThemeContext";
+import { useTheme } from "../context/ThemeContext";
 import { useAuth } from "../context/AuthContext";
 
 import UserModel from ".././models/Author";
@@ -11,8 +11,7 @@ import classes from "./Friends.module.scss";
 
 const Friends = () => {
   const { user, token, setLoggedOutUser } = useAuth();
-  const { mode, accent } = useContext(ThemeContext);
-  const theme = mode + accent;
+  const { theme } = useTheme();
   const styleClasses = [classes[theme], classes.container];
 
   const [friendsDownloading, setFriendsDownloading] = useState(true);

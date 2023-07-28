@@ -1,7 +1,7 @@
-import React, { useContext } from "react";
+import React from "react";
 import { FaAngleLeft } from "react-icons/fa";
 
-import { ThemeContext } from "../context/ThemeContext";
+import { useTheme } from "../context/ThemeContext";
 
 import Logo from "./Logo";
 import User from "./User";
@@ -15,8 +15,7 @@ type Props = {
 };
 
 const Sidebar: React.FC<Props> = ({ setShowAside }) => {
-  const { mode, accent } = useContext(ThemeContext);
-  const theme = mode + accent;
+  const { mode, accent, theme } = useTheme();
   const styleClasses: string[] = [classes.sidebar, classes[theme]];
 
   return (
